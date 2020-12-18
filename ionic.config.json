@@ -1,5 +1,7 @@
 {
   "name": "MyCargonaut",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
