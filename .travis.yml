@@ -27,4 +27,4 @@ deploy:
     keep_history: true
     local_dir: ./www
     on:
-      branch: main
+      branch: release
