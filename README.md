@@ -59,16 +59,16 @@ Technology | Usage
 [Github Pages](https://pages.github.com) | Deployment
 
 ## Infrastructure
-Lorem Ipsum
+**GitHub - GitHub Pages - Travis CI**
 
 ## Domain model
-Lorem Ipsum
+![Domain model](./docs/domain%20diagram.png)]
 
 ## Class diagram
 Lorem Ipsum
 
 ## Wireframe
-Lorem Ipsum
-
+[Wireframes in Adobe XD](https://xd.adobe.com/view/3972f6df-4178-426e-bcd4-7858681e2eda-6c21/?fullscreen)
 ## Mockup
-Lorem Ipsum
+[Mockup in Adbobe XD](https://xd.adobe.com/view/f2ef1bff-8858-4cd0-b83e-3012263a7b20-a7bc/?fullscreen)
+
