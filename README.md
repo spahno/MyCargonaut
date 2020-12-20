@@ -59,7 +59,7 @@ Technology | Usage
 [Github Pages](https://pages.github.com) | Deployment
 
 ## Infrastructure
-Lorem Ipsum
+**GitHub - GitHub Pages - Travis CI**
 
 ## Domain model
 ![Domain model](./docs/domain%20diagram.png)]
