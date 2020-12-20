@@ -1,0 +1,87 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Registrierung</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div>
+        <ng-container>
+            <ion-list>
+
+                <ion-item>
+                    <ion-label>Nutzername*</ion-label>
+                    <ion-input #emailRef
+                               class="ion-text-end formControl"
+                               placeholder="Nutzername..."
+                               clearOnEdit="false"
+                               [(ngModel)]="username"
+                               type="text"
+                               required>
+                    </ion-input>
+                </ion-item>
+
+                <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+                   *ngIf="errors.get('username')">
+                    {{errors.get('username')}} </p>
+
+
+                <ion-item>
+                    <ion-label>E-Mail*</ion-label>
+                    <ion-input class="ion-text-end formControl"
+                               placeholder="Email..."
+                               clearOnEdit="false"
+                               [(ngModel)]="mail"
+                               type="email"
+                               required>
+                    </ion-input>
+                </ion-item>
+
+                <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+                   *ngIf="errors.get('mail')">
+                    {{errors.get('mail')}} </p>
+
+
+                <ion-item>
+                    <ion-label>Passwort*</ion-label>
+                    <ion-input class="ion-text-end formControl"
+                               placeholder="Passwort..."
+                               clearOnEdit="false"
+                               [(ngModel)]="password"
+                               type="password"
+                               required>
+                    </ion-input>
+                </ion-item>
+
+                <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+                   *ngIf="errors.get('password')">
+                    {{errors.get('password')}} </p>
+
+
+                <ion-item>
+                    <ion-label>Passwort bestätigen*</ion-label>
+                    <ion-input class="ion-text-end formControl"
+                               placeholder="Passwort bestätigen..."
+                               clearOnEdit="false"
+                               [(ngModel)]="passwordConfirmation"
+                               type="password"
+                               required>
+                    </ion-input>
+                </ion-item>
+
+                <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+                   *ngIf="errors.get('passwordConfirmation')">
+                    {{errors.get('passwordConfirmation')}} </p>
+            </ion-list>
+
+            <ion-note class="margin">*Pflichtfeld</ion-note>
+
+        </ng-container>
+
+
+        <ion-button [title]="'Registrieren'" (click)="signUp(mail, username, password)">Registrieren</ion-button>
+
+        <a class="margin kuis" (click)="router.navigate(['login'])">Bereits registriert? Hier einloggen!</a>
+
+    </div>
+</ion-content>
