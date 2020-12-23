@@ -62,7 +62,7 @@ Technology | Usage
 **GitHub - GitHub Pages - Travis CI**
 
 ## Domain model
-![Domain model](./docs/domain_diagram.png)]
+![Domain model](./docs/domain_diagram.png)
 
 ## Class diagram
 Lorem Ipsum
