@@ -1,0 +1,33 @@
+<ion-content class="content">
+
+
+                <ion-card>
+                    <p class="title">LOGIN</p>
+                    <img src="./assets/icon/MyCargonaut.png" alt="MyCargonaut"/>
+                    <ion-card-header>
+
+                    </ion-card-header>
+                    <ion-card-content>
+
+                        <ion-input type="email" name="mail" placeholder="E-Mail..."></ion-input>
+                        <ion-input type="password" name="password" minlength="6"
+                                   placeholder="Passwort..."></ion-input>
+
+                        <ion-grid>
+                            <ion-row>
+                                <ion-col></ion-col>
+                                <ion-col>
+                                    <button class="login-button">Login</button>
+                                </ion-col>
+                                <ion-col></ion-col>
+                            </ion-row>
+                        </ion-grid>
+
+                        <p class="info">Noch nicht registriert? <br> Klicke <a [routerLink]="'/register'">hier</a>, um dich zu
+                            registrieren.
+                        </p>
+                    </ion-card-content>
+                </ion-card>
+
+</ion-content>
+

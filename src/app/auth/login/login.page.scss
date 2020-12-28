@@ -1,0 +1,43 @@
+.content {
+  background-color: #EFEEEE;
+
+  position: fixed;
+  top: 15%;
+}
+
+ion-card {
+  border-radius: 50px;
+  font-size: 25px;
+  background-color: #FFFFFF;
+}
+
+img {
+  width: 500px;
+  height: 50%;
+  padding: 50px;
+}
+
+.title {
+  text-align: center;
+}
+
+.login-button {
+  width: 150px;
+  height: 50px;
+  border-radius: 10px;
+  font-size: 20px;
+  color: white;
+  background-color: #1D5A52;
+}
+
+ion-input {
+  --placeholder-color: #1D5A52;
+  --placeholder-font-weight: bold;
+  border: solid 3px #1D5A52;
+  border-radius: 10px;
+}
+
+.info{
+  font-size: 20px;
+  color: #1D5A52;
+}
