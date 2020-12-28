@@ -2,16 +2,20 @@
   .info {
     text-align: center;
   }
-  ion-input {
+  ion-input, ion-card {
     max-width: 75%;
     display: block;
     margin-left: auto;
     margin-right: auto;
   }
+  ion-card {
+    max-width: 50%;
+  }
 }
 
 .content {
   background-color: #EFEEEE;
+
   // position: fixed;
   // top: 15%;
 }
