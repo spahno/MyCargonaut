@@ -1,0 +1,25 @@
+@media only screen and (min-width: 600px) {
+  ion-card {
+    max-width: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+ion-title {
+  text-align: center;
+}
+
+.title {
+  font-size: 25px;
+  color: #1D5A52;
+  font-weight: bold;
+}
+
+ion-card {
+  border-radius: 50px;
+  font-size: 25px;
+  color: #1D5A52;
+  background-color: #FFFFFF;
+}
