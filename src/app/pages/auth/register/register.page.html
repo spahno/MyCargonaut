@@ -7,12 +7,59 @@
             </ion-card-header>
 
             <ion-card-content>
-                <ion-input type="email" name="mail" placeholder="E-Mail..."></ion-input>
-                <ion-input type="text" name="username" placeholder="Nutzername..."></ion-input>
-                <ion-input type="password" name="password" minlength="6" placeholder="Passwort..."></ion-input>
+                <ion-input #focus
+                           clearOnEdit="false"
+                           [(ngModel)]="email"
+                           type="email"
+                           name="mail"
+                           placeholder="E-Mail..."
+                           required>
+                </ion-input>
+
+                <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+                   *ngIf="errors.get('email')">
+                    {{errors.get('email')}} </p>
+
+                <ion-input clearOnEdit="false"
+                           [(ngModel)]="username"
+                           type="text"
+                           name="username"
+                           placeholder="Nutzername..."
+                           required>
+                </ion-input>
+
+                <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+                   *ngIf="errors.get('username')">
+                    {{errors.get('username')}} </p>
+
+                <ion-input clearOnEdit="false"
+                           [(ngModel)]="password"
+                           type="password"
+                           name="password"
+                           minlength="6"
+                           placeholder="Passwort..."
+                           required>
+                </ion-input>
+
+                <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+                   *ngIf="errors.get('password')">
+                    {{errors.get('password')}} </p>
+
+                <ion-input clearOnEdit="false"
+                           [(ngModel)]="passwordConfirmation"
+                           type="password"
+                           name="passwordConfirmation"
+                           minlength="6"
+                           placeholder="Passwort bestätigen..."
+                           required>
+                </ion-input>
+
+                <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+                   *ngIf="errors.get('passwordConfirmation')">
+                    {{errors.get('passwordConfirmation')}} </p>
 
                 <div class="center">
-                    <button class="auth-button">Registrieren</button>
+                    <button class="auth-button" (click)="register()">Registrieren</button>
                 </div>
 
                 <p class="info">Bereits registriert? <br> Klicke <a [routerLink]="'/login'">hier</a>, um dich
