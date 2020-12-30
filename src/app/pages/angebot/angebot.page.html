@@ -1,0 +1,9 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>angebot</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-anfrage-card *ngFor="let angebot of angebote" [anfrage]="angebot"></app-anfrage-card>
+</ion-content>

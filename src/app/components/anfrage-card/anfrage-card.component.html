@@ -1,0 +1,83 @@
+<ion-card [class.border-card-orange]="true">
+  <ion-item lines="none">
+    <h3 slot="start">Lieferobjekt</h3>
+    <ion-badge slot="end">999 Interessenten</ion-badge>
+  </ion-item>
+  <ion-item lines="none">
+    <h4 slot="start">{{anfrage.abfahrtOrt}}</h4>
+    <ion-icon class="center" name="arrow-forward"></ion-icon>
+    <h4 slot="end">{{anfrage.ankunftOrt}}</h4>
+  </ion-item>
+  <ion-item lines="none">
+    <p slot="start">Ankunft:</p>
+    <p slot="end">{{anfrage.ankunftDatum}}, {{anfrage.ankunftZeit}}</p>
+  </ion-item>
+  <ion-icon [class.spin]="dopdown" class="center transition" name="chevron-down-outline" (click)="dopdown= !dopdown"></ion-icon>
+</ion-card>
+<!-- Dropdown -->
+<ion-card [class.card-dropdown-disabled]="!dopdown" class="card-dropdown">
+
+  <!-- Fahrzeug/ Lieferobjekt -->
+  <ion-item lines="full">
+    <ion-label slot="start">
+      Fahrzeug:
+    </ion-label>
+    <ion-label slot="end">
+      Mercedes Vito
+    </ion-label>
+  </ion-item>
+
+  <!-- Start Adresse -->
+  <ion-item lines="full">
+    <ion-label slot="start">
+      Start Adresse:
+    </ion-label>
+    <ion-label slot="end">
+      {{anfrage.abfahrtStrasse}},<br>
+      {{anfrage.abfahrtPlz}} {{anfrage.abfahrtOrt}}
+    </ion-label>
+  </ion-item>
+  <!-- Ziel Adresse -->
+  <ion-item lines="full">
+    <ion-label slot="start">
+      Ziel Adresse:
+    </ion-label>
+    <ion-label slot="end">
+      {{anfrage.ankunftStrasse}},<br>
+      {{anfrage.ankunftPlz}} {{anfrage.ankunftOrt}}
+    </ion-label>
+  </ion-item>
+  <!-- Profil -->
+  <ion-item lines="full">
+    <ion-label slot="start">
+      Ersteller:
+    </ion-label>
+    <ion-avatar class="ion-margin">
+      <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+    </ion-avatar>
+    <ion-label>
+      Maximilian Mustermann
+    </ion-label>
+  </ion-item>
+  <!-- Telefon -->
+  <ion-item lines="full">
+    <ion-label slot="start">
+      Telefon:
+    </ion-label>
+    <ion-label slot="end">
+      0123 456789
+    </ion-label>
+  </ion-item>
+  <!-- Bezahlung -->
+  <ion-item lines="full">
+    <ion-label slot="start">
+      Bezahlung:
+    </ion-label>
+    <ion-label slot="end">
+      {{anfrage.bezahlung}}
+    </ion-label>
+  </ion-item>
+  <div class="ion-text-center ion-margin">
+    <ion-button>Anfragen</ion-button>
+  </div>
+</ion-card>

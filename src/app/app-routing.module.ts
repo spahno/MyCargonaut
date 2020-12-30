@@ -4,7 +4,7 @@ import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 const routes: Routes = [
     {
         path: '',
-        redirectTo: 'login',
+        redirectTo: 'angebot',
         pathMatch: 'full'
     },
     {
@@ -19,13 +19,22 @@ const routes: Routes = [
         path: 'tracking',
         loadChildren: () => import('./pages/tracking/tracking.module').then(m => m.TrackingPageModule)
     },
+  {
+    path: 'gesuch',
+    loadChildren: () => import('./pages/gesuch/gesuch.module').then( m => m.GesuchPageModule)
+  },
+  {
+    path: 'angebot',
+    loadChildren: () => import('./pages/angebot/angebot.module').then( m => m.AngebotPageModule)
+  },
 ];
 
 @NgModule({
     imports: [
         RouterModule.forRoot(routes, {preloadingStrategy: PreloadAllModules, useHash: true})
     ],
-    exports: [RouterModule]
+    exports: [RouterModule],
+    declarations: []
 })
 export class AppRoutingModule {
 }
