@@ -14,12 +14,11 @@ export class AuthService {
     user: User;
     subUser: Subscription;
     userCollection: AngularFirestoreCollection<User>;
+    loggedIn = false;
 
     constructor(private router: Router,
                 private afs: AngularFirestore,
                 private afAuth: AngularFireAuth) {
-        this.userCollection = afs.collection<User>('users');
-         // todo
         this.load();
     }
 
@@ -91,6 +90,7 @@ export class AuthService {
                 this.subUser = this.findById(res.user.uid)
                     .subscribe(u => {
                         this.user = u;
+                        this.loggedIn = true;
                     });
                 localStorage.setItem('userID', res.user.uid);
             })
@@ -111,6 +111,7 @@ export class AuthService {
                 this.subUser = this.findById(res.user.uid)
                     .subscribe(async u => {
                         this.user = u;
+                        this.loggedIn = true;
                     });
             })
             .catch((error) => {
@@ -121,21 +122,21 @@ export class AuthService {
     /**
      * un-authenticate
      */
-    async logOut() {
-
-        /* this.afAuth.user.await;
-         this.subUser.unsubscribe();
-         this.user = await null;
-         await localStorage.clear();*/
-
+    logOut() {
+        setTimeout(() => {
+            this.loggedIn = false;
+        }, 800);
+        localStorage.clear();
         this.afAuth.signOut().then(() => {
-            this.router.navigate(['']);
+            this.subUser.unsubscribe();
+            this.router.navigate(['/login']);
         });
     }
 
-    load() {
-        if (this.afAuth.currentUser) {
-            this.subUser = this.findById(localStorage.getItem('userID'))
+    async load() {
+        this.userCollection = await this.afs.collection<User>('users');
+        if (this.loggedIn) {
+            this.subUser = await this.findById(localStorage.getItem('userID'))
                 .subscribe(u => {
                     this.user = u;
                 });

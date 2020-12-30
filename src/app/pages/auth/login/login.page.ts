@@ -19,7 +19,7 @@ export class LoginPage implements ViewDidEnter {
 
     constructor(private authService: AuthService,
                 private router: Router) {
-        if (authService.user) {
+        if (this.authService.loggedIn) {
             this.router.navigate(['/profile']);
         }
     }
