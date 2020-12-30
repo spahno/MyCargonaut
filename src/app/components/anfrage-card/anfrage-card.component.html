@@ -1,5 +1,6 @@
-<div *ngIf="anfrage">
-    <ion-card [class.border-card-orange]="true">
+<div *ngIf="anfrage && anfrage.abfahrtOrt">
+    <ion-card [class.border-card-orange]="page=='angebot'"
+              [class.border-card-green]="page=='gesuch'">
         <ion-item lines="none">
             <h3 slot="start">Lieferobjekt</h3>
             <ion-badge slot="end">999 Interessenten</ion-badge>
@@ -9,15 +10,15 @@
             <ion-icon class="center" name="arrow-forward"></ion-icon>
             <h4 slot="end">{{anfrage.ankunftOrt}}</h4>
         </ion-item>
-        <ion-item lines="none">
+        <ion-item lines="full">
             <p slot="start">Ankunft:</p>
             <p slot="end">{{anfrage.ankunftDatum}}, {{anfrage.ankunftZeit}}</p>
         </ion-item>
-        <ion-icon [class.spin]="dopdown" class="center transition" name="chevron-down-outline"
-                  (click)="dopdown= !dopdown"></ion-icon>
+        <ion-icon [class.spin]="dropdown" class="center transition pointer" size="large" name="chevron-down-outline"
+                  (click)="dropdown= !dropdown"></ion-icon>
     </ion-card>
     <!-- Dropdown -->
-    <ion-card [class.card-dropdown-disabled]="!dopdown" class="card-dropdown">
+    <ion-card [class.card-dropdown-disabled]="!dropdown" class="card-dropdown">
 
         <!-- Fahrzeug/ Lieferobjekt -->
         <ion-item lines="full">
@@ -86,21 +87,24 @@
 </div>
 
 <!-- Skeleton screen -->
-<div *ngIf="!anfrage">
-    <ion-card [class.border-card-orange]="true" class="ion-padding custom-skeleton">
+<div *ngIf="!(anfrage && anfrage.abfahrtOrt)">
+    <ion-card [class.border-card-orange]="page=='angebot'"
+              [class.border-card-green]="page=='gesuch'"
+              class="ion-padding custom-skeleton">
         <ion-item lines="none">
             <ion-skeleton-text slot="start" animated style="width: 30%"></ion-skeleton-text>
             <ion-skeleton-text slot="end" animated style="width: 10%"></ion-skeleton-text>
         </ion-item>
         <ion-item lines="none">
-            <ion-skeleton-text slot="start" animated style="width: 25%"></ion-skeleton-text>
+            <ion-skeleton-text slot="" animated style="width: 25%"></ion-skeleton-text>
             <ion-icon class="center" name="arrow-forward"></ion-icon>
-            <ion-skeleton-text slot="end" animated style="width: 25%"></ion-skeleton-text>
+            <ion-skeleton-text slot="" animated style="width: 25%"></ion-skeleton-text>
         </ion-item>
-        <ion-item lines="none">
+        <ion-item lines="full">
             <ion-skeleton-text slot="start" animated style="width: 30%"></ion-skeleton-text>
             <ion-skeleton-text slot="end" animated style="width: 10%"></ion-skeleton-text>
             <ion-skeleton-text slot="end" animated style="width: 20%"></ion-skeleton-text>
         </ion-item>
+        <ion-icon class="center" size="large" name="chevron-down-outline"></ion-icon>
     </ion-card>
 </div>

@@ -9,6 +9,7 @@ import {Angebot} from '../../models/Angebot';
 export class AngebotPage implements OnInit {
   angebote: Angebot[] = [];
   constructor() {
+    this.angebote = [];
     const angebot1: Angebot = new Angebot();
     angebot1.ankunftDatum = '17.12.2020';
     angebot1.ankunftZeit = '17:12 Uhr';
@@ -29,8 +30,10 @@ export class AngebotPage implements OnInit {
     angebot2.ankunftPlz = '80923';
     angebot2.ankunftOrt = 'Konstanz';
     angebot2.bezahlung = '30€ Pro 1m^3';
-    this.angebote.push(angebot1);
-    this.angebote.push(angebot2);
+    setTimeout(() => {
+      this.angebote.push(angebot1);
+      this.angebote.push(angebot2);
+    }, 1000);
   }
 
   ngOnInit() {
