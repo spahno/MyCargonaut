@@ -19,7 +19,7 @@ export class AuthService {
     constructor(private router: Router,
                 private afs: AngularFirestore,
                 private afAuth: AngularFireAuth) {
-        this.load();
+        this.userCollection = this.afs.collection<User>('users');
     }
 
     /**
@@ -75,6 +75,18 @@ export class AuthService {
      */
     getUser(): User {
         return this.user;
+    }
+
+    checkIfLoggedIn(): Promise<boolean> {
+        return new Promise((resolve) => {
+            this.loadPageSubscription((u) => {
+                if (u === undefined || u.id === undefined) {
+                    resolve(false);
+                } else {
+                    resolve(true);
+                }
+            });
+        });
     }
 
     /**
@@ -133,13 +145,39 @@ export class AuthService {
         });
     }
 
-    async load() {
-        this.userCollection = await this.afs.collection<User>('users');
-        if (this.loggedIn) {
-            this.subUser = await this.findById(localStorage.getItem('userID'))
-                .subscribe(u => {
-                    this.user = u;
+    /* async load(callback: (u: User) => void) {
+         if (this.loggedIn) {
+             this.subUser = await this.findById(localStorage.getItem('userID'))
+                 .subscribe(u => {
+                     this.user = u;
+                     callback(this.user);
+                 });
+         }
+     }*/
+
+    async loadPageSubscription(callback: (u: User) => void) {
+        let counter = true;
+        if (this.getUserID()) {
+            this.subUser = this.findById(this.getUserID())
+                .subscribe(async u => {
+                    this.user = await u;
+                    this.loggedIn = true;
+                    if (counter) {
+                        counter = false;
+                        callback(this.user);
+                        setTimeout(() => counter = true, 500);
+                    }
                 });
+        } else {
+            callback(undefined);
+        }
+    }
+
+    getUserID(): string {
+        if (localStorage.getItem('userID')) {
+            return localStorage.getItem('userID');
+        } else {
+            return undefined;
         }
     }
 
