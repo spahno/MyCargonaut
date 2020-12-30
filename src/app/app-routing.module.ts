@@ -7,7 +7,11 @@ const routes: Routes = [
     {path: 'login', loadChildren: () => import('./auth/login/login.module').then(m => m.LoginPageModule)},
     {path: 'register', loadChildren: () => import('./auth/register/register.module').then(m => m.RegisterPageModule)},
     // protected by authentication guard
-    {path: 'start', canActivate: [AuthGuard], loadChildren: () => import('./start/start.module').then(m => m.StartPageModule)}
+    {path: 'start', canActivate: [AuthGuard], loadChildren: () => import('./start/start.module').then(m => m.StartPageModule)},  {
+    path: 'profile',
+    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+  }
+
 ];
 
 @NgModule({

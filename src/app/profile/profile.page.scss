@@ -1,0 +1,35 @@
+/**
+PROFILE BOX STYLING
+ */
+.profile-wrapper {
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 0.25rem;
+  font-size: 1rem;
+  margin-top: 3rem;
+}
+
+img {
+  border-radius: 50%;
+  width: 3rem;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+ion-icon[name="star"] {
+  color: #005B52;
+}
+
+.profile-item {
+  font-size: 1rem;
+}
+
+.profile-item ion-icon {
+  font-size: 1.3rem;
+}
+
+ion-content {
+  display: flex;
+}

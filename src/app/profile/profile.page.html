@@ -1,0 +1,70 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Profil</ion-title>
+        <ion-icon name="log-out-outline" slot="end"></ion-icon>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-margin-horizontal">
+
+    <!------------------------>
+    <!-- PROFILE CONTAINER  -->
+    <!------------------------>
+
+    <div class="profile-wrapper ion-margin-horizontal">
+        <ion-row class="ion-justify-content-center">
+            <ion-col class="ion-justify-content-center">
+                <!-- PROFILE PICTURE  -->
+                <img src="../../assets/img/man.jpg" alt="profilbild">
+            </ion-col>
+            <ion-col>
+                <span>{{this.currentUser.username}}</span>
+            </ion-col>
+            <ion-col>
+                <ion-icon name="star"></ion-icon>
+                <ion-icon name="star"></ion-icon>
+                <ion-icon name="star"></ion-icon>
+                <ion-icon name="star"></ion-icon>
+                <ion-icon name="star"></ion-icon>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-list>
+                <ion-item class="profile-item">
+                    <ion-icon name="mail-outline" slot="start"></ion-icon>
+                    <ion-label>{{this.currentUser.mail}}</ion-label>
+                </ion-item>
+                <ion-item class="profile-item">
+                    <ion-icon name="call-outline" slot="start"></ion-icon>
+                    <ion-label>0123 456789</ion-label>
+                </ion-item>
+            </ion-list>
+        </ion-row>
+        <ion-row class="ion-justify-content-center">
+            <ion-col size="5">
+                <ion-button expand="block" class="bg-green">Profil editieren</ion-button>
+            </ion-col>
+            <ion-col size="5">
+                <ion-button expand="block" class="bg-yellow">Profil löschen</ion-button>
+            </ion-col>
+        </ion-row>
+    </div>
+
+    <!-------------------------->
+    <!-- FAHRZEUGE CONTAINER  -->
+    <!-------------------------->
+
+    <div class="fahrzeuge-wrapper">
+        <ion-row>
+            <ion-list-header>
+                Meine Fahrzeuge
+            </ion-list-header>
+            <ion-list>
+                <ion-item *ngFor="let car of cars">
+                    <ion-label></ion-label>
+                </ion-item>
+            </ion-list>
+        </ion-row>
+    </div>
+
+</ion-content>
