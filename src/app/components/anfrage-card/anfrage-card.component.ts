@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Anfrage} from '../../models/Anfrage';
+import {Anfrage} from '../../../models/Anfrage';
 
 @Component({
   selector: 'app-anfrage-card',
