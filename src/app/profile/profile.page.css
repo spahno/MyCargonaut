@@ -6,7 +6,7 @@ PROFILE BOX STYLING
   border-radius: 15px;
   padding: 0.25rem;
   font-size: 1rem;
-  margin-top: 3rem;
+  margin-top: 1.8rem;
 }
 
 img {
@@ -32,6 +32,50 @@ ion-icon[name=star] {
 
 ion-content {
   display: flex;
+}
+
+/**
+FAHRZEUGE BOX STYLING
+ */
+ion-list-header {
+  color: #707070;
+  font-size: 1.3rem;
+  font-weight: normal;
+  margin-bottom: 1rem;
+}
+
+.fahrzeuge-wrapper {
+  margin-top: 1.8rem;
+}
+
+.fahrzeuge-box {
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 0.25rem;
+  font-size: 1rem;
+  width: 100%;
+}
+
+.action-btn {
+  padding: 0.2rem;
+  font-size: 1rem;
+  border-radius: 50%;
+  border: 1px solid;
+  margin: 0.2rem;
+}
+
+.forward-chevron {
+  color: #707070;
+}
+
+.add-btn {
+  --border-radius: 50%;
+  --color: #ffffff;
+  --background: #005B52;
+  --background-activated: #005B52;
+  --background-hover: #005B52;
+  height: 3rem;
+  width: 3rem;
 }
 
 /*# sourceMappingURL=profile.page.css.map */

@@ -53,8 +53,24 @@ BUTTON STYLINGS
  */
 .bg-yellow{
   --background: #E28D0D;
+  --background-activated: #E28D0D;
+  --background-hover: #E28D0D;
 }
 
 .bg-green{
   --background: #005B52;
+  --background-activated: #005B52;
+  --background-hover: #005B52;
 }
+
+/**
+ICON STYLINGS
+ */
+.icon-yellow {
+  color: #E28D0D;
+}
+
+.icon-green {
+  color: #005B52;
+}
+

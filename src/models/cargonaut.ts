@@ -1,12 +1,15 @@
-export class Cargonaut {
-    public id: string;
-    public mail: string;
-    public username: string;
-    public profile_image: string;
-
-    constructor(mail: string, username: string, profile_image: string) {
-        this.mail = mail;
-        this.username = username;
-        this.profile_image = profile_image;
-    }
+export interface Cargonaut {
+    _id?: string;
+    username: string;
+    vorname: string;
+    nachname: string;
+    geb_dat?: string;
+    profile_image?: string;
+    mail: string;
+    telefon?: string;
+    bewertung: number;
+    fahrzeuge: string[];
+    angebote: string[];
+    gesuche: string[];
+    anfragen: string[];
 }

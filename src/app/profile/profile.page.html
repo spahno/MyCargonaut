@@ -41,11 +41,11 @@
             </ion-list>
         </ion-row>
         <ion-row class="ion-justify-content-center">
-            <ion-col size="5">
-                <ion-button expand="block" class="bg-green">Profil editieren</ion-button>
+            <ion-col size="6">
+                <ion-button expand="block" class="bg-green">EDITIEREN</ion-button>
             </ion-col>
-            <ion-col size="5">
-                <ion-button expand="block" class="bg-yellow">Profil löschen</ion-button>
+            <ion-col size="6">
+                <ion-button expand="block" class="bg-yellow">LÖSCHEN</ion-button>
             </ion-col>
         </ion-row>
     </div>
@@ -54,17 +54,32 @@
     <!-- FAHRZEUGE CONTAINER  -->
     <!-------------------------->
 
-    <div class="fahrzeuge-wrapper">
+    <div class="fahrzeuge-wrapper ion-margin-horizontal">
         <ion-row>
             <ion-list-header>
                 Meine Fahrzeuge
             </ion-list-header>
-            <ion-list>
-                <ion-item *ngFor="let car of cars">
-                    <ion-label></ion-label>
-                </ion-item>
-            </ion-list>
+            <div class="fahrzeuge-box">
+                <ion-list>
+                    <ion-item *ngFor="let car of cars">
+                        <ion-label>
+                            <h2>{{car.marke}} {{car.modell}}</h2>
+                            <p>{{car.nummernschild}}</p>
+                        </ion-label>
+                        <ion-icon name="create-outline" slot="end" class="action-btn icon-green"></ion-icon>
+                        <ion-icon name="trash" slot="end" class="action-btn icon-yellow"></ion-icon>
+                        <ion-icon name="chevron-forward-outline" slot="end" class="forward-chevron"></ion-icon>
+                    </ion-item>
+                </ion-list>
+            </div>
+        </ion-row>
+        <ion-row class="ion-justify-content-center">
+            <ion-col size="3">
+                <ion-button class="add-btn">
+                    <ion-icon name="add" slot="icon-only"></ion-icon>
+                </ion-button>
+            </ion-col>
         </ion-row>
     </div>
-
 </ion-content>
+<app-navbar></app-navbar>

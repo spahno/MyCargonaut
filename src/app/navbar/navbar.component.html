@@ -1,0 +1,17 @@
+<ion-footer>
+  <ion-toolbar>
+    <ion-row class="ion-justify-content-around">
+      <ion-button color="none" routerLink="/courses" [routerLinkActive]="['active']">
+        <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+      </ion-button>
+      <ion-button color="none" routerLink="/messages" [routerLinkActive]="['active']">
+        <ion-icon slot="icon-only" name="list"></ion-icon>
+        <!--        Anderes Icon eventuell einbinden, wenn es ungelesene Nachrichten gibt-->
+        <!--        <ion-icon name="mail-unread"></ion-icon>-->
+      </ion-button>
+      <ion-button color="none" routerLink="/profile" [routerLinkActive]="['active']">
+        <ion-icon slot="icon-only" name="person"></ion-icon>
+      </ion-button>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>
