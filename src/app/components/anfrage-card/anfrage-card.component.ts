@@ -7,8 +7,8 @@ import {Anfrage} from '../../models/Anfrage';
   styleUrls: ['./anfrage-card.component.scss'],
 })
 export class AnfrageCardComponent implements OnInit {
-  @Input() anfrage: Anfrage;
-  dopdown = false;
+  @Input() public anfrage: Anfrage;
+  public dopdown = false;
 
   constructor() { }
 

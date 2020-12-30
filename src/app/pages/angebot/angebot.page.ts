@@ -22,7 +22,11 @@ export class AngebotPage implements OnInit {
     const angebot2: Angebot = new Angebot();
     angebot2.ankunftDatum = '18.12.2020';
     angebot2.ankunftZeit = '18:12 Uhr';
+    angebot2.abfahrtStrasse = 'Heidelbergerstraße 299';
+    angebot2.abfahrtPlz = '69120';
     angebot2.abfahrtOrt = 'Heidelberg';
+    angebot2.ankunftStrasse = 'Konstanzerstraße 399';
+    angebot2.ankunftPlz = '80923';
     angebot2.ankunftOrt = 'Konstanz';
     angebot2.bezahlung = '30€ Pro 1m^3';
     this.angebote.push(angebot1);
