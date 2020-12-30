@@ -19,6 +19,10 @@ const routes: Routes = [
         path: 'tracking',
         loadChildren: () => import('./pages/tracking/tracking.module').then(m => m.TrackingPageModule)
     },
+    {
+        path: 'tracking2',
+        loadChildren: () => import('./pages/tracking2/tracking2.module').then(m => m.Tracking2PageModule)
+    },
 ];
 
 @NgModule({

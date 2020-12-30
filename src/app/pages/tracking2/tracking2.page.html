@@ -1,0 +1,33 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-title>
+            GPS Tracking
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <button *ngIf="!isTracking">
+        <!--            (click)="startTracking()" -->
+        <ion-icon name="locate"></ion-icon>
+        Start Tracking
+    </button>
+    <button *ngIf="isTracking">
+        <!--            (click)="stopTracking()" -->
+        <ion-icon name="hand"></ion-icon>
+        Stop Tracking
+    </button>
+
+    <div #map id="map"></div>
+
+    <ion-list>
+        <ion-list-header>Previous Tracks</ion-list-header>
+        <ion-item *ngFor="let route of previousTracks">
+            {{ route.finished | date }}, {{ route.path.length }} Waypoints
+            <button>View Route</button>
+            <!--                    (click)="showHistoryRoute(route.path)"-->
+
+        </ion-item>
+    </ion-list>
+</ion-content>
