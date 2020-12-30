@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>angebot</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ng-container *ngIf="angebote.length < 1">
+    <app-anfrage-card *ngFor="let i of [0,1,2]" [anfrage]="" [page]="'angebot'"></app-anfrage-card>
+  </ng-container>
+  <ng-container *ngIf="angebote.length > 0">
+    <app-anfrage-card *ngFor="let angebot of angebote" [anfrage]="angebot" [page]="'angebot'"></app-anfrage-card>
+  </ng-container>
+</ion-content>
