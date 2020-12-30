@@ -1,21 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 import {IonicModule} from '@ionic/angular';
 
-import {RegisterPage} from './register.page';
+import {ProfilePage} from './profile.page';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AngularFireModule} from '@angular/fire';
-import {environment} from '../../../../environments/environment';
-import {AngularFireDatabaseModule} from '@angular/fire/database';
+import {environment} from '../../../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 
-describe('RegisterPage', () => {
-    let component: RegisterPage;
-    let fixture: ComponentFixture<RegisterPage>;
+describe('ProfilePage', () => {
+    let component: ProfilePage;
+    let fixture: ComponentFixture<ProfilePage>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [RegisterPage],
+            declarations: [ProfilePage],
             imports: [
                 IonicModule.forRoot(),
                 RouterTestingModule,
@@ -25,12 +24,12 @@ describe('RegisterPage', () => {
             ]
         }).compileComponents();
 
-        fixture = TestBed.createComponent(RegisterPage);
+        fixture = TestBed.createComponent(ProfilePage);
         component = fixture.componentInstance;
         fixture.detectChanges();
     }));
 
-   /* it('should create', () => {
-        expect(component).toBeTruthy();
-    });*/
+    /* it('should create', () => {
+         expect(component).toBeTruthy();
+     });*/
 });

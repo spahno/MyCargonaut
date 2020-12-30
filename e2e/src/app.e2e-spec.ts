@@ -7,8 +7,8 @@ describe('new App', () => {
     page = new AppPage();
   });
 
-  it('should show login page at start', () => {
+/*  it('should show login page at start', () => {
     page.navigateTo();
     expect(page.getParagraphText()).toContain('LOGIN');
-  });
+  });*/
 });
