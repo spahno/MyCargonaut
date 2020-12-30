@@ -21,9 +21,7 @@ export class RegisterPage implements ViewDidEnter {
 
     constructor(private authService: AuthService,
                 private router: Router) {
-        if (this.authService.loggedIn) {
-            this.router.navigate(['/profile']);
-        }
+
     }
 
     async register() {
@@ -61,6 +59,9 @@ export class RegisterPage implements ViewDidEnter {
     }
 
     ionViewDidEnter() {
+        if (this.authService.getUserID()) {
+            this.router.navigate(['/profile']);
+        }
         setTimeout(() => this.emailRef.setFocus(), 10);
     }
 }
