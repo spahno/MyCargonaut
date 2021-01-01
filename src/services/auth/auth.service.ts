@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 import {User} from '../../models/user';
 import {Observable, Subscription} from 'rxjs';
 import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
-import {Router} from '@angular/router';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {map} from 'rxjs/operators';
+import {ChangePageService} from '../changePage/change-page.service';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +16,7 @@ export class AuthService {
     userCollection: AngularFirestoreCollection<User>;
     loggedIn = false;
 
-    constructor(private router: Router,
+    constructor(private changePage: ChangePageService,
                 private afs: AngularFirestore,
                 private afAuth: AngularFireAuth) {
         this.userCollection = this.afs.collection<User>('users');
@@ -117,6 +117,7 @@ export class AuthService {
      * @param password user's password
      */
     async signIn(email: string, password: string) {
+        alert(email);
         await this.afAuth.signInWithEmailAndPassword(email, password)
             .then(res => {
                 localStorage.setItem('userID', res.user.uid);
@@ -141,7 +142,7 @@ export class AuthService {
         localStorage.clear();
         this.afAuth.signOut().then(() => {
             this.subUser.unsubscribe();
-            this.router.navigate(['/login']);
+            this.changePage.route('login');
         });
     }
 

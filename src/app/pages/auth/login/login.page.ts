@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {IonInput, ViewDidEnter} from '@ionic/angular';
 import {AuthService} from '../../../../services/auth/auth.service';
-import {Router} from '@angular/router';
+import {ChangePageService} from '../../../../services/changePage/change-page.service';
 
 @Component({
     selector: 'app-login',
@@ -18,7 +18,7 @@ export class LoginPage implements ViewDidEnter {
     @ViewChild('focus') private emailRef: IonInput;
 
     constructor(private authService: AuthService,
-                private router: Router) {
+                private changePage: ChangePageService) {
 
     }
 
@@ -36,21 +36,23 @@ export class LoginPage implements ViewDidEnter {
             this.errors.set('password', 'Passwort muss mindestens 6 Zeichen besitzen!');
         }
 
-        await this.authService.signIn(this.email, this.password).catch(error => {
-            if (error.code === 'auth/user-not-found') {
-                this.errors.set('wrongData', 'E-Mail oder Passwort wurde falsch eingegeben!');
-            } else if (error.code === 'auth/wrong-password') {
-                this.errors.set('wrongData', 'E-Mail oder Passwort wurde falsch eingegeben!');
-            } else if (error.code === 'auth/argument-error') {
-                this.errors.set('wrongData', 'E-Mail oder Passwort wurde falsch eingegeben!');
-            }
-        });
-        if (this.errors.size === 0) {
-            await this.authService.signIn(this.email, this.password);
-            await this.router.navigate(['/profile']);
-        }
-        this.email = '';
-        this.password = '';
+        await this.authService.signIn(this.email, this.password)
+            .then(() => {
+                this.changePage.route('profile');
+                this.email = '';
+                this.password = '';
+            })
+            .catch(error => {
+                if (error.code === 'auth/user-not-found') {
+                    this.errors.set('email', 'E-Mail oder Passwort wurde falsch eingegeben!');
+                } else if (error.code === 'auth/invalid-email') {
+                    this.errors.set('email', 'E-Mail oder Passwort wurde falsch eingegeben!');
+                } else if (error.code === 'auth/wrong-password') {
+                    this.errors.set('email', 'E-Mail oder Passwort wurde falsch eingegeben!');
+                } else if (error.code === 'auth/argument-error') {
+                    this.errors.set('email', 'E-Mail oder Passwort wurde falsch eingegeben!');
+                }
+            });
     }
 
     emailIsValid(email: string) {
@@ -59,7 +61,7 @@ export class LoginPage implements ViewDidEnter {
 
     ionViewDidEnter() {
         if (this.authService.getUserID()) {
-            this.router.navigate(['/profile']);
+            this.changePage.route('profile');
         }
         setTimeout(() => this.emailRef.setFocus(), 10);
     }

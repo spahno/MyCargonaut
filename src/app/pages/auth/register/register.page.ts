@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {IonInput, ViewDidEnter} from '@ionic/angular';
 import {AuthService} from '../../../../services/auth/auth.service';
-import {Router} from '@angular/router';
+import {ChangePageService} from '../../../../services/changePage/change-page.service';
 
 @Component({
     selector: 'app-register',
@@ -20,7 +20,7 @@ export class RegisterPage implements ViewDidEnter {
     @ViewChild('focus') private emailRef: IonInput;
 
     constructor(private authService: AuthService,
-                private router: Router) {
+                private changePage: ChangePageService) {
 
     }
 
@@ -46,7 +46,7 @@ export class RegisterPage implements ViewDidEnter {
         }
         if (this.errors.size === 0) {
             await this.authService.signUp(this.email, this.username, this.password);
-            await this.router.navigate(['/profile']);
+            await this.changePage.route('profile');
         }
 
         this.email = '';
@@ -60,7 +60,7 @@ export class RegisterPage implements ViewDidEnter {
 
     ionViewDidEnter() {
         if (this.authService.getUserID()) {
-            this.router.navigate(['/profile']);
+            this.changePage.route('profile');
         }
         setTimeout(() => this.emailRef.setFocus(), 10);
     }
