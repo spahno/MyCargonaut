@@ -6,7 +6,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../../../../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
-import {AngularFireAuthModule} from '@angular/fire/auth';
+import {FormsModule} from '@angular/forms';
 
 describe('LoginPage', () => {
     let component: LoginPage;
@@ -16,11 +16,11 @@ describe('LoginPage', () => {
         TestBed.configureTestingModule({
             declarations: [LoginPage],
             imports: [
+                FormsModule,
                 IonicModule.forRoot(),
                 RouterTestingModule,
                 AngularFireModule.initializeApp(environment.firebaseConfig),
-                AngularFirestoreModule,
-                AngularFireAuthModule
+                AngularFirestoreModule
             ]
         }).compileComponents();
 
@@ -29,7 +29,19 @@ describe('LoginPage', () => {
         fixture.detectChanges();
     }));
 
-    /*it('should create', () => {
+    it('should create', () => {
         expect(component).toBeTruthy();
-    });*/
+    });
+
+    it('should check login', (done) => {
+        component.email = 'a@a.de';
+        component.password = 'aaaaaa';
+
+        component.login()
+            .then(() => {
+                expect(component.email).toBe('');
+                expect(component.password).toBe('');
+                done();
+            });
+    });
 });

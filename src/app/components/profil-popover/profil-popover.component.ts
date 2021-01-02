@@ -30,10 +30,7 @@ export class ProfilPopoverComponent {
         }
     }
 
-    // TODO - einbinden bei Anfrage annehmen
     async dismissClickPopover() {
         await this.modalController.dismiss();
     }
-
-
 }

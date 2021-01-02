@@ -2,6 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {IonInput, ViewDidEnter} from '@ionic/angular';
 import {AuthService} from '../../../../services/auth/auth.service';
 import {ChangePageService} from '../../../../services/changePage/change-page.service';
+import {ProfileService} from '../../../../services/profile/profile.service';
 
 @Component({
     selector: 'app-login',
@@ -18,6 +19,7 @@ export class LoginPage implements ViewDidEnter {
     @ViewChild('focus') private emailRef: IonInput;
 
     constructor(private authService: AuthService,
+                private profileService: ProfileService,
                 private changePage: ChangePageService) {
 
     }
@@ -27,7 +29,7 @@ export class LoginPage implements ViewDidEnter {
 
         if (!this.email) {
             this.errors.set('email', 'Email darf nicht leer sein!');
-        } else if (!this.emailIsValid(this.email)) {
+        } else if (!this.profileService.emailIsValid(this.email)) {
             this.errors.set('email', 'Fehlerhaftes Email Format!');
         }
         if (!this.password) {
@@ -53,10 +55,6 @@ export class LoginPage implements ViewDidEnter {
                     this.errors.set('email', 'E-Mail oder Passwort wurde falsch eingegeben!');
                 }
             });
-    }
-
-    emailIsValid(email: string) {
-        return /\S+@\S+\.\S+/.test(email);
     }
 
     ionViewDidEnter() {

@@ -18,7 +18,6 @@ export class ProfileService {
         return await modal.present();
     }
 
-
     /*async presentPopoverProfile(ev: any) {
         const popover = await this.popoverController
             .create({
@@ -31,4 +30,8 @@ export class ProfileService {
             });
         return await popover.present();
     }*/
+
+    emailIsValid(email: string) {
+        return /\S+@\S+\.\S+/.test(email);
+    }
 }

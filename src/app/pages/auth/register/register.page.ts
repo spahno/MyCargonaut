@@ -2,6 +2,7 @@ import {Component, ViewChild} from '@angular/core';
 import {IonInput, ViewDidEnter} from '@ionic/angular';
 import {AuthService} from '../../../../services/auth/auth.service';
 import {ChangePageService} from '../../../../services/changePage/change-page.service';
+import {ProfileService} from '../../../../services/profile/profile.service';
 
 @Component({
     selector: 'app-register',
@@ -20,6 +21,7 @@ export class RegisterPage implements ViewDidEnter {
     @ViewChild('focus') private emailRef: IonInput;
 
     constructor(private authService: AuthService,
+                private profileService: ProfileService,
                 private changePage: ChangePageService) {
 
     }
@@ -29,7 +31,7 @@ export class RegisterPage implements ViewDidEnter {
 
         if (!this.email) {
             this.errors.set('email', 'Email darf nicht leer sein!');
-        } else if (!this.emailIsValid(this.email)) {
+        } else if (!this.profileService.emailIsValid(this.email)) {
             this.errors.set('email', 'Fehlerhaftes Email Format!');
         }
         if (!this.username) {
@@ -52,10 +54,7 @@ export class RegisterPage implements ViewDidEnter {
         this.email = '';
         this.username = '';
         this.password = '';
-    }
-
-    emailIsValid(email: string) {
-        return /\S+@\S+\.\S+/.test(email);
+        this.passwordConfirmation = '';
     }
 
     ionViewDidEnter() {
