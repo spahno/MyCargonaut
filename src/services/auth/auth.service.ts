@@ -117,7 +117,6 @@ export class AuthService {
      * @param password user's password
      */
     async signIn(email: string, password: string) {
-        alert(email);
         await this.afAuth.signInWithEmailAndPassword(email, password)
             .then(res => {
                 localStorage.setItem('userID', res.user.uid);

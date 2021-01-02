@@ -1,34 +1,77 @@
 <ion-content>
-    <div class="content">
-        <ion-card>
-            <ion-card-content>
-                <div class="profile-wrapper ion-margin-horizontal">
-                    <ion-row class="ion-justify-content-center">
-                        <ion-col class="ion-justify-content-center">
-                            <!-- PROFILE PICTURE  -->
-                            <img src="../../../assets/icon/man.jpeg" alt="profilbild">
-                        </ion-col>
-                        <ion-col>
-                            <span>Max Mustermann</span>
-                        </ion-col>
-                        <ion-col>
-                            <ion-icon name="star"></ion-icon>
-                            <ion-icon name="star"></ion-icon>
-                            <ion-icon name="star"></ion-icon>
-                            <ion-icon name="star"></ion-icon>
-                            <ion-icon name="star"></ion-icon>
-                        </ion-col>
-                    </ion-row>
-                    <ion-row>
-                        <ion-list>
-                            <ion-item class="profile-item">
-                                <ion-icon name="call-outline" slot="start"></ion-icon>
-                                <ion-label>0123 456789</ion-label>
-                            </ion-item>
-                        </ion-list>
-                    </ion-row>
-                </div>
-            </ion-card-content>
-        </ion-card>
-    </div>
+    <ion-card>
+        <ion-card-content>
+
+            <ion-grid>
+                <ion-row>
+                    <!--TODO-->
+                    <ion-col>
+                        <img src="../../../assets/icon/man.jpeg" alt="profilbild">
+                    </ion-col>
+
+                    <ion-col>
+                        <p class="name">Max Mustermann</p>
+                    </ion-col>
+
+                    <ion-col class="stars">
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star-half-outline"></ion-icon>
+                        <ion-icon name="star-outline"></ion-icon>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+
+            <ion-row>
+                <ion-list>
+                    <ion-item lines="full">
+                        <p>
+                            <ion-icon name="mail-outline" slot="start"></ion-icon>
+                            max@gmail.com
+                        </p>
+                    </ion-item>
+
+                    <ion-item lines="full">
+
+                        <p>
+                        <p>
+                            <ion-icon name="call-outline" slot="start"></ion-icon>
+                            0123 456789
+                        </p>
+                    </ion-item>
+                </ion-list>
+            </ion-row>
+
+
+            <ion-row>
+                <ion-list>
+                    <ion-item lines="full">
+                        <p>Mercedes Vito</p>
+                    </ion-item>
+
+                    <ion-item lines="full">
+                        <p>Fahrzeugart: Transporter</p>
+                    </ion-item>
+                    <ion-item lines="full">
+                        <p>3m x 4m x 200x</p>
+                    </ion-item>
+                </ion-list>
+            </ion-row>
+
+
+            <ion-row class="ion-justify-content-center">
+                <ion-list>
+                    <button (click)="dismissClickPopover()" class="accept">Anfrage annehmen</button>
+                </ion-list>
+            </ion-row>
+
+            <ion-row class="ion-justify-content-center">
+                <ion-list>
+                    <button (click)="dismissClickPopover()" class="abbrechen">Abbrechen</button>
+                </ion-list>
+            </ion-row>
+
+        </ion-card-content>
+    </ion-card>
 </ion-content>

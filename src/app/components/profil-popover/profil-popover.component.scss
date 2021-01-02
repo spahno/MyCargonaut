@@ -1,4 +1,53 @@
-ion-content {
-  height: 35%;
-  width: 35%;
+@media only screen and (min-width: 768px) {
+  .abbrechen {
+    visibility: hidden;
+  }
 }
+
+.abbrechen {
+  width: 200px;
+  height: 50px;
+  border-radius: 10px;
+  font-size: 20px;
+  color: white;
+}
+
+ion-card {
+  border-radius: 30px;
+  background-color: #FFFFFF;
+}
+
+img {
+  border-radius: 50%;
+  width: 75px;
+  height: 75px;
+}
+
+.accept {
+  width: 200px;
+  height: 50px;
+  border-radius: 10px;
+  font-size: 20px;
+  color: white;
+  background-color: #1D5A52;
+}
+
+p {
+  font-size: 20px;
+  color: #1D5A52;
+}
+
+ion-item {
+  --border-color: #1D5A52;
+}
+
+.name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.stars {
+  text-align: right;
+  font-size: 18px;
+}
+
