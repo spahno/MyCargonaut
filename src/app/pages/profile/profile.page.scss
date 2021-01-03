@@ -2,22 +2,15 @@
 PROFILE BOX STYLING
 */
 
-.profile-wrapper {
-  background: #ffffff;
-  border-radius: 15px;
-  padding: 0.25rem;
-  font-size: 1rem;
-  margin-top: 1.8rem;
+ion-title {
+  text-align: center;
 }
 
-img {
-  border-radius: 50%;
-  width: 3rem;
-  height: auto;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+.logout {
+  padding-right: 10px;
 }
+
+
 
 ion-icon[name="star"] {
   color: #005B52;
@@ -55,7 +48,10 @@ ion-list-header {
   border-radius: 15px;
   padding: 0.25rem;
   font-size: 1rem;
-  width: 100%;
+  width: 75%;
+
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .action-btn {
@@ -78,4 +74,22 @@ ion-list-header {
   --background-hover: #005B52;
   height: 3rem;
   width: 3rem;
+}
+
+ion-label {
+  --border-color: #1D5A52;
+}
+
+.name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.stars {
+  text-align: right;
+  font-size: 18px;
+}
+
+ion-item {
+  --border-color: #1D5A52;
 }

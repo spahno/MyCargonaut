@@ -1,11 +1,72 @@
-<ng-container>
-  <ion-card>
-    <ion-item lines="none">
-      <ion-avatar slot="start" class="ion-margin">
-        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-      </ion-avatar>
-      <h3>Max Muster</h3>
-      <ion-badge slot="end">3/5 Sternen</ion-badge>
-    </ion-item>
-  </ion-card>
-</ng-container>
+<ion-content>
+    <ion-card>
+        <ion-card-content>
+
+            <ion-grid>
+                <ion-row>
+                    <!--TODO-->
+                    <ion-col>
+                        <img src="../../../assets/icon/man.jpeg" alt="profilbild">
+                    </ion-col>
+
+                    <ion-col>
+                        <p class="name">Max Mustermann</p>
+                    </ion-col>
+
+                    <ion-col class="stars">
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star"></ion-icon>
+                        <ion-icon name="star-half-outline"></ion-icon>
+                        <ion-icon name="star-outline"></ion-icon>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+
+
+            <ion-item lines="full">
+                <p>
+                    <ion-icon name="mail-outline" slot="start"></ion-icon>
+                    max@gmail.com
+                </p>
+            </ion-item>
+
+            <ion-item lines="full">
+
+                <p>
+                <p>
+                    <ion-icon name="call-outline" slot="start"></ion-icon>
+                    0123 456789
+                </p>
+            </ion-item>
+
+            <br>
+            <br>
+
+            <ion-item lines="full">
+                <p>Mercedes Vito</p>
+            </ion-item>
+
+            <ion-item lines="full">
+                <p>Fahrzeugart: Transporter</p>
+            </ion-item>
+            <ion-item lines="full">
+                <p>3m x 4m x 200x</p>
+            </ion-item>
+
+
+            <ion-row class="ion-justify-content-center">
+                <ion-list>
+                    <button (click)="dismissClickPopover()" class="accept">Anfrage annehmen</button>
+                </ion-list>
+            </ion-row>
+
+            <ion-row class="ion-justify-content-center">
+                <ion-list>
+                    <button (click)="dismissClickPopover()" class="abbrechen">Abbrechen</button>
+                </ion-list>
+            </ion-row>
+
+        </ion-card-content>
+    </ion-card>
+</ion-content>

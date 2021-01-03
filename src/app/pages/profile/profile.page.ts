@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {User} from '../../../models/user';
 import {Fahrzeug} from '../../../models/fahrzeug';
 import {AuthService} from '../../../services/auth/auth.service';
+import {ProfileService} from '../../../services/profile/profile.service';
 
 @Component({
     selector: 'app-profile',
@@ -10,7 +10,7 @@ import {AuthService} from '../../../services/auth/auth.service';
 })
 export class ProfilePage implements OnInit {
 
-    testUser: User;
+    // testUser: User;
     car: Fahrzeug = {
         nummernschild: 'LDKRL777',
         marke: 'Audi',
@@ -22,11 +22,12 @@ export class ProfilePage implements OnInit {
     };
     cars: Fahrzeug[] = [];
 
-    constructor(public authService: AuthService) {
+    constructor(public authService: AuthService,
+                public profileService: ProfileService) {
     }
 
     ngOnInit() {
-        this.testUser = {
+        /*this.testUser = {
             id: 'lol',
             username: 'max power',
             vorname: 'max',
@@ -37,7 +38,9 @@ export class ProfilePage implements OnInit {
             angebote: [],
             gesuche: [],
             anfragen: []
-        };
+        };*/
+        this.cars.push(this.car);
+        this.cars.push(this.car);
         this.cars.push(this.car);
     }
 

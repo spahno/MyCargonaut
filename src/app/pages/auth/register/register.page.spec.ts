@@ -5,9 +5,8 @@ import {RegisterPage} from './register.page';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../../../../environments/environment';
-import {AngularFireDatabaseModule} from '@angular/fire/database';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
-import {AngularFireAuthModule} from '@angular/fire/auth';
+import {FormsModule} from '@angular/forms';
 
 describe('RegisterPage', () => {
     let component: RegisterPage;
@@ -17,11 +16,11 @@ describe('RegisterPage', () => {
         TestBed.configureTestingModule({
             declarations: [RegisterPage],
             imports: [
+                FormsModule,
                 IonicModule.forRoot(),
                 RouterTestingModule,
                 AngularFireModule.initializeApp(environment.firebaseConfig),
-                AngularFirestoreModule,
-                AngularFireAuthModule
+                AngularFirestoreModule
             ]
         }).compileComponents();
 
@@ -30,7 +29,20 @@ describe('RegisterPage', () => {
         fixture.detectChanges();
     }));
 
-   /* it('should create', () => {
+    it('should create', () => {
         expect(component).toBeTruthy();
-    });*/
+    });
+
+    it('should check registration', (done) => {
+        component.email = 'a@a.de';
+        component.password = 'aaaaaa';
+
+        component.register().then(() => {
+            expect(component.email).toBe('');
+            expect(component.username).toBe('');
+            expect(component.password).toBe('');
+            expect(component.passwordConfirmation).toBe('');
+            done();
+        });
+    });
 });
