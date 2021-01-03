@@ -6,9 +6,6 @@
   "homepage": "https://spahno.github.io/MyCargonaut/",
   "scripts": {
     "ion": "ionic serve",
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
     "lint": "ng lint",
     "test": "ng test --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "e2e": "ng e2e --protractor-config=e2e/protractor-ci.conf.js",
