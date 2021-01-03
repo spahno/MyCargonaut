@@ -22,7 +22,7 @@ export class AngebotService {
      * copy and prepare
      * @param angebot to prepare as Object
      */
-    private static copyAndPrepare(angebot: Angebot): Angebot {
+    private static copyAndPrepare(angebot: Angebot): any {
         const copy = {...angebot};
         delete copy._ID;
 
@@ -37,8 +37,8 @@ export class AngebotService {
         copy.ankunftPlz = copy.ankunftPlz || null;
         copy.bezahlung = copy.bezahlung || null;
         copy.fahrtId = copy.fahrtId || null;
-        copy.kunden = copy.kunden || null;
-        copy.interessenten = copy.interessenten || null;
+        copy.kunden = copy.kunden || [];
+        copy.interessenten = copy.interessenten || [];
         copy.fahrzeugId = copy.fahrzeugId || null;
 
         return copy;

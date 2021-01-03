@@ -4,7 +4,7 @@ import {AngebotService} from './angebot.service';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
-import {Angebot} from '../../models/Angebot';
+import {Angebot, Interessent} from '../../models/Angebot';
 
 describe('AngebotService', () => {
     let service: AngebotService;
@@ -30,6 +30,10 @@ describe('AngebotService', () => {
     angebot2.ankunftPlz = '80923';
     angebot2.ankunftOrt = 'Konstanz';
     angebot2.bezahlung = '30€ Pro 1m^3';
+
+    const interessent: Interessent = new Interessent();
+    interessent.userId = 'userTestId';
+    interessent.objectId = 'objectTestId';
 
     beforeEach(async () => {
         TestBed.configureTestingModule({
@@ -101,23 +105,46 @@ describe('AngebotService', () => {
             done();
         });
 
-
-        it('Test update Angebot on Firebase', (done) => {
-            let addedAngebot1 = new Angebot();
-            service.addAngebot(angebot1)
-                .then(res => {
-                    addedAngebot1 = res.angebot;
-                    expect(res.message).toBeDefined();
-                    expect(res.angebot.bezahlung).toBe(angebot1.bezahlung);
-                    addedAngebote.push(res.angebot._ID);
-                    addedAngebot1.bezahlung = 'Test €';
-                    service.updateAngebot(addedAngebot1).then(res2 => {
-                        expect(res2.angebot._ID).toEqual(addedAngebot1._ID);
-                        expect(res2.angebot.bezahlung).toEqual('Test €');
-                        done();
-                    });
-                }).catch(err => {
-                console.log(err);
+        describe('Test update Angebot on Firebase', () => {
+            it('update bezahlung', (done) => {
+                let addedAngebot1 = new Angebot();
+                service.addAngebot(angebot1)
+                    .then(res => {
+                        addedAngebot1 = res.angebot;
+                        expect(res.message).toBeDefined();
+                        expect(res.angebot.bezahlung).toBe(angebot1.bezahlung);
+                        addedAngebote.push(res.angebot._ID);
+                        addedAngebot1.bezahlung = 'Test €';
+                        service.updateAngebot(addedAngebot1).then(res2 => {
+                            expect(res2.angebot._ID).toEqual(addedAngebot1._ID);
+                            expect(res2.angebot.bezahlung).toEqual('Test €');
+                            done();
+                        });
+                    }).catch(err => {
+                    console.log(err);
+                });
+            });
+            it('CRUD Interessenten', (done) => {
+                let interesseAngebotBefore: Angebot;
+                const interesseAngebotAfter = new Angebot();
+                service.addAngebot(angebot1)
+                    .then(res => {
+                        interesseAngebotBefore = res.angebot;
+                        expect(res.message).toBeDefined();
+                        expect(res.angebot.bezahlung).toBe(angebot1.bezahlung);
+                        addedAngebote.push(res.angebot._ID);
+                        service.updateAngebot(interesseAngebotBefore.addInteressent(interessent)).then(res2 => {
+                            expect(res2.angebot._ID).toEqual(interesseAngebotBefore._ID);
+                            expect(res2.angebot.getInteressenten()[0].userId).toEqual(interessent.userId);
+                            Object.assign(interesseAngebotAfter, res2.angebot);
+                            service.updateAngebot(res2.angebot.deleteInteressent(interessent)).then(res3 => {
+                                expect(res3.angebot.getInteressenten().length).toEqual(interesseAngebotAfter.getInteressenten().length - 1);
+                                done();
+                            });
+                        });
+                    }).catch(err => {
+                    console.log(err);
+                });
             });
         });
     });
