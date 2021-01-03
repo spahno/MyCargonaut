@@ -265,15 +265,6 @@ Apache-2.0
 @firebase/webchannel-wrapper
 Apache-2.0
 
-@ionic-native/core
-MIT
-
-@ionic-native/splash-screen
-MIT
-
-@ionic-native/status-bar
-MIT
-
 @ionic/angular
 MIT
 
