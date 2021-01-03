@@ -13,8 +13,10 @@ export class User {
     public gesuche: string[];
     public anfragen: string[];
 
-    constructor(email: string, username: string) {
+    constructor(email: string, username: string, vorname: string, nachname: string) {
         this.email = email;
         this.username = username;
+        this.vorname = vorname;
+        this.nachname = nachname;
     }
 }

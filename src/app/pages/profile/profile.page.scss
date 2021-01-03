@@ -2,26 +2,6 @@
 PROFILE BOX STYLING
 */
 
-@media only screen and (min-width: 600px) {
-  ion-card {
-    max-width: 75%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
-}
-
-ion-card {
-    --border-color: #1D5A52;
-}
-
-ion-list-header {
-  max-width: 75%;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
 ion-title {
   text-align: center;
 }
@@ -30,19 +10,7 @@ ion-title {
   padding-right: 10px;
 }
 
-.profile-wrapper {
-  background: #ffffff;
-  border-radius: 15px;
-  padding: 0.25rem;
-  font-size: 1rem;
-  margin-top: 1.8rem;
-}
 
-img {
-  border-radius: 50%;
-  width: 75px;
-  height: 75px;
-}
 
 ion-icon[name="star"] {
   color: #005B52;

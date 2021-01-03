@@ -93,12 +93,14 @@ export class AuthService {
      * Method to sign up an user
      * @param email user's email
      * @param username user's username
+     * @param firstname user's firstname
+     * @param lastname user's lastname
      * @param password user's password
      */
-    async signUp(email: string, username: string, password: string) {
+    async signUp(email: string, username: string, firstname: string, lastname: string, password: string) {
         await this.afAuth.createUserWithEmailAndPassword(email, password)
             .then(async res => {
-                this.persist(new User(email, username), res.user.uid);
+                this.persist(new User(email, username, firstname, lastname), res.user.uid);
                 this.subUser = this.findById(res.user.uid)
                     .subscribe(u => {
                         this.user = u;

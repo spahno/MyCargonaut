@@ -40,6 +40,8 @@ export class ProfilePage implements OnInit {
             anfragen: []
         };*/
         this.cars.push(this.car);
+        this.cars.push(this.car);
+        this.cars.push(this.car);
     }
 
 }

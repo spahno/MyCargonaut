@@ -1,5 +1,5 @@
 <ion-content>
-    <div class="content">
+    <div class="cargo-content">
         <ion-card>
             <ion-card-header>
                 <p class="title">REGISTRIEREN</p>
@@ -31,6 +31,30 @@
                 <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
                    *ngIf="errors.get('username')">
                     {{errors.get('username')}} </p>
+
+                <ion-input clearOnEdit="false"
+                           [(ngModel)]="firstname"
+                           type="text"
+                           name="firstname"
+                           placeholder="Vorname..."
+                           required>
+                </ion-input>
+
+                <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+                   *ngIf="errors.get('firstname')">
+                    {{errors.get('firstname')}} </p>
+
+                <ion-input clearOnEdit="false"
+                           [(ngModel)]="lastname"
+                           type="text"
+                           name="lastname"
+                           placeholder="Nachname..."
+                           required>
+                </ion-input>
+
+                <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+                   *ngIf="errors.get('lastname')">
+                    {{errors.get('lastname')}} </p>
 
                 <ion-input clearOnEdit="false"
                            [(ngModel)]="password"

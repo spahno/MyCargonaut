@@ -13,6 +13,8 @@ export class RegisterPage implements ViewDidEnter {
 
     email: string;
     username: string;
+    firstname: string;
+    lastname: string;
     password: string;
     passwordConfirmation: string;
 
@@ -37,6 +39,12 @@ export class RegisterPage implements ViewDidEnter {
         if (!this.username) {
             this.errors.set('username', 'Nutzername darf nicht leer sein!');
         }
+        if (!this.firstname) {
+            this.errors.set('firstname', 'Vorname darf nicht leer sein!');
+        }
+        if (!this.lastname) {
+            this.errors.set('lastname', 'Nachname darf nicht leer sein!');
+        }
         if (!this.password) {
             this.errors.set('password', 'Passwort darf nicht leer sein!');
         } else if (this.password.length < 6) {
@@ -47,12 +55,14 @@ export class RegisterPage implements ViewDidEnter {
             this.errors.set('passwordConfirmation', 'Passwörter stimmen nicht überein!');
         }
         if (this.errors.size === 0) {
-            await this.authService.signUp(this.email, this.username, this.password);
+            await this.authService.signUp(this.email, this.username, this.firstname, this.lastname, this.password);
             await this.changePage.route('profile');
         }
 
         this.email = '';
         this.username = '';
+        this.firstname = '';
+        this.lastname = '';
         this.password = '';
         this.passwordConfirmation = '';
     }

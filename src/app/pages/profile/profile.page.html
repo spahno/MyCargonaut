@@ -5,103 +5,97 @@
     </ion-toolbar>
 </ion-header>
 
+
 <ion-content class="ion-margin-horizontal">
+    <div class="cargo-content">
+        <!------------------------>
+        <!-- PROFILE CONTAINER  -->
+        <!------------------------>
 
-    <!------------------------>
-    <!-- PROFILE CONTAINER  -->
-    <!------------------------>
-
-    <ion-card class="profile-wrapper ion-margin-horizontal">
+        <ion-card>
 
 
-        <ion-grid>
-            <ion-row>
-                <!--TODO-->
-                <ion-col>
-                    <img src="../../../assets/icon/man.jpeg" alt="profilbild">
-                </ion-col>
+            <ion-item lines="none">
+                <ion-avatar style="height: 50px; width: 50px" slot="start">
+                    <ion-img src="../../../assets/icon/man.jpeg" alt="profilbild"></ion-img>
+                </ion-avatar>
 
-                <ion-col>
-                    <p class="name">{{this.authService.user.username}}</p>
-                </ion-col>
+                <ion-label class="ion-margin">
+                    <h2>{{this.authService.user.vorname || 'lädt...'}}</h2>
+                    <h2>{{this.authService.user.nachname || 'lädt...'}}</h2>
+                </ion-label>
 
-                <ion-col class="stars">
+                <ion-col style="height: 50px;" class="stars">
                     <ion-icon name="star"></ion-icon>
                     <ion-icon name="star"></ion-icon>
                     <ion-icon name="star"></ion-icon>
                     <ion-icon name="star-half-outline"></ion-icon>
                     <ion-icon name="star-outline"></ion-icon>
                 </ion-col>
+            </ion-item>
+
+
+            <ion-item lines="full">
+                <p>
+                    <ion-icon name="mail-outline" slot="start"></ion-icon>
+                    {{this.authService.user.email}}
+                </p>
+            </ion-item>
+
+            <ion-item lines="full">
+
+                <p>
+                    <ion-icon name="call-outline" slot="start"></ion-icon>
+                    0123 456789
+                </p>
+            </ion-item>
+
+
+            <ion-row class="ion-justify-content-center">
+                <ion-col size="6">
+                    <ion-button expand="block" class="bg-yellow">Profil löschen</ion-button>
+                </ion-col>
+                <ion-col size="6">
+                    <ion-button expand="block" class="bg-green">Profil editieren</ion-button>
+                </ion-col>
             </ion-row>
-        </ion-grid>
+        </ion-card>
 
-        <ion-item lines="full">
-            <p>
-                <ion-icon name="mail-outline" slot="start"></ion-icon>
-                {{this.authService.user.email}}
-            </p>
-        </ion-item>
-
-        <ion-item lines="full">
-
-            <p>
-            <p>
-                <ion-icon name="call-outline" slot="start"></ion-icon>
-                0123 456789
-            </p>
-        </ion-item>
+        <!-------------------------->
+        <!-- FAHRZEUGE CONTAINER  -->
+        <!-------------------------->
+        <br>
+        <ion-list-header>
+            Meine Fahrzeuge
+        </ion-list-header>
+        <ion-card>
+            <ng-container *ngFor="let car of cars; last as isLast">
+                <ion-item [lines]="isLast ? 'none' : 'full'">
+                    <ion-label>
+                        <h2>{{car.marke}} {{car.modell}}</h2>
+                        <p>{{car.nummernschild}}</p>
+                    </ion-label>
+                    <ion-icon name="create-outline" slot="end" class="action-btn icon-green"></ion-icon>
+                    <ion-icon name="trash" slot="end" class="action-btn icon-yellow"></ion-icon>
+                    <ion-icon name="chevron-forward-outline" slot="end" class="forward-chevron"></ion-icon>
+                </ion-item>
+            </ng-container>
+        </ion-card>
 
 
         <ion-row class="ion-justify-content-center">
-            <ion-col size="6">
-                <ion-button expand="block" class="bg-yellow">Profil löschen</ion-button>
-            </ion-col>
-            <ion-col size="6">
-                <ion-button expand="block" class="bg-green">Profil editieren</ion-button>
-            </ion-col>
+            <ion-button class="add-btn">
+                <ion-icon name="add" slot="icon-only"></ion-icon>
+            </ion-button>
         </ion-row>
-    </ion-card>
-
-    <!-------------------------->
-    <!-- FAHRZEUGE CONTAINER  -->
-    <!-------------------------->
-
-    <div class="fahrzeuge-wrapper ion-margin-horizontal">
-        <ion-row>
-            <ion-list-header>
-                Meine Fahrzeuge
-            </ion-list-header>
-
-            <div class="fahrzeuge-box">
-                <ion-list>
-                    <ion-item *ngFor="let car of cars">
-                        <ion-label>
-                            <h2>{{car.marke}} {{car.modell}}</h2>
-                            <p>{{car.nummernschild}}</p>
-                        </ion-label>
-                        <ion-icon name="create-outline" slot="end" class="action-btn icon-green"></ion-icon>
-                        <ion-icon name="trash" slot="end" class="action-btn icon-yellow"></ion-icon>
-                        <ion-icon name="chevron-forward-outline" slot="end" class="forward-chevron"></ion-icon>
-                    </ion-item>
-                </ion-list>
-            </div>
-        </ion-row>
-    </div>
 
 
-    <ion-row class="ion-justify-content-center">
-        <ion-button class="add-btn">
-            <ion-icon name="add" slot="icon-only"></ion-icon>
-        </ion-button>
-    </ion-row>
-
-
-    <ion-row class="ion-justify-content-center">
+        <ion-row class="ion-justify-content-center">
             <ion-button (click)="profileService.presentPopoverProfile()">
                 Button für Interessenten annehmen usw.
             </ion-button>
-    </ion-row>
-
+        </ion-row>
+    </div>
 </ion-content>
 
 <app-navbar></app-navbar>
