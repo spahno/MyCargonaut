@@ -75,6 +75,10 @@ export class GesuchService {
     });
   }
 
+  /**
+   * This Method deletes a Gesuch in Firebase
+   * @param gesuchId is the id of the Gesuch that will be deleted
+   */
   deleteGesuch(gesuchId: string): Promise<string> {
     return new Promise((resolve, reject) => {
       this.gesuchCollection.doc(gesuchId).delete()
@@ -86,6 +90,10 @@ export class GesuchService {
     });
   }
 
+  /**
+   * This Method updates a Gesuch in Firebase
+   * @param gesuch is the gesuch that will be updated in Firebase
+   */
   updateGesuch(gesuch: Gesuch): Promise<{ gesuch: Gesuch, message: string }> {
     return new Promise((resolve, reject) => {
       const gesuchId = gesuch._ID;
