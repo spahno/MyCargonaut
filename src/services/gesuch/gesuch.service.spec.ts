@@ -4,7 +4,7 @@ import { GesuchService } from './gesuch.service';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
-import {Gesuch, Interessent} from '../../models/Gesuch';
+import {Gesuch, InteressentG} from '../../models/Gesuch';
 
 describe('GesuchService', () => {
   let service: GesuchService;
@@ -31,7 +31,7 @@ describe('GesuchService', () => {
   gesuche2.ankunftOrt = 'Konstanz';
   gesuche2.bezahlung = '30€ Pro 1m^3';
 
-  const interessent: Interessent = new Interessent();
+  const interessent: InteressentG = new InteressentG();
   interessent.userId = 'userTestId';
   interessent.fahrerId = 'fahrerTestId';
 

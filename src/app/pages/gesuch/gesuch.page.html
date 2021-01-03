@@ -5,6 +5,10 @@
 </ion-header>
 
 <ion-content>
-  <app-anfrage-card [anfrage]="" [page]="'gesuch'"></app-anfrage-card>
-  <app-profil-popover></app-profil-popover>
+  <ng-container *ngIf="filtertGesuche.length < 1">
+    <app-anfrage-card *ngFor="let i of [0,1,2]" [page]="'gesuch'"></app-anfrage-card>
+  </ng-container>
+  <ng-container *ngIf="filtertGesuche.length > 0">
+    <app-anfrage-card *ngFor="let gesuch of filtertGesuche" [inputGesuch]="gesuch" [page]="'gesuch'"></app-anfrage-card>
+  </ng-container>
 </ion-content>
