@@ -12,6 +12,15 @@ export const environment = {
         messagingSenderId: '726275788263',
         appId: '1:726275788263:web:7f0228bb144bf6e0cd8142',
         measurementId: 'G-PY35054YH0'
+    },
+    testFirebaseConfig: {
+        apiKey: 'AIzaSyD0blraYKeq5pb4MK1GTbJSDPdovb2VmRY',
+        authDomain: 'testdatabasemycargonaut.firebaseapp.com',
+        projectId: 'testdatabasemycargonaut',
+        storageBucket: 'testdatabasemycargonaut.appspot.com',
+        messagingSenderId: '994811066991',
+        appId: '1:994811066991:web:84d7d964041c6f4c5feb9a',
+        measurementId: 'G-71F24KG1R2'
     }
 };
 

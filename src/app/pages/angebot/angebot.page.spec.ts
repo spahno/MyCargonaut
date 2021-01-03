@@ -2,6 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { AngebotPage } from './angebot.page';
+import {AngularFireModule} from '@angular/fire';
+import {environment} from '../../../environments/environment';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
 
 describe('AngebotPage', () => {
   let component: AngebotPage;
@@ -10,7 +13,9 @@ describe('AngebotPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AngebotPage ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot(),
+        AngularFireModule.initializeApp(environment.testFirebaseConfig),
+        AngularFirestoreModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(AngebotPage);

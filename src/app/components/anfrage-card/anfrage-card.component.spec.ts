@@ -3,6 +3,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { AnfrageCardComponent } from './anfrage-card.component';
 import {Angebot} from '../../../models/Angebot';
+import {Input} from '@angular/core';
+import {Gesuch} from '../../../models/Gesuch';
 
 describe('AnfrageCardComponent', () => {
   let component: AnfrageCardComponent;
@@ -11,26 +13,26 @@ describe('AnfrageCardComponent', () => {
   /***
    * Test Daten
    */
-  const angebot1: Angebot = new Angebot();
-  angebot1.ankunftDatum = '17.12.2020';
-  angebot1.ankunftZeit = '17:12 Uhr';
-  angebot1.abfahrtStrasse = 'Gießenerstraße 299';
-  angebot1.abfahrtPlz = '35390';
-  angebot1.abfahrtOrt = 'Gießen';
-  angebot1.ankunftStrasse = 'Berlinerstraße 399';
-  angebot1.ankunftPlz = '10201';
-  angebot1.ankunftOrt = 'Berlin';
-  angebot1.bezahlung = '30€ VB';
-  const angebot2: Angebot = new Angebot();
-  angebot2.ankunftDatum = '18.12.2020';
-  angebot2.ankunftZeit = '18:12 Uhr';
-  angebot2.abfahrtStrasse = 'Heidelbergerstraße 299';
-  angebot2.abfahrtPlz = '69120';
-  angebot2.abfahrtOrt = 'Heidelberg';
-  angebot2.ankunftStrasse = 'Konstanzerstraße 399';
-  angebot2.ankunftPlz = '80923';
-  angebot2.ankunftOrt = 'Konstanz';
-  angebot2.bezahlung = '30€ Pro 1m^3';
+  const angebot: Angebot = new Angebot();
+  angebot.ankunftDatum = '17.12.2020';
+  angebot.ankunftZeit = '17:12 Uhr';
+  angebot.abfahrtStrasse = 'Gießenerstraße 299';
+  angebot.abfahrtPlz = '35390';
+  angebot.abfahrtOrt = 'Gießen';
+  angebot.ankunftStrasse = 'Berlinerstraße 399';
+  angebot.ankunftPlz = '10201';
+  angebot.ankunftOrt = 'Berlin';
+  angebot.bezahlung = '30€ VB';
+  const gesuch: Gesuch = new Gesuch();
+  gesuch.ankunftDatum = '18.12.2020';
+  gesuch.ankunftZeit = '18:12 Uhr';
+  gesuch.abfahrtStrasse = 'Heidelbergerstraße 299';
+  gesuch.abfahrtPlz = '69120';
+  gesuch.abfahrtOrt = 'Heidelberg';
+  gesuch.ankunftStrasse = 'Konstanzerstraße 399';
+  gesuch.ankunftPlz = '80923';
+  gesuch.ankunftOrt = 'Konstanz';
+  gesuch.bezahlung = '30€ Pro 1m^3';
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -44,7 +46,9 @@ describe('AnfrageCardComponent', () => {
   }));
 
   it('should create', () => {
-    component.anfrage = angebot1;
+    component.inputAngebot = angebot;
+    component.inputGesuch = gesuch;
+    component.page = 'none';
     expect(component).toBeTruthy();
   });
 });
