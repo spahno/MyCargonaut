@@ -6,8 +6,6 @@ import {AuthService} from '../../../services/auth/auth.service';
 import {AngebotService} from '../../../services/angebot/angebot.service';
 import {FahrtService} from '../../../services/fahrt/fahrt.service';
 import {AlertController, ModalController} from '@ionic/angular';
-import {Router} from '@angular/router';
-import {LieferobjektService} from '../../../services/lieferobjekt/lieferobjekt.service';
 import {AddLieferobjektModalComponent} from '../add-lieferobjekt-modal/add-lieferobjekt-modal.component';
 
 @Component({
@@ -38,7 +36,7 @@ export class AnfrageCardComponent implements OnInit {
   erstellerName: string;
   erstellerProfilbild: string;
 
-  constructor(private authService: AuthService,
+  constructor(public authService: AuthService,
               private angebotService: AngebotService,
               private fahrtService: FahrtService,
               public alertController: AlertController,
@@ -96,22 +94,77 @@ export class AnfrageCardComponent implements OnInit {
   starteFahrt() {
     if (this.authService.getUser() && this.authService.getUser().id === this.angebot.erstellerId){
       if (this.angebot) {
-        this.fahrtService.startFahrt().then(res => {
-          this.angebot.fahrtId = res.fahrt._ID;
-          this.angebotService.updateAngebot(this.angebot).then(res2 => {
-            this.presentAlert('Fahrt gestartet', 'Die fahrt von ' + res2.angebot.abfahrtOrt +
-                'nach ' + res2.angebot.ankunftOrt + ' wurde gestartet.<br>' +
-                'Ihre angegebene Ankunftszeit ist: ' + res2.angebot.ankunftZeit + '.', 'Los gehts!');
-          }).catch(err => {
-            this.presentAlert('Fehler', 'Fahrt starten fehlgeschlagen. Error: ' + err, 'Verstanden');
+        if (!this.angebot.fahrtId) {
+          this.fahrtService.startFahrt().then(res => {
+            this.angebot.fahrtId = res.fahrt._ID;
+            this.angebotService.updateAngebot(this.angebot).then(res2 => {
+              this.presentAlert('Fahrt gestartet', 'Die fahrt von ' + res2.angebot.abfahrtOrt +
+                  ' nach ' + res2.angebot.ankunftOrt + ' wurde gestartet.<br>' +
+                  'Ihre angegebene Ankunftszeit ist: ' + res2.angebot.ankunftZeit + '.', 'Los gehts!');
+            }).catch(err => {
+              this.presentAlert('Fehler', 'Fahrt starten fehlgeschlagen. Error: ' + err, 'Ok');
+            });
           });
-        });
+        } else {
+          this.presentAlert('Fehler', 'Fahrt starten fehlgeschlagen. Die fahrt wurde bereits gestartet.', 'Ok');
+        }
       } else {
         this.presentAlert('Fehler', 'Fahrt starten fehlgeschlagen. Error: angebot: undefined', 'Ok');
       }
     } else {
       this.presentAlert('Fehler', 'Fahrt starten fehlgeschlagen. Error: Nicht Authorisiert', 'Ok');
     }
+  }
+
+  fahrtBeenden() {
+    if (this.authService.getUser() && this.authService.getUser().id === this.angebot.erstellerId) {
+      if (this.angebot) {
+        if (this.angebot.fahrtId){
+          this.fahrtService.endFahrt(this.angebot.fahrtId).then( async res => {
+            this.fahrtBewerten(res._ID);
+          });
+        } else {
+          this.presentAlert('Fehler', 'Fahrt beenden fehlgeschlagen. Die fahrt wurde noch nicht gestartet.', 'Ok');
+        }
+      } else {
+        this.presentAlert('Fehler', 'Fahrt beenden fehlgeschlagen. Error: angebot: undefined', 'Ok');
+      }
+    } else {
+      this.presentAlert('Fehler', 'Fahrt beenden fehlgeschlagen. Error: Nicht Authorisiert', 'Ok');
+    }
+  }
+
+  async fahrtBewerten(fahrtId: string) {
+    const bewertung = 5;
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Fahrt bewerten!',
+      subHeader: 'Bewerte die Fahrt',
+      message: '<ion-col>' +
+          '                <ion-icon name="star"></ion-icon>' +
+          '                <ion-icon name="star"></ion-icon>' +
+          '                <ion-icon name="star"></ion-icon>' +
+          '                <ion-icon name="star"></ion-icon>' +
+          '                <ion-icon name="star"></ion-icon>' +
+          '            </ion-col>',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+        }, {
+          text: 'Okay',
+          handler: () => {
+            this.fahrtService.fahrtBewerten(fahrtId, bewertung).catch(reason => {
+              this.presentAlert('Bewertung fehlgeschlagen!', 'Beim speichern der Bewertung ist etwas schiefgelaufen. Error: <br>' +
+              reason, 'Ok');
+            });
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   async angebotAnfragen() {

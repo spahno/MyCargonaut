@@ -12,6 +12,8 @@ export class AngebotPage implements OnInit {
   filtertAngebote: Angebot[] = [];
   constructor(private angebotService: AngebotService) {
     this.angebotService.observableAngebote().subscribe(async data => {
+      this.angebote = [];
+      this.filtertAngebote = [];
       this.angebote = data;
       this.angebote.forEach(e => {this.filtertAngebote.push(e); });
     });

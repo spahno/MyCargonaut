@@ -85,7 +85,7 @@ describe('AngebotService', () => {
                     expect(res.angebot.bezahlung).toBe(angebot1.bezahlung);
                     addedAngebote.push(res.angebot._ID);
                 }).catch(err => {
-                    console.log(err);
+                    console.log('Failed adding first Angebot to Firebase. Error: ' + err);
                 });
             await service.addAngebot(angebot2)
                 .then(async res => {
@@ -94,7 +94,7 @@ describe('AngebotService', () => {
                     expect(res.angebot.bezahlung).toBe(angebot2.bezahlung);
                     addedAngebote.push(res.angebot._ID);
                 }).catch(err => {
-                    console.log(err);
+                    console.log('Failed adding second Angebot to Firebase. Error: ' + err);
                 });
             const sub2 = await service.observableAngebote().subscribe(data => {
                 sub2.unsubscribe();
@@ -106,22 +106,27 @@ describe('AngebotService', () => {
         });
 
         describe('Test update Angebot on Firebase', () => {
+            const angebotUpdate: Angebot = new Angebot();
+            angebotUpdate.bezahlung = '30€ Pro 1m^3';
             it('update bezahlung', (done) => {
                 let addedAngebot1 = new Angebot();
-                service.addAngebot(angebot1)
+                service.addAngebot(angebotUpdate)
                     .then(res => {
                         addedAngebot1 = res.angebot;
+                        const addedAngebot1Id = res.angebot._ID;
                         expect(res.message).toBeDefined();
-                        expect(res.angebot.bezahlung).toBe(angebot1.bezahlung);
+                        expect(res.angebot.bezahlung).toBe('30€ Pro 1m^3');
                         addedAngebote.push(res.angebot._ID);
                         addedAngebot1.bezahlung = 'Test €';
                         service.updateAngebot(addedAngebot1).then(res2 => {
-                            expect(res2.angebot._ID).toEqual(addedAngebot1._ID);
+                            expect(res2.angebot._ID).toEqual(addedAngebot1Id);
                             expect(res2.angebot.bezahlung).toEqual('Test €');
                             done();
+                        }).catch(err => {
+                            console.log('Failed updating Angebot to update Angebot in Firebase. Error: ' + err);
                         });
                     }).catch(err => {
-                    console.log(err);
+                    console.log('Failed adding Angebot to update Angebot in Firebase. Error: ' + err);
                 });
             });
             it('CRUD Interessenten', (done) => {

@@ -33,7 +33,7 @@ describe('GesuchService', () => {
 
   const interessent: InteressentG = new InteressentG();
   interessent.userId = 'userTestId';
-  interessent.fahrerId = 'fahrerTestId';
+  interessent.fahrzeugId = 'fahrerTestId';
 
   beforeEach(async () => {
     TestBed.configureTestingModule({

@@ -20,7 +20,7 @@ export class Gesuch extends Anfrage {
 
     deleteInteressent(interessent: InteressentG): Gesuch {
         this.interessenten = this.interessenten.filter(e => {
-            return JSON.parse(e).userId !== interessent.userId && JSON.parse(e).objectId !== interessent.fahrerId;
+            return JSON.parse(e).userId !== interessent.userId && JSON.parse(e).objectId !== interessent.fahrzeugId;
         });
         return this;
     }
@@ -39,12 +39,12 @@ export class Gesuch extends Anfrage {
     }
 
     deleteFahrer(fahrer: InteressentG): Gesuch {
-        this.fahrer = this.fahrer.filter(e => JSON.parse(e).userId !== fahrer.userId && JSON.parse(e).objectId !== fahrer.fahrerId);
+        this.fahrer = this.fahrer.filter(e => JSON.parse(e).userId !== fahrer.userId && JSON.parse(e).objectId !== fahrer.fahrzeugId);
         return this;
     }
 }
 
 export class InteressentG {
     userId: string;
-    fahrerId: string;
+    fahrzeugId: string;
 }

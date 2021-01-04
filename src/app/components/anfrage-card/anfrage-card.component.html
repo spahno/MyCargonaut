@@ -88,11 +88,16 @@
                 {{bezahlung}}
             </ion-label>
         </ion-item>
-        <div class="ion-text-center ion-margin">
-            <ion-button (click)="starteFahrt()">Fahrt starten</ion-button>
+
+        <!-- Buttons Angebot -->
+        <div *ngIf="this.authService.getUser() && this.authService.getUser().id === this.angebot.erstellerId && angebot" class="ion-text-center ion-margin">
+            <ion-button *ngIf="!angebot.fahrtId" (click)="starteFahrt()">Fahrt starten</ion-button>
+            <ion-button *ngIf="angebot.fahrtId" (click)="fahrtBeenden()">Fahrt beenden</ion-button>
         </div>
-        <div class="ion-text-center ion-margin">
-            <ion-button (click)="angebotAnfragen()">Anfragen</ion-button>
+        <div *ngIf="this.authService.getUser() && this.authService.getUser().id !== this.angebot.erstellerId && angebot"class="ion-text-center ion-margin">
+            <ion-button *ngIf="!angebot.isInteressent(this.authService.getUser().id) && !angebot.isKunde(this.authService.getUser().id)" (click)="angebotAnfragen()">Anfragen</ion-button>
+            <ion-button *ngIf="angebot.isInteressent(this.authService.getUser().id)" (click)="angebotAnfragen()">Anfragen</ion-button>
+            <ion-button *ngIf="angebot.isKunde(this.authService.getUser().id)" (click)="angebotAnfragen()">Anfragen</ion-button>
         </div>
     </ion-card>
 </div>
