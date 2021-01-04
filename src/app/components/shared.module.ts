@@ -6,11 +6,15 @@ import {ProfilPopoverComponent} from './profil-popover/profil-popover.component'
 import {NavbarComponent} from './navbar/navbar.component';
 import {RouterModule} from '@angular/router';
 import {GesuchCardComponent} from './gesuch-card/gesuch-card.component';
+import {AddFahrzeugModalComponent} from './add-fahrzeug-modal/add-fahrzeug-modal.component';
+import {AddLieferobjektModalComponent} from './add-lieferobjekt-modal/add-lieferobjekt-modal.component';
 
 @NgModule({
-    declarations: [AngebotCardComponent, GesuchCardComponent, ProfilPopoverComponent, NavbarComponent],
+    declarations: [AngebotCardComponent, GesuchCardComponent, ProfilPopoverComponent, NavbarComponent,
+        AddFahrzeugModalComponent, AddLieferobjektModalComponent],
     imports: [CommonModule, IonicModule, RouterModule],
-    exports: [AngebotCardComponent, GesuchCardComponent, ProfilPopoverComponent, NavbarComponent]
+    exports: [AngebotCardComponent, GesuchCardComponent, ProfilPopoverComponent, NavbarComponent,
+        AddFahrzeugModalComponent, AddLieferobjektModalComponent]
 })
 export class SharedModule {
 }
