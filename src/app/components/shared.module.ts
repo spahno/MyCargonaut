@@ -8,11 +8,12 @@ import {RouterModule} from '@angular/router';
 import {GesuchCardComponent} from './gesuch-card/gesuch-card.component';
 import {AddFahrzeugModalComponent} from './add-fahrzeug-modal/add-fahrzeug-modal.component';
 import {AddLieferobjektModalComponent} from './add-lieferobjekt-modal/add-lieferobjekt-modal.component';
+import {FormsModule} from '@angular/forms';
 
 @NgModule({
     declarations: [AngebotCardComponent, GesuchCardComponent, ProfilPopoverComponent, NavbarComponent,
         AddFahrzeugModalComponent, AddLieferobjektModalComponent],
-    imports: [CommonModule, IonicModule, RouterModule],
+    imports: [CommonModule, IonicModule, RouterModule, FormsModule],
     exports: [AngebotCardComponent, GesuchCardComponent, ProfilPopoverComponent, NavbarComponent,
         AddFahrzeugModalComponent, AddLieferobjektModalComponent]
 })
