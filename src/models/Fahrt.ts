@@ -2,5 +2,6 @@ export class Fahrt {
     _ID: string;
     tracking: string;
     bewertung: number;
-    beendet: boolean;
+    anzahlBewertungen = 0;
+    beendet = false;
 }
