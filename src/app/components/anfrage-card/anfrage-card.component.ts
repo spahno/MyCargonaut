@@ -2,6 +2,13 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Anfrage} from '../../../models/Anfrage';
 import {Gesuch, InteressentG} from '../../../models/Gesuch';
 import {Angebot, InteressentA} from '../../../models/Angebot';
+import {AuthService} from '../../../services/auth/auth.service';
+import {AngebotService} from '../../../services/angebot/angebot.service';
+import {FahrtService} from '../../../services/fahrt/fahrt.service';
+import {AlertController, ModalController} from '@ionic/angular';
+import {Router} from '@angular/router';
+import {LieferobjektService} from '../../../services/lieferobjekt/lieferobjekt.service';
+import {AddLieferobjektModalComponent} from '../add-lieferobjekt-modal/add-lieferobjekt-modal.component';
 
 @Component({
   selector: 'app-anfrage-card',
@@ -31,7 +38,11 @@ export class AnfrageCardComponent implements OnInit {
   erstellerName: string;
   erstellerProfilbild: string;
 
-  constructor() {
+  constructor(private authService: AuthService,
+              private angebotService: AngebotService,
+              private fahrtService: FahrtService,
+              public alertController: AlertController,
+              public modalController: ModalController) {
   }
 
   ngOnInit() {
@@ -82,4 +93,53 @@ export class AnfrageCardComponent implements OnInit {
     }
   }
 
+  starteFahrt() {
+    if (this.authService.getUser() && this.authService.getUser().id === this.angebot.erstellerId){
+      if (this.angebot) {
+        this.fahrtService.startFahrt().then(res => {
+          this.angebot.fahrtId = res.fahrt._ID;
+          this.angebotService.updateAngebot(this.angebot).then(res2 => {
+            this.presentAlert('Fahrt gestartet', 'Die fahrt von ' + res2.angebot.abfahrtOrt +
+                'nach ' + res2.angebot.ankunftOrt + ' wurde gestartet.<br>' +
+                'Ihre angegebene Ankunftszeit ist: ' + res2.angebot.ankunftZeit + '.', 'Los gehts!');
+          }).catch(err => {
+            this.presentAlert('Fehler', 'Fahrt starten fehlgeschlagen. Error: ' + err, 'Verstanden');
+          });
+        });
+      } else {
+        this.presentAlert('Fehler', 'Fahrt starten fehlgeschlagen. Error: angebot: undefined', 'Ok');
+      }
+    } else {
+      this.presentAlert('Fehler', 'Fahrt starten fehlgeschlagen. Error: Nicht Authorisiert', 'Ok');
+    }
+  }
+
+  async angebotAnfragen() {
+    if (this.angebot) {
+      const modal = await this.modalController.create({
+        component: AddLieferobjektModalComponent,
+        cssClass: 'my-custom-class',
+        mode: 'ios'
+      });
+      await modal.present();
+      const { data } = await modal.onWillDismiss();
+      const interessent = new InteressentA();
+      interessent.userId = this.authService.getUser().id;
+      interessent.objectId = data;
+      this.angebot.addInteressent(new InteressentA());
+      this.angebotService.updateAngebot(this.angebot).catch(err => {
+        this.presentAlert('Fehler!', 'Fehler beim speichern des Angebots entstanden. Error: ' + err, 'Ok');
+      });
+    }
+  }
+
+  async presentAlert(header: string, message: string, buttonText: string) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header,
+      message,
+      buttons: [buttonText]
+    });
+    await alert.present();
+  }
 }

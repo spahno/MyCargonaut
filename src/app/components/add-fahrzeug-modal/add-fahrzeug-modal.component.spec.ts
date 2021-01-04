@@ -1,26 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { ProfilPopoverComponent } from './profil-popover.component';
+import { AddFahrzeugModalComponent } from './add-fahrzeug-modal.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../../../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 
-describe('ProfilPopoverComponent', () => {
-  let component: ProfilPopoverComponent;
-  let fixture: ComponentFixture<ProfilPopoverComponent>;
+describe('AddFahrzeugModalComponent', () => {
+  let component: AddFahrzeugModalComponent;
+  let fixture: ComponentFixture<AddFahrzeugModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProfilPopoverComponent ],
-      imports: [IonicModule.forRoot(), RouterTestingModule,
+      declarations: [ AddFahrzeugModalComponent ],
+      imports: [IonicModule.forRoot(),
         AngularFireModule.initializeApp(environment.testFirebaseConfig),
-        AngularFirestoreModule],
-      providers: [RouterTestingModule]
+        AngularFirestoreModule]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ProfilPopoverComponent);
+    fixture = TestBed.createComponent(AddFahrzeugModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

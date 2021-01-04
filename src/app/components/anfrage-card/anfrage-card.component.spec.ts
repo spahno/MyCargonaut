@@ -5,6 +5,10 @@ import { AnfrageCardComponent } from './anfrage-card.component';
 import {Angebot} from '../../../models/Angebot';
 import {Input} from '@angular/core';
 import {Gesuch} from '../../../models/Gesuch';
+import {RouterTestingModule} from '@angular/router/testing';
+import {AngularFireModule} from '@angular/fire';
+import {environment} from '../../../environments/environment';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
 
 describe('AnfrageCardComponent', () => {
   let component: AnfrageCardComponent;
@@ -37,7 +41,10 @@ describe('AnfrageCardComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AnfrageCardComponent ],
-      imports: [IonicModule.forRoot()]
+      imports: [IonicModule.forRoot(), RouterTestingModule,
+        AngularFireModule.initializeApp(environment.testFirebaseConfig),
+        AngularFirestoreModule],
+      providers: [RouterTestingModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(AnfrageCardComponent);
