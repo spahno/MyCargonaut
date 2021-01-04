@@ -1,23 +1,5 @@
-@media only screen and (min-width: 600px) {
-  .info {
-    text-align: center;
-  }
-  ion-input, ion-card {
-    max-width: 75%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  ion-card {
-    max-width: 50%;
-  }
-}
 
-.content {
-  background-color: #EFEEEE;
-  // position: fixed;
-  // top: 15%;
-}
+
 
 ion-card {
   border-radius: 50px;
@@ -26,21 +8,22 @@ ion-card {
 }
 
 img {
-  width: 500px;
+  width: 400px;
   height: 50%;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 30px;
+  margin: 50px auto;
 }
 
 .title {
   text-align: center;
+  margin-top: 0;
 }
 
 .auth-button {
   width: 150px;
   height: 50px;
+  margin-top: 10px;
+  margin-bottom: 20px;
   border-radius: 10px;
   font-size: 20px;
   color: white;

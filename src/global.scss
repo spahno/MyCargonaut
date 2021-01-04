@@ -34,6 +34,11 @@
 /**
 HEADER STYLING
  */
+
+ion-content {
+  --background: #EFEFEF;
+}
+
 ion-toolbar {
   color: #707070;
 }
@@ -42,11 +47,10 @@ ion-toolbar ion-icon {
   font-size: 1.5rem;
 }
 
-ion-content {
-  margin-left: 1rem;
-  margin-right: 1rem;
-  display: flex;
-  justify-content: center;
+.cargo-content {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
   --background: #EFEFEF;
 }
 
