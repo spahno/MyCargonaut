@@ -12,6 +12,8 @@ export class GesuchPage implements OnInit {
   filtertGesuche: Gesuch[] = [];
   constructor(private gesuchService: GesuchService) {
     this.gesuchService.observableGesuch().subscribe(async data => {
+      this.gesuche = [];
+      this.filtertGesuche = [];
       this.gesuche = data;
       this.gesuche.forEach(e => {this.filtertGesuche.push(e); });
     });

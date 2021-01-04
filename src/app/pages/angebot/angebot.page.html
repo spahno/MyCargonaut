@@ -6,9 +6,9 @@
 
 <ion-content>
   <ng-container *ngIf="filtertAngebote.length < 1">
-    <app-anfrage-card *ngFor="let i of [0,1,2]" [page]="'angebot'"></app-anfrage-card>
+    <app-angebot-card *ngFor="let i of [0,1,2]" [page]="'angebot'"></app-angebot-card>
   </ng-container>
   <ng-container *ngIf="filtertAngebote.length > 0">
-    <app-anfrage-card *ngFor="let angebot of filtertAngebote" [inputAngebot]="angebot" [page]="'angebot'"></app-anfrage-card>
+    <app-angebot-card *ngFor="let angebot of filtertAngebote" [inputAngebot]="angebot" [page]="'angebot'"></app-angebot-card>
   </ng-container>
 </ion-content>

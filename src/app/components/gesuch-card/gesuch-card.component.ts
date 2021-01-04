@@ -9,11 +9,11 @@ import {AlertController, ModalController} from '@ionic/angular';
 import {AddLieferobjektModalComponent} from '../add-lieferobjekt-modal/add-lieferobjekt-modal.component';
 
 @Component({
-  selector: 'app-anfrage-card',
-  templateUrl: './anfrage-card.component.html',
-  styleUrls: ['./anfrage-card.component.scss'],
+  selector: 'app-gesuch-card',
+  templateUrl: './gesuch-card.component.html',
+  styleUrls: ['./gesuch-card.component.scss'],
 })
-export class AnfrageCardComponent implements OnInit {
+export class GesuchCardComponent implements OnInit {
   @Input() inputAngebot: Angebot = new Angebot();
   angebot = new Angebot();
   @Input() inputGesuch: Gesuch = new Gesuch();

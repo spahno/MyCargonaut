@@ -1,0 +1,126 @@
+<div *ngIf="inputGesuch && inputAngebot">
+    <ion-card [class.border-card-orange]="page=='angebot'"
+              [class.border-card-green]="page=='gesuch'">
+        <ion-item lines="none">
+            <h3 slot="start">{{titel}}</h3>
+            <ion-badge slot="end">{{interessenten}}</ion-badge>
+        </ion-item>
+        <ion-item lines="none">
+            <h4 slot="start">{{abfahrtOrt}}</h4>
+            <ion-icon class="center" name="arrow-forward"></ion-icon>
+            <h4 slot="end">{{ankunftOrt}}</h4>
+        </ion-item>
+        <ion-item lines="full">
+            <p slot="start">Ankunft:</p>
+            <p slot="end">{{ankunftDatum}}, {{ankunftZeit}}</p>
+        </ion-item>
+        <ion-icon [class.spin]="dropdown" class="center transition pointer" size="large" name="chevron-down-outline"
+                  (click)="dropdown= !dropdown"></ion-icon>
+    </ion-card>
+    <!-- Dropdown -->
+    <ion-card [class.card-dropdown-disabled]="!dropdown" class="card-dropdown">
+
+        <!-- Fahrzeug/ Lieferobjekt -->
+        <ion-item lines="full" *ngIf="angebot">
+            <ion-label slot="start">
+                Fahrzeug:
+            </ion-label>
+            <ion-label>
+                Mercedes Vito
+            </ion-label>
+        </ion-item>
+        <ion-item lines="full" *ngIf="gesuch">
+            <ion-label slot="start">
+                Gegenstand:
+            </ion-label>
+            <ion-label>
+                GegebstandID
+            </ion-label>
+        </ion-item>
+
+        <!-- Start Adresse -->
+        <ion-item lines="full">
+            <ion-label slot="start">
+                Start Adresse:
+            </ion-label>
+            <ion-label>
+                {{abfahrtStrasse}},<br>
+                {{abfahrtPlz}} {{abfahrtOrt}}
+            </ion-label>
+        </ion-item>
+        <!-- Ziel Adresse -->
+        <ion-item lines="full">
+            <ion-label slot="start">
+                Ziel Adresse:
+            </ion-label>
+            <ion-label>
+                {{ankunftStrasse}},<br>
+                {{ankunftPlz}} {{ankunftOrt}}
+            </ion-label>
+        </ion-item>
+        <!-- Profil -->
+        <ion-item lines="full">
+            <ion-label slot="start">
+                Ersteller:
+            </ion-label>
+            <ion-avatar class="ion-margin">
+                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+            </ion-avatar>
+            <ion-label>
+                {{erstellerName}}
+            </ion-label>
+        </ion-item>
+        <!-- Telefon -->
+        <ion-item lines="full">
+            <ion-label slot="start">
+                Telefon:
+            </ion-label>
+            <ion-label>
+                0123 456789
+            </ion-label>
+        </ion-item>
+        <!-- Bezahlung -->
+        <ion-item lines="full">
+            <ion-label slot="start">
+                Bezahlung:
+            </ion-label>
+            <ion-label>
+                {{bezahlung}}
+            </ion-label>
+        </ion-item>
+
+        <!-- Buttons Angebot -->
+        <div *ngIf="this.authService.getUser() && this.authService.getUser().id === this.angebot.erstellerId && angebot" class="ion-text-center ion-margin">
+            <ion-button *ngIf="!angebot.fahrtId" (click)="starteFahrt()">Fahrt starten</ion-button>
+            <ion-button *ngIf="angebot.fahrtId" (click)="fahrtBeenden()">Fahrt beenden</ion-button>
+        </div>
+        <div *ngIf="this.authService.getUser() && this.authService.getUser().id !== this.angebot.erstellerId && angebot"class="ion-text-center ion-margin">
+            <ion-button *ngIf="!angebot.isInteressent(this.authService.getUser().id) && !angebot.isKunde(this.authService.getUser().id)" (click)="angebotAnfragen()">Anfragen</ion-button>
+            <ion-button *ngIf="angebot.isInteressent(this.authService.getUser().id)" (click)="angebotAnfragen()">Anfragen</ion-button>
+            <ion-button *ngIf="angebot.isKunde(this.authService.getUser().id)" (click)="angebotAnfragen()">Anfragen</ion-button>
+        </div>
+    </ion-card>
+</div>
+
+<!-- Skeleton screen -->
+<div *ngIf="!(inputAngebot && inputGesuch)">
+    <ion-card [class.border-card-orange]="page=='angebot'"
+              [class.border-card-green]="page=='gesuch'"
+              class="ion-padding custom-skeleton">
+        <ion-item lines="none">
+            <ion-skeleton-text slot="start" animated style="width: 30%"></ion-skeleton-text>
+            <ion-skeleton-text slot="end" animated style="width: 10%"></ion-skeleton-text>
+        </ion-item>
+        <ion-item lines="none">
+            <ion-skeleton-text slot="" animated style="width: 25%"></ion-skeleton-text>
+            <ion-icon class="center" name="arrow-forward"></ion-icon>
+            <ion-skeleton-text slot="" animated style="width: 25%"></ion-skeleton-text>
+        </ion-item>
+        <ion-item lines="full">
+            <ion-skeleton-text slot="start" animated style="width: 30%"></ion-skeleton-text>
+            <ion-skeleton-text slot="end" animated style="width: 10%"></ion-skeleton-text>
+            <ion-skeleton-text slot="end" animated style="width: 20%"></ion-skeleton-text>
+        </ion-item>
+        <ion-icon class="center" size="large" name="chevron-down-outline"></ion-icon>
+    </ion-card>
+</div>

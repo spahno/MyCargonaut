@@ -1,9 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { AnfrageCardComponent } from './anfrage-card.component';
+import { GesuchCardComponent } from './gesuch-card.component';
 import {Angebot} from '../../../models/Angebot';
-import {Input} from '@angular/core';
 import {Gesuch} from '../../../models/Gesuch';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AngularFireModule} from '@angular/fire';
@@ -11,8 +10,8 @@ import {environment} from '../../../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 
 describe('AnfrageCardComponent', () => {
-  let component: AnfrageCardComponent;
-  let fixture: ComponentFixture<AnfrageCardComponent>;
+  let component: GesuchCardComponent;
+  let fixture: ComponentFixture<GesuchCardComponent>;
 
   /***
    * Test Daten
@@ -40,14 +39,14 @@ describe('AnfrageCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AnfrageCardComponent ],
+      declarations: [ GesuchCardComponent ],
       imports: [IonicModule.forRoot(), RouterTestingModule,
         AngularFireModule.initializeApp(environment.testFirebaseConfig),
         AngularFirestoreModule],
       providers: [RouterTestingModule]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AnfrageCardComponent);
+    fixture = TestBed.createComponent(GesuchCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
