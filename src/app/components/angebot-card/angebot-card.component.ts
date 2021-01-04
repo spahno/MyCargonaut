@@ -7,6 +7,7 @@ import {AngebotService} from '../../../services/angebot/angebot.service';
 import {FahrtService} from '../../../services/fahrt/fahrt.service';
 import {AlertController, ModalController} from '@ionic/angular';
 import {AddLieferobjektModalComponent} from '../add-lieferobjekt-modal/add-lieferobjekt-modal.component';
+import {User} from '../../../models/user';
 
 @Component({
   selector: 'app-angebot-card',
@@ -14,70 +15,35 @@ import {AddLieferobjektModalComponent} from '../add-lieferobjekt-modal/add-liefe
   styleUrls: ['./angebot-card.component.scss'],
 })
 export class AngebotCardComponent implements OnInit {
-  @Input() inputAngebot: Angebot = new Angebot();
+  @Input() inputAngebot = new Angebot();
   angebot = new Angebot();
-  @Input() inputGesuch: Gesuch = new Gesuch();
-  gesuch: Gesuch = new Gesuch();
-  @Input() page = 'none';
-  public dropdown = false;
-  titel: string;
-  interessenten = 'laden...';
-  interessentenGesuch: InteressentG[];
-  interessentenAngebot: InteressentA[];
-  abfahrtOrt: string;
-  abfahrtStrasse: string;
-  abfahrtPlz: string;
-  ankunftStrasse: string;
-  ankunftOrt: string;
-  ankunftPlz: string;
-  ankunftDatum: string;
-  ankunftZeit: string;
-  bezahlung: string;
+  user: User = new User('', '', '', '');
+  interessenten: string;
   erstellerName: string;
-  erstellerProfilbild: string;
+  erstellerBild = 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y';
+  public dropdown = false;
 
   constructor(public authService: AuthService,
               private angebotService: AngebotService,
               private fahrtService: FahrtService,
               public alertController: AlertController,
               public modalController: ModalController) {
+    this.authService.loadPageSubscription(u => {
+      Object.assign(this.user, u);
+      });
   }
 
   ngOnInit() {
-    if (this.page === 'angebot' && this.inputAngebot) {
-      Object.assign(this.angebot, this.inputAngebot);
-      const tmpInteressenten = this.angebot.getInteressenten() || [];
-      this.setInteressenten(tmpInteressenten.length);
-      this.titel = this.angebot.fahrzeugId;
-      this.interessentenAngebot = this.angebot.getInteressenten();
-      this.abfahrtOrt = this.angebot.abfahrtOrt;
-      this.abfahrtStrasse = this.angebot.abfahrtStrasse;
-      this.abfahrtPlz = this.angebot.abfahrtPlz;
-      this.ankunftStrasse = this.angebot.ankunftStrasse;
-      this.ankunftOrt = this.angebot.ankunftOrt;
-      this.ankunftPlz = this.angebot.ankunftPlz;
-      this.ankunftDatum = this.angebot.ankunftDatum;
-      this.ankunftZeit = this.angebot.ankunftZeit;
-      this.bezahlung = this.angebot.bezahlung;
-      this.erstellerName = this.angebot.erstellerId;
-      this.erstellerProfilbild = '';
-    } else if (this.page === 'gesuch' && this.inputGesuch) {
-      Object.assign(this.gesuch, this.inputGesuch);
-      const tmpInteressenten = this.gesuch.getInteressenten() || [];
-      this.setInteressenten(tmpInteressenten.length);
-      this.titel = this.gesuch.lieferobjektId;
-      this.interessentenGesuch = this.gesuch.getInteressenten();
-      this.abfahrtOrt = this.gesuch.abfahrtOrt;
-      this.abfahrtStrasse = this.gesuch.abfahrtStrasse;
-      this.abfahrtPlz = this.gesuch.abfahrtPlz;
-      this.ankunftStrasse = this.gesuch.ankunftStrasse;
-      this.ankunftOrt = this.gesuch.ankunftOrt;
-      this.ankunftPlz = this.gesuch.ankunftPlz;
-      this.ankunftDatum = this.gesuch.ankunftDatum;
-      this.ankunftZeit = this.gesuch.ankunftZeit;
-      this.bezahlung = this.gesuch.bezahlung;
-      this.erstellerName = this.gesuch.erstellerId;
-      this.erstellerProfilbild = '';
+    Object.assign(this.angebot, this.inputAngebot);
+    this.setInteressenten(this.angebot.getInteressenten().length);
+    if (this.angebot.erstellerId) {
+      const sub = this.authService.findById(this.angebot.erstellerId).subscribe(res => {
+        sub.unsubscribe();
+        this.erstellerName = res.vorname + ' ' + res.nachname;
+        this.erstellerBild = res.profileImage || 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y';
+      });
+    } else {
+      this.erstellerName = 'Kein Ersteller gespeichert!';
     }
   }
 
@@ -169,20 +135,46 @@ export class AngebotCardComponent implements OnInit {
 
   async angebotAnfragen() {
     if (this.angebot) {
-      const modal = await this.modalController.create({
-        component: AddLieferobjektModalComponent,
+      const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
-        mode: 'ios'
+        header: 'Prompt!',
+        inputs: [
+          {
+            name: 'name',
+            type: 'text',
+            placeholder: 'name des Lieferobjekts'
+          },
+          {
+            name: 'beschreibung',
+            type: 'text',
+            placeholder: 'beschreibung'
+          },
+          {
+            name: 'preis',
+            type: 'text',
+            placeholder: 'Preisvorschlag'
+          }],
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: () => {}
+          }, {
+            text: 'Anfrage senden',
+            handler: (data) => {
+              const interessent = new InteressentA();
+              interessent.userId = this.authService.getUser().id;
+              interessent.objectId = data;
+              this.angebot.addInteressent(new InteressentA());
+              this.angebotService.updateAngebot(this.angebot).catch(err => {
+                this.presentAlert('Fehler!', 'Fehler beim speichern des Angebots entstanden. Error: ' + err, 'Ok');
+              });
+            }
+          }
+        ]
       });
-      await modal.present();
-      const { data } = await modal.onWillDismiss();
-      const interessent = new InteressentA();
-      interessent.userId = this.authService.getUser().id;
-      interessent.objectId = data;
-      this.angebot.addInteressent(new InteressentA());
-      this.angebotService.updateAngebot(this.angebot).catch(err => {
-        this.presentAlert('Fehler!', 'Fehler beim speichern des Angebots entstanden. Error: ' + err, 'Ok');
-      });
+      await alert.present();
     }
   }
 
