@@ -26,16 +26,6 @@ describe('AnfrageCardComponent', () => {
   angebot.ankunftPlz = '10201';
   angebot.ankunftOrt = 'Berlin';
   angebot.bezahlung = '30€ VB';
-  const gesuch: Gesuch = new Gesuch();
-  gesuch.ankunftDatum = '18.12.2020';
-  gesuch.ankunftZeit = '18:12 Uhr';
-  gesuch.abfahrtStrasse = 'Heidelbergerstraße 299';
-  gesuch.abfahrtPlz = '69120';
-  gesuch.abfahrtOrt = 'Heidelberg';
-  gesuch.ankunftStrasse = 'Konstanzerstraße 399';
-  gesuch.ankunftPlz = '80923';
-  gesuch.ankunftOrt = 'Konstanz';
-  gesuch.bezahlung = '30€ Pro 1m^3';
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -53,8 +43,6 @@ describe('AnfrageCardComponent', () => {
 
   it('should create', () => {
     component.inputAngebot = angebot;
-    component.inputGesuch = gesuch;
-    component.page = 'none';
     expect(component).toBeTruthy();
   });
 });

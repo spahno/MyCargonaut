@@ -16,16 +16,6 @@ describe('AnfrageCardComponent', () => {
   /***
    * Test Daten
    */
-  const angebot: Angebot = new Angebot();
-  angebot.ankunftDatum = '17.12.2020';
-  angebot.ankunftZeit = '17:12 Uhr';
-  angebot.abfahrtStrasse = 'Gießenerstraße 299';
-  angebot.abfahrtPlz = '35390';
-  angebot.abfahrtOrt = 'Gießen';
-  angebot.ankunftStrasse = 'Berlinerstraße 399';
-  angebot.ankunftPlz = '10201';
-  angebot.ankunftOrt = 'Berlin';
-  angebot.bezahlung = '30€ VB';
   const gesuch: Gesuch = new Gesuch();
   gesuch.ankunftDatum = '18.12.2020';
   gesuch.ankunftZeit = '18:12 Uhr';
@@ -52,9 +42,7 @@ describe('AnfrageCardComponent', () => {
   }));
 
   it('should create', () => {
-    component.inputAngebot = angebot;
     component.inputGesuch = gesuch;
-    component.page = 'none';
     expect(component).toBeTruthy();
   });
 });
