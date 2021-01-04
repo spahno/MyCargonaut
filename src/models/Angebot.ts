@@ -34,7 +34,7 @@ export class Angebot extends Anfrage {
         const interessenten = this.getInteressenten();
         for (let i = 0; i < interessenten.length; i++) {
             contains = interessenten[i].userId === userId;
-            if (interessenten[i].userId === userId && i + 1 === interessenten.length) {
+            if (i + 1 === interessenten.length) {
                 return contains;
             }
         }
