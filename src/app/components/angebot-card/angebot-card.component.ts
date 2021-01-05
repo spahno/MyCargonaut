@@ -134,10 +134,12 @@ export class AngebotCardComponent implements OnInit {
   }
 
   async angebotAnfragen() {
+    console.log(this.angebot.isInteressent(this.user.id));
     if (this.angebot) {
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
-        header: 'Prompt!',
+        header: 'Angebot anfragen',
+        subHeader: 'Welches Objekt soll für Sie transportiert werden? ',
         inputs: [
           {
             name: 'name',
@@ -163,10 +165,10 @@ export class AngebotCardComponent implements OnInit {
           }, {
             text: 'Anfrage senden',
             handler: (data) => {
-              const interessent = new InteressentA();
-              interessent.userId = this.authService.getUser().id;
-              interessent.objectId = data;
-              this.angebot.addInteressent(new InteressentA());
+              const sendInteressent = new InteressentA();
+              sendInteressent.userId = this.authService.getUser().id;
+              sendInteressent.objectId = data;
+              this.angebot.addInteressent(sendInteressent);
               this.angebotService.updateAngebot(this.angebot).catch(err => {
                 this.presentAlert('Fehler!', 'Fehler beim speichern des Angebots entstanden. Error: ' + err, 'Ok');
               });
