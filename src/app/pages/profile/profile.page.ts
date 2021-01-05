@@ -18,7 +18,9 @@ export class ProfilePage implements OnInit {
         fahrzeugart: 'Limousine',
         farbe: 'silber',
         baujahr: 2020,
-        ladeflaeche: [{hoehe: 75, breite: 180, tiefe: 180}]
+        hoehe: 75,
+        breite: 180,
+        tiefe: 180
     };
     cars: Fahrzeug[] = [];
 
