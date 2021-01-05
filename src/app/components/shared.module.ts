@@ -5,10 +5,11 @@ import {AngebotCardComponent} from './angebot-card/angebot-card.component';
 import {ProfilPopoverComponent} from './profil-popover/profil-popover.component';
 import {NavbarComponent} from './navbar/navbar.component';
 import {RouterModule} from '@angular/router';
+import {FahrzeugdetailsComponent} from './fahrzeugdetails/fahrzeugdetails.component';
+import {FormsModule} from '@angular/forms';
 import {GesuchCardComponent} from './gesuch-card/gesuch-card.component';
 import {AddFahrzeugModalComponent} from './add-fahrzeug-modal/add-fahrzeug-modal.component';
 import {AddLieferobjektModalComponent} from './add-lieferobjekt-modal/add-lieferobjekt-modal.component';
-import {FormsModule} from '@angular/forms';
 
 @NgModule({
     declarations: [AngebotCardComponent, GesuchCardComponent, ProfilPopoverComponent, NavbarComponent,
