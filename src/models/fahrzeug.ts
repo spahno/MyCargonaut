@@ -6,9 +6,9 @@ export class Fahrzeug {
     public fahrzeugart: string;
     public farbe: string;
     public baujahr: number;
-    public ladeflaeche: [{
+    public ladeflaeche: {
         hoehe: number,
         breite: number,
         tiefe: number
-    }];
+    };
 }

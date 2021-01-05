@@ -37,7 +37,11 @@ const routes: Routes = [
         path: '**',
         redirectTo: 'login',
         pathMatch: 'full'
-    }
+    },  {
+    path: 'suchen',
+    loadChildren: () => import('./pages/suchen/suchen.module').then( m => m.SuchenPageModule)
+  }
+
 ];
 
 @NgModule({
