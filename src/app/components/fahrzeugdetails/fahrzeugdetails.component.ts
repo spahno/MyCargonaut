@@ -12,20 +12,20 @@ export class FahrzeugdetailsComponent implements OnInit {
   /**
    * Values that are passed to the form
    */
-  @Input() fahrzeug: Fahrzeug;
-  @Input() detailmode: boolean;
-  @Input() editmode: boolean;
+  @Input() fahrzeug: Fahrzeug = new Fahrzeug();
+  @Input() detailmode = true;
+  @Input() editmode = false;
 
   errors: Map<string, string> = new Map<string, string>();
 
   constructor(private modalController: ModalController) { }
 
   ngOnInit() {
-    console.log(
-        'fahrzeug: ' + this.fahrzeug.marke,
-        'editmode: ' + this.editmode,
-        'detailmode: ' + this.detailmode
-    );
+    // console.log(
+        // 'fahrzeug: ' + this.fahrzeug.marke,
+    //     'editmode: ' + this.editmode,
+    //     'detailmode: ' + this.detailmode
+    // );
   }
 
   /**
@@ -50,13 +50,13 @@ export class FahrzeugdetailsComponent implements OnInit {
     if (!this.fahrzeug.baujahr) {
       this.errors.set('baujahr', 'Das Baujahr muss korrekt eingetragen werden!');
     }
-    if (!this.fahrzeug.ladeflaeche.hoehe) {
+    if (!this.fahrzeug.hoehe) {
       this.errors.set('hoehe', 'Die Höhe muss korrekt eingetragen werden!');
     }
-    if (!this.fahrzeug.ladeflaeche.breite) {
+    if (!this.fahrzeug.breite) {
       this.errors.set('breite', 'Die Breite muss korrekt eingetragen werden!');
     }
-    if (!this.fahrzeug.ladeflaeche.tiefe) {
+    if (!this.fahrzeug.tiefe) {
       this.errors.set('tiefe', 'Die Tiefe muss korrekt eingetragen werden!');
     }
 

@@ -19,7 +19,9 @@ export class ProfilePage implements OnInit {
         fahrzeugart: '',
         farbe: '',
         baujahr: null,
-        ladeflaeche: {hoehe: null, breite: null, tiefe: null}
+        hoehe: null,
+        breite: null,
+        tiefe: null
     };
 
     cars: Fahrzeug[] = [];
