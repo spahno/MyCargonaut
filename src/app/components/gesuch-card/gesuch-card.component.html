@@ -1,8 +1,8 @@
 <div *ngIf="this.user.id && gesuch._ID">
-    <ion-card class="border-card-orange">
+    <ion-card class="border-card-green">
         <ion-item lines="none">
             <h3 slot="start">{{gesuch.lieferobjektId}}</h3>
-            <ion-badge slot="end">{{interessenten}}</ion-badge>
+            <ion-badge color="primary" slot="end">{{interessentenText}}</ion-badge>
         </ion-item>
         <ion-item lines="none">
             <h4 slot="start">{{gesuch.abfahrtOrt}}</h4>
@@ -79,6 +79,22 @@
                 {{gesuch.bezahlung}}
             </ion-label>
         </ion-item>
+        <ng-container *ngIf="this.user.id && this.user.id === this.gesuch.erstellerId && gesuch._ID">
+            <ion-item lines="none">
+                <ion-label slot="start">Interessenten:</ion-label>
+            </ion-item>
+            <ion-item lines="inset" *ngFor="let interessent of this.interessenten">
+                <ion-avatar slot="start">
+                    <img src="{{interessent.profileImage || 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'}}">
+                </ion-avatar>
+                <ion-label>
+                    {{interessent.vorname}} {{interessent.nachname}}
+                </ion-label>
+                <ion-icon slot="end" name="information-circle-outline"></ion-icon>
+                <ion-icon slot="end" color="primary" name="checkmark-circle-outline"></ion-icon>
+                <ion-icon slot="end" color="secondary" name="close-circle-outline"></ion-icon>
+            </ion-item>
+        </ng-container>
 
         <!-- Buttons Angebot -->
         <div *ngIf="this.user.id && this.user.id === this.gesuch.erstellerId && gesuch._ID" class="ion-text-center ion-margin">
@@ -90,14 +106,14 @@
             <ion-button *ngIf="!gesuch.fahrtId && gesuch.isInteressent(this.user.id)" disabled="true"><em>Anfrage abgelehnt</em></ion-button>
             <ion-button *ngIf="!gesuch.fahrtId && gesuch.isFahrer(this.user.id)" disabled="true"><em>Tracking gesendet</em></ion-button>
             <ion-button *ngIf="gesuch.fahrtId && gesuch.isFahrer(this.user.id)" disabled="true"><em>Fahrt tracken</em></ion-button>
-            <ion-button *ngIf="!gesuch.isInteressent(this.user.id) && !gesuch.isFahrer(this.user.id)" (click)="angebotAnfragen()">Anfragen</ion-button>
+            <ion-button *ngIf="!gesuch.isInteressent(this.user.id) && !gesuch.isFahrer(this.user.id)" (click)="gesuchAnfragen()">Anfragen</ion-button>
         </div>
     </ion-card>
 </div>
 
 <!-- Skeleton screen -->
 <div *ngIf="!(this.user.id && gesuch._ID)">
-    <ion-card class="ion-padding custom-skeleton border-card-orange">
+    <ion-card class="ion-padding custom-skeleton border-card-green">
         <ion-item lines="none">
             <ion-skeleton-text slot="start" animated style="width: 30%"></ion-skeleton-text>
             <ion-skeleton-text slot="end" animated style="width: 10%"></ion-skeleton-text>

@@ -5,6 +5,7 @@ import { GesuchPage } from './gesuch.page';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../../../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('GesuchPage', () => {
   let component: GesuchPage;
@@ -13,7 +14,7 @@ describe('GesuchPage', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ GesuchPage ],
-      imports: [IonicModule.forRoot(),
+      imports: [IonicModule.forRoot(), RouterTestingModule,
         AngularFireModule.initializeApp(environment.testFirebaseConfig),
         AngularFirestoreModule]
     }).compileComponents();
