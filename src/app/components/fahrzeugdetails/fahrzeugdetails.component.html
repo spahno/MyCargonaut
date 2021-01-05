@@ -1,0 +1,116 @@
+<ion-header translucent>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-button (click)="dismiss()">Schließen</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content>
+    <ion-list class="ion-margin-horizontal">
+        <h2 class="ion-text-center">Fahrzeugdetails</h2>
+        <ion-item>
+            <ion-label position="stacked">Nummernschild</ion-label>
+            <ion-input [autofocus]="true" [readonly]="detailmode" [(ngModel)]="fahrzeug.nummernschild"></ion-input>
+            <ion-text class="ion-text-end ion-padding-end"
+               style="color:var(--ion-color-danger)"
+               *ngIf="errors.get('nummernschild')">
+                {{errors.get('nummernschild')}}
+            </ion-text>
+        </ion-item>
+        <ion-item>
+            <ion-label position="stacked">Marke</ion-label>
+            <ion-input [(ngModel)]="fahrzeug.marke" [readonly]="detailmode"></ion-input>
+            <p class="ion-text-end ion-padding-end"
+               style="color:var(--ion-color-danger)"
+               *ngIf="errors.get('marke')">
+                {{errors.get('marke')}}
+            </p>
+        </ion-item>
+        <ion-item>
+            <ion-label position="stacked">Modell</ion-label>
+            <ion-input [(ngModel)]="fahrzeug.modell" [readonly]="detailmode"></ion-input>
+            <p class="ion-text-end ion-padding-end"
+               style="color:var(--ion-color-danger)"
+               *ngIf="errors.get('modell')">
+                {{errors.get('modell')}}
+            </p>
+        </ion-item>
+        <ion-item>
+            <ion-label position="stacked">Fahrzeugart</ion-label>
+            <ion-input [(ngModel)]="fahrzeug.fahrzeugart" [readonly]="detailmode"></ion-input>
+            <p class="ion-text-end ion-padding-end"
+               style="color:var(--ion-color-danger)"
+               *ngIf="errors.get('fahrzeugart')">
+                {{errors.get('fahrzeugart')}}
+            </p>
+        </ion-item>
+        <ion-item>
+            <ion-label position="stacked">Farbe</ion-label>
+            <ion-input [(ngModel)]="fahrzeug.farbe" [readonly]="detailmode"></ion-input>
+            <p class="ion-text-end ion-padding-end"
+               style="color:var(--ion-color-danger)"
+               *ngIf="errors.get('farbe')">
+                {{errors.get('farbe')}}
+            </p>
+        </ion-item>
+        <ion-item>
+            <ion-label position="stacked">Baujahr</ion-label>
+            <ion-input [(ngModel)]="fahrzeug.baujahr" [readonly]="detailmode"></ion-input>
+            <p class="ion-text-end ion-padding-end"
+               style="color:var(--ion-color-danger)"
+               *ngIf="errors.get('baujahr')">
+                {{errors.get('baujahr')}}
+            </p>
+        </ion-item>
+
+        <ion-list-header>
+            Ladefläche
+        </ion-list-header>
+        <ion-row class="ion-justify-content-center">
+            <ion-col>
+                <ion-item>
+                    <ion-label position="stacked">Höhe</ion-label>
+                    <ion-input type="number" [(ngModel)]="fahrzeug.hoehe"
+                               [readonly]="detailmode"></ion-input>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label position="stacked">Breite</ion-label>
+                    <ion-input type="number" [(ngModel)]="fahrzeug.breite"
+                               [readonly]="detailmode"></ion-input>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-label position="stacked">Tiefe</ion-label>
+                    <ion-input type="number" [(ngModel)]="fahrzeug.tiefe"
+                               [readonly]="detailmode"></ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <p class="ion-text-end ion-padding-end"
+               style="color:var(--ion-color-danger)"
+               *ngIf="errors.get('breite')">
+                {{errors.get('breite')}}
+            </p>
+            <p class="ion-text-end ion-padding-end"
+               style="color:var(--ion-color-danger)"
+               *ngIf="errors.get('tiefe')">
+                {{errors.get('tiefe')}}
+            </p>
+            <p class="ion-text-end ion-padding-end"
+               style="color:var(--ion-color-danger)"
+               *ngIf="errors.get('hoehe')">
+                {{errors.get('hoehe')}}
+            </p>
+        </ion-row>
+        <ion-button *ngIf="!detailmode" expand="block" class="bg-green ion-margin-top" (click)="save()">
+            Speichern
+        </ion-button>
+        <ion-button *ngIf="detailmode" expand="block" class="bg-green ion-margin-top" (click)="dismiss()">
+            Zurück
+        </ion-button>
+    </ion-list>
+</ion-content>
