@@ -87,3 +87,31 @@ Card Stylings
 ion-card {
   border-radius: 15px;
 }
+
+/**
+INPUT STYLINGS
+ */
+ion-input {
+  --color: #005B52;
+  border-radius: 8px !important;
+  border: 2px solid #005B52;
+  padding-left: 0.2rem;
+}
+
+ion-label {
+  --color: #005B52;
+}
+
+/**
+SEGMENT BUTTON STYLING
+ */
+ion-segment {
+  --background: #005B52;
+}
+
+ion-segment-button {
+  --background: #005B52;
+  --color: #ffffff;
+  --indicator-color: #ffffff;
+  --color-checked: #005B52;
+}

@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Fahrzeug} from '../../../models/fahrzeug';
 import {AuthService} from '../../../services/auth/auth.service';
 import {ProfileService} from '../../../services/profile/profile.service';
+import {FahrzeugdetailsComponent} from '../../components/fahrzeugdetails/fahrzeugdetails.component';
+import {ModalController} from '@ionic/angular';
 
 @Component({
     selector: 'app-profile',
@@ -10,40 +12,38 @@ import {ProfileService} from '../../../services/profile/profile.service';
 })
 export class ProfilePage implements OnInit {
 
-    // testUser: User;
     car: Fahrzeug = {
-        nummernschild: 'LDKRL777',
-        marke: 'Audi',
-        modell: 'A4',
-        fahrzeugart: 'Limousine',
-        farbe: 'silber',
-        baujahr: 2020,
-        hoehe: 75,
-        breite: 180,
-        tiefe: 180
+        nummernschild: '',
+        marke: '',
+        modell: '',
+        fahrzeugart: '',
+        farbe: '',
+        baujahr: null,
+        hoehe: null,
+        breite: null,
+        tiefe: null
     };
+
     cars: Fahrzeug[] = [];
 
     constructor(public authService: AuthService,
-                public profileService: ProfileService) {
+                public profileService: ProfileService,
+                public modalController: ModalController) {
     }
 
-    ngOnInit() {
-        /*this.testUser = {
-            id: 'lol',
-            username: 'max power',
-            vorname: 'max',
-            nachname: 'mustermann',
-            email: 'maxpower@mail.com',
-            bewertung: 0,
-            fahrzeuge: [],
-            angebote: [],
-            gesuche: [],
-            anfragen: []
-        };*/
-        this.cars.push(this.car);
-        this.cars.push(this.car);
-        this.cars.push(this.car);
+    ngOnInit() {}
+
+    async openFahrzeugdetails(fahrzeug: Fahrzeug, detailmode: boolean, editmode: boolean) {
+        const modal = await this.modalController.create({
+            component: FahrzeugdetailsComponent,
+            cssClass: 'my-custom-class',
+            componentProps: {
+                fahrzeug,
+                detailmode,
+                editmode
+            }
+        });
+        return await modal.present();
     }
 
 }
