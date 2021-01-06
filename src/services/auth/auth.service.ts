@@ -5,6 +5,7 @@ import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firest
 import {AngularFireAuth} from '@angular/fire/auth';
 import {map} from 'rxjs/operators';
 import {ChangePageService} from '../changePage/change-page.service';
+import firebase from 'firebase';
 
 @Injectable({
     providedIn: 'root'
@@ -32,6 +33,9 @@ export class AuthService {
 
         copy.email = copy.email || null;
         copy.username = copy.username || null;
+        copy.vorname = copy.vorname || null;
+        copy.nachname = copy.nachname || null;
+        copy.telefon = copy.telefon || null;
         copy.anfragen = copy.anfragen || [];
         copy.angebote = copy.angebote || [];
         copy.gesuche = copy.gesuche || [];
@@ -45,6 +49,24 @@ export class AuthService {
      */
     persist(user: User, id: string) {
         this.userCollection.doc(id).set(AuthService.copyAndPrepare(user));
+    }
+
+    /**
+     * Method to update the user's data in firestore
+     * @param user user to be updated
+     */
+    async updateUser(user: User) {
+        await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
+    }
+
+    /**
+     * Method to delete a user in the database
+     */
+    async deleteProfile() {
+        const u = firebase.auth().currentUser;
+        await this.logOut();
+        await u.delete();
+        await this.userCollection.doc(this.user.id).delete();
     }
 
     /**
@@ -78,13 +100,6 @@ export class AuthService {
         });
     }
 
-    /**
-     * Method to update the user's data in firestore
-     * @param user user to be updated
-     */
-    async updateUser(user: User) {
-        await this.userCollection.doc(user.id).update(AuthService.copyAndPrepare(user));
-    }
 
     /**
      * Method to return the authenticated user
@@ -92,6 +107,14 @@ export class AuthService {
      */
     getUser(): User {
         return this.user;
+    }
+
+    getUserID(): string {
+        if (localStorage.getItem('userID')) {
+            return localStorage.getItem('userID');
+        } else {
+            return undefined;
+        }
     }
 
     checkIfLoggedIn(): Promise<boolean> {
@@ -189,14 +212,6 @@ export class AuthService {
                 });
         } else {
             callback(undefined);
-        }
-    }
-
-    getUserID(): string {
-        if (localStorage.getItem('userID')) {
-            return localStorage.getItem('userID');
-        } else {
-            return undefined;
         }
     }
 

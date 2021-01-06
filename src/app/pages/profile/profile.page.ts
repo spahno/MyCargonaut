@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {Fahrzeug} from '../../../models/fahrzeug';
 import {AuthService} from '../../../services/auth/auth.service';
-import {ProfileService} from '../../../services/profile/profile.service';
 import {FahrzeugdetailsComponent} from '../../components/fahrzeugdetails/fahrzeugdetails.component';
 import {ModalController} from '@ionic/angular';
 import {User} from '../../../models/user';
 import {FahrzeugService} from '../../../services/fahrzeug/fahrzeug.service';
+import {ProfileEditPage} from './profile-edit/profile-edit.page';
 
 @Component({
     selector: 'app-profile',
@@ -32,7 +32,6 @@ export class ProfilePage implements OnInit {
     cars: Fahrzeug[] = [];
 
     constructor(public authService: AuthService,
-                public profileService: ProfileService,
                 public modalController: ModalController,
                 public fahrzeugService: FahrzeugService) {
     }
@@ -57,6 +56,17 @@ export class ProfilePage implements OnInit {
         return await modal.present();
     }
 
+    async openProfilBearbeiten() {
+        const modal = await this.modalController.create({
+            component: ProfileEditPage,
+        });
+        return await modal.present();
+    }
+
+    async delete() {
+        await this.authService.deleteProfile();
+    }
+
     getUserFahrzeuge() {
         this.cars = [];
         this.user.fahrzeuge.forEach(id => {
@@ -68,7 +78,7 @@ export class ProfilePage implements OnInit {
     }
 
     deleteFahrzeug(fahrzeug: Fahrzeug) {
-        this.fahrzeugService.deleteFahrzeug(fahrzeug.id).then(res => {
+        this.fahrzeugService.deleteFahrzeug(fahrzeug.id).then(() => {
             const user = this.authService.getUser();
             let fahrzeugIndex = user.fahrzeuge.indexOf(fahrzeug.id);
             user.fahrzeuge.splice(fahrzeugIndex, 1);

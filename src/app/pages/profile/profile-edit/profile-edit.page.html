@@ -1,0 +1,78 @@
+<ion-header translucent>
+    <ion-toolbar>
+        <ion-buttons slot="end">
+            <ion-button (click)="modalCtrl.dismiss()">Schließen</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list class="ion-margin-horizontal">
+        <h2 class="ion-text-center">Profil bearbeiten</h2>
+        <ion-item>
+            <ion-label position="stacked">Nutzername</ion-label>
+            <ion-input #focus
+                       clearOnEdit="false"
+                       [(ngModel)]="this.authService.user.username"
+                       type="text"
+                       name="username"
+                       placeholder="Nutzername..."
+                       required>
+            </ion-input>
+
+            <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+               *ngIf="errors.get('username')">
+                {{errors.get('username')}} </p>
+
+            <br>
+
+            <ion-label position="stacked">Vorname</ion-label>
+            <ion-input clearOnEdit="false"
+                       [(ngModel)]="this.authService.user.vorname"
+                       type="text"
+                       name="firstname"
+                       placeholder="Vorname..."
+                       required>
+            </ion-input>
+
+            <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+               *ngIf="errors.get('firstname')">
+                {{errors.get('firstname')}} </p>
+
+            <br>
+
+            <ion-label position="stacked">Nachname</ion-label>
+            <ion-input clearOnEdit="false"
+                       [(ngModel)]="this.authService.user.nachname"
+                       type="text"
+                       name="lastname"
+                       placeholder="Nachname..."
+                       required>
+            </ion-input>
+
+            <p class="ion-text-end ion-padding-end" style="color:var(--ion-color-danger)"
+               *ngIf="errors.get('lastname')">
+                {{errors.get('lastname')}} </p>
+
+            <br>
+
+            <ion-label position="stacked">Telefonnummer</ion-label>
+            <ion-input clearOnEdit="false"
+                       [(ngModel)]="this.authService.user.telefon"
+                       type="text"
+                       name="telefon"
+                       placeholder="Telefonnummer mit Länderkennung...">
+            </ion-input>
+
+            <ion-text class="ion-text-end ion-padding-end"
+                      style="color:var(--ion-color-danger)"
+                      *ngIf="errors.get('telefon')">
+                {{errors.get('telefon')}}
+            </ion-text>
+        </ion-item>
+
+        <ion-button expand="block" (click)="save()">
+            Speichern
+        </ion-button>
+    </ion-list>
+</ion-content>
