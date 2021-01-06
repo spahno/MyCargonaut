@@ -17,7 +17,7 @@ describe('FahrzeugdetailsComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [FahrzeugdetailsComponent],
+            declarations: [FahrzeugdetailsComponent,],
             imports: [AngularFireModule.initializeApp(environment.testFirebaseConfig),
                 AngularFirestoreModule, IonicModule.forRoot(),
                 FormsModule, CommonModule, RouterTestingModule]
