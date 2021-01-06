@@ -3,17 +3,26 @@ import {AngularFirestore, AngularFirestoreCollection, DocumentChangeAction} from
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Gesuch} from '../../models/Gesuch';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GesuchService {
+  /**
+   * Filtervariablen
+   */
+  startort = '';
+  zielort = '';
+  endDate = '';
+
   /***
    * This service implements the CRUD of an Angebot.
    */
   gesuchCollection: AngularFirestoreCollection<Gesuch>;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(private afs: AngularFirestore,
+              private router: Router) {
     this.gesuchCollection = afs.collection<Gesuch>('gesuche');
   }
 
@@ -106,4 +115,18 @@ export class GesuchService {
       });
     });
   }
+
+  /**
+   * Passes search variables to the page that is to be filtered
+   * @param startort is the place where the ride starts
+   * @param zielort is the place where the ride ends
+   * @param abfahrtsdatum is the date on which the ride ends
+   */
+  startSearch(startort: string, zielort: string, abfahrtsdatum: string) {
+    this.startort = startort;
+    this.zielort = zielort;
+    this.endDate = abfahrtsdatum;
+    this.router.navigate(['/gesuch']);
+  }
 }
+

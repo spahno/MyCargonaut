@@ -5,6 +5,7 @@ import {AngularFireModule} from '@angular/fire';
 import {environment} from '../../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {Gesuch, InteressentG} from '../../models/Gesuch';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('GesuchService', () => {
   let service: GesuchService;
@@ -39,7 +40,7 @@ describe('GesuchService', () => {
     TestBed.configureTestingModule({
       imports: [
         AngularFireModule.initializeApp(environment.testFirebaseConfig),
-        AngularFirestoreModule,
+        AngularFirestoreModule, RouterTestingModule
       ]
     });
     service = TestBed.inject(GesuchService);

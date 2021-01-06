@@ -1,0 +1,72 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title class="ion-text-center">Suchen</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="content-center ion-margin-horizontal">
+        <ion-row>
+            <ion-col>
+                <ion-row>
+                    <ion-segment mode="ios" (ionChange)="segmentChanged($event)" [(ngModel)]="tabSwitch">
+                        <ion-segment-button value="gesuche">
+                            <ion-label>Gesuche</ion-label>
+                        </ion-segment-button>
+                        <ion-segment-button value="angebote">
+                            <ion-label>Angebote</ion-label>
+                        </ion-segment-button>
+                    </ion-segment>
+                </ion-row>
+                <ion-row class="ion-justify-content-center">
+                    <ion-list>
+                        <ion-item>
+                            <ion-label position="stacked">Startort</ion-label>
+                            <ion-input [autofocus]="true" [(ngModel)]="startort"></ion-input>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label position="stacked">Zielort</ion-label>
+                            <ion-input [(ngModel)]="zielort"></ion-input>
+                        </ion-item>
+                        <div [ngSwitch]="tabSwitch">
+
+                            <div *ngSwitchCase="'gesuche'">
+                                <ion-item>
+                                    <ion-label position="floating">Ankunftsdatum</ion-label>
+                                    <ion-datetime displayFormat="DD/MM/YYYY" [min]="now" [max]="now + 2" placeholder="Ankunftsdatum wählen" [(ngModel)]="endDate"></ion-datetime>
+                                </ion-item>
+                            </div>
+                            <p>{{endDate}}</p>
+
+                            <div *ngSwitchCase="'angebote'">
+                                <ion-item>
+                                    <ion-label position="floating">Ankunftsdatum</ion-label>
+                                    <ion-datetime displayFormat="DD/MM/YYYY" [min]="now" [max]="now + 2" placeholder="Ankunftsdatum wählen" [(ngModel)]="endDate"></ion-datetime>
+                                </ion-item>
+                            </div>
+
+                        </div>
+                    </ion-list>
+                </ion-row>
+
+                <div [ngSwitch]="tabSwitch">
+
+                    <div *ngSwitchCase="'gesuche'">
+                        <ion-button expand="block" class="bg-green ion-margin-top" (click)="gesuchSearch()">
+                            Gesuche finden
+                        </ion-button>
+                    </div>
+                    <div *ngSwitchCase="'angebote'">
+                        <ion-button expand="block" class="bg-green ion-margin-top" (click)="angebotSearch()">
+                            Angebote finden
+                        </ion-button>
+                    </div>
+
+                </div>
+
+
+            </ion-col>
+        </ion-row>
+    </div>
+</ion-content>
+<app-navbar></app-navbar>

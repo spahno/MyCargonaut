@@ -167,7 +167,6 @@ export class AngebotCardComponent implements OnInit {
   }
 
   async angebotAnfragen() {
-    console.log(this.angebot.isInteressent(this.user.id));
     if (this.angebot) {
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',

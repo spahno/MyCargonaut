@@ -1,0 +1,19 @@
+.content-center {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  background: #FFFFFF;
+  padding: 0.5rem;
+}
+
+ion-item {
+  --inner-border-width: 0;
+}
+
+ion-input {
+  --inner-padding: 1rem;
+}

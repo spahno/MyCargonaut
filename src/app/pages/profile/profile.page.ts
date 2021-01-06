@@ -2,6 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {Fahrzeug} from '../../../models/fahrzeug';
 import {AuthService} from '../../../services/auth/auth.service';
 import {ProfileService} from '../../../services/profile/profile.service';
+import {FahrzeugdetailsComponent} from '../../components/fahrzeugdetails/fahrzeugdetails.component';
+import {ModalController} from '@ionic/angular';
+import {User} from '../../../models/user';
+import {FahrzeugService} from '../../../services/fahrzeug/fahrzeug.service';
 
 @Component({
     selector: 'app-profile',
@@ -10,38 +14,67 @@ import {ProfileService} from '../../../services/profile/profile.service';
 })
 export class ProfilePage implements OnInit {
 
-    // testUser: User;
+    public user: User = new User('', '', '', '');
+    public subFahrzeuge;
+
     car: Fahrzeug = {
-        nummernschild: 'LDKRL777',
-        marke: 'Audi',
-        modell: 'A4',
-        fahrzeugart: 'Limousine',
-        farbe: 'silber',
-        baujahr: 2020,
-        ladeflaeche: [{hoehe: 75, breite: 180, tiefe: 180}]
+        nummernschild: '',
+        marke: '',
+        modell: '',
+        fahrzeugart: '',
+        farbe: '',
+        baujahr: null,
+        hoehe: null,
+        breite: null,
+        tiefe: null
     };
+
     cars: Fahrzeug[] = [];
 
     constructor(public authService: AuthService,
-                public profileService: ProfileService) {
+                public profileService: ProfileService,
+                public modalController: ModalController,
+                public fahrzeugService: FahrzeugService) {
     }
 
     ngOnInit() {
-        /*this.testUser = {
-            id: 'lol',
-            username: 'max power',
-            vorname: 'max',
-            nachname: 'mustermann',
-            email: 'maxpower@mail.com',
-            bewertung: 0,
-            fahrzeuge: [],
-            angebote: [],
-            gesuche: [],
-            anfragen: []
-        };*/
-        this.cars.push(this.car);
-        this.cars.push(this.car);
-        this.cars.push(this.car);
+        this.user = this.authService.user;
+        this.getUserFahrzeuge();
+        console.log(this.user);
+        console.log(this.cars);
     }
 
+    async openFahrzeugdetails(fahrzeug: Fahrzeug, detailmode: boolean, editmode: boolean) {
+        const modal = await this.modalController.create({
+            component: FahrzeugdetailsComponent,
+            cssClass: 'my-custom-class',
+            componentProps: {
+                fahrzeug,
+                detailmode,
+                editmode
+            }
+        });
+        return await modal.present();
+    }
+
+    getUserFahrzeuge() {
+        this.cars = [];
+        this.user.fahrzeuge.forEach(id => {
+            const sub = this.fahrzeugService.findFahrzeugById(id).subscribe(fahrzeug => {
+                sub.unsubscribe();
+                this.cars.push(fahrzeug);
+            });
+        });
+    }
+
+    deleteFahrzeug(fahrzeug: Fahrzeug) {
+        this.fahrzeugService.deleteFahrzeug(fahrzeug.id).then(res => {
+            const user = this.authService.getUser();
+            let fahrzeugIndex = user.fahrzeuge.indexOf(fahrzeug.id);
+            user.fahrzeuge.splice(fahrzeugIndex, 1);
+            this.authService.persist(user, user.id);
+            fahrzeugIndex = this.cars.indexOf(fahrzeug);
+            this.cars.splice(fahrzeugIndex, 1);
+        });
+    }
 }
