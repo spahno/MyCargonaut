@@ -33,7 +33,7 @@
                             <div *ngSwitchCase="'gesuche'">
                                 <ion-item>
                                     <ion-label position="floating">Ankunftsdatum</ion-label>
-                                    <ion-datetime displayFormat="DD/MM/YYYY" [min]="now" [max]="now+2" placeholder="Ankunftsdatum wählen" [(ngModel)]="endDate"></ion-datetime>
+                                    <ion-datetime displayFormat="DD/MM/YYYY" [min]="now" [max]="now + 2" placeholder="Ankunftsdatum wählen" [(ngModel)]="endDate"></ion-datetime>
                                 </ion-item>
                             </div>
                             <p>{{endDate}}</p>
@@ -52,12 +52,12 @@
                 <div [ngSwitch]="tabSwitch">
 
                     <div *ngSwitchCase="'gesuche'">
-                        <ion-button expand="block" class="bg-green ion-margin-top" (click)="transformDate()">
+                        <ion-button expand="block" class="bg-green ion-margin-top" (click)="gesuchSearch()">
                             Gesuche finden
                         </ion-button>
                     </div>
                     <div *ngSwitchCase="'angebote'">
-                        <ion-button expand="block" class="bg-green ion-margin-top" (click)="transformDate()">
+                        <ion-button expand="block" class="bg-green ion-margin-top" (click)="angebotSearch()">
                             Angebote finden
                         </ion-button>
                     </div>

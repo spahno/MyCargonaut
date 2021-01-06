@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {Angebot} from '../../models/Angebot';
 import {map} from 'rxjs/operators';
 import {IError} from 'protractor/built/exitCodes';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,8 @@ export class AngebotService {
      */
     angebotCollection: AngularFirestoreCollection<Angebot>;
 
-    constructor(private afs: AngularFirestore) {
+    constructor(private afs: AngularFirestore,
+                private router: Router) {
         this.angebotCollection = afs.collection<Angebot>('angebote');
     }
 
@@ -111,5 +113,6 @@ export class AngebotService {
         this.startort = startort;
         this.zielort = zielort;
         this.endDate = abfahrtsdatum;
+        this.router.navigate(['/angebot']);
     }
 }

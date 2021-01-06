@@ -37,7 +37,8 @@ export class SuchenPage implements OnInit {
   gesuchSearch() {
     console.log(this.endDate);
     this.transformDate();
-    console.log(this.endDate);    this.gesuchService.startSearch(this.startort, this.zielort, this.endDate);
+    console.log(this.endDate);
+    this.gesuchService.startSearch(this.startort, this.zielort, this.endDate);
   }
 
   /**

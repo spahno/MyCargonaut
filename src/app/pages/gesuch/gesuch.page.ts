@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {GesuchService} from '../../../services/gesuch/gesuch.service';
 import {Gesuch} from '../../../models/Gesuch';
 import {User} from '../../../models/user';
@@ -9,10 +9,11 @@ import {AuthService} from '../../../services/auth/auth.service';
     templateUrl: './gesuch.page.html',
     styleUrls: ['./gesuch.page.scss'],
 })
-export class GesuchPage implements OnInit {
+export class GesuchPage implements OnInit, OnDestroy {
     user: User = new User('', '', '', '');
     gesuche: Gesuch[] = [];
     filtertGesuche: Gesuch[] = [];
+    subGesuch;
 
     constructor(private gesuchService: GesuchService,
                 private authService: AuthService) {
@@ -24,14 +25,16 @@ export class GesuchPage implements OnInit {
             this.gesuche = [];
             this.filtertGesuche = [];
             this.gesuche = data;
-            this.gesuche.forEach(e => {
-                this.filtertGesuche.push(e);
-            });
             this.filterGesuche();
         });
     }
 
+    ngOnDestroy(): void {
+        this.subGesuch.unsubscribe();
+    }
+
     filterGesuche() {
+        this.filtertGesuche = [];
         const startort = this.gesuchService.startort.toLowerCase();
         const zielort = this.gesuchService.zielort.toLowerCase();
         const endDate = this.gesuchService.endDate;

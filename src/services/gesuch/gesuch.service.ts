@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Gesuch} from '../../models/Gesuch';
 import {start} from 'repl';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,8 @@ export class GesuchService {
    */
   gesuchCollection: AngularFirestoreCollection<Gesuch>;
 
-  constructor(private afs: AngularFirestore) {
+  constructor(private afs: AngularFirestore,
+              private router: Router) {
     this.gesuchCollection = afs.collection<Gesuch>('gesuche');
   }
 
@@ -119,6 +121,7 @@ export class GesuchService {
     this.startort = startort;
     this.zielort = zielort;
     this.endDate = abfahrtsdatum;
+    this.router.navigate(['/gesuch']);
   }
 }
 
