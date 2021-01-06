@@ -30,7 +30,7 @@ const routes: Routes = [
     },
     {
         path: 'suchen',
-        loadChildren: () => import('./pages/suchen/suchen.module').then( m => m.SuchenPageModule)
+        loadChildren: () => import('./pages/suchen/suchen.module').then(m => m.SuchenPageModule)
     },
     {
         path: 'profile',
@@ -38,10 +38,14 @@ const routes: Routes = [
         canActivate: [AuthGuard]
     },
     {
+        path: 'auftraege',
+        loadChildren: () => import('./pages/auftraege/auftraege.module').then(m => m.AuftraegePageModule)
+    },
+    {
         path: '**',
         redirectTo: 'login',
         pathMatch: 'full'
-    },
+    }
 
 ];
 
