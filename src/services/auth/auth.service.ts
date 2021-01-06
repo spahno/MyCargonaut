@@ -36,9 +36,10 @@ export class AuthService {
         copy.vorname = copy.vorname || null;
         copy.nachname = copy.nachname || null;
         copy.telefon = copy.telefon || null;
-        copy.anfragen = copy.anfragen || [];
-        copy.angebote = copy.angebote || [];
-        copy.gesuche = copy.gesuche || [];
+        copy.interessierteAngebote = copy.interessierteAngebote || [];
+        copy.interessierteGesuche = copy.interessierteGesuche || [];
+        copy.erstellteAngebote = copy.erstellteAngebote || [];
+        copy.erstellteGesuche = copy.erstellteGesuche || [];
         copy.fahrzeuge = copy.fahrzeuge || [];
 
         return copy;
