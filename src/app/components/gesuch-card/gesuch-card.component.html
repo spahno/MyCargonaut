@@ -93,18 +93,31 @@
         <ng-container *ngIf="this.user.id && this.user.id === this.gesuch.erstellerId && gesuch._ID">
             <ion-item lines="none">
                 <ion-label slot="start">Interessenten:</ion-label>
-                <ion-label *ngIf="interessenten.length === 0"><em>Es gibt noch keine interessenten.</em></ion-label>
+                <ion-label *ngIf="interessenten.length === 0"><em>Es gibt noch keine Interessenten.</em></ion-label>
             </ion-item>
             <ion-item lines="inset" *ngFor="let interessent of this.interessenten">
                 <ion-avatar slot="start">
-                    <img src="{{interessent.profileImage || 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'}}">
+                    <img src="{{interessent.user.profileImage || 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'}}">
                 </ion-avatar>
                 <ion-label>
-                    {{interessent.vorname}} {{interessent.nachname}}
+                    {{interessent.user.vorname}} {{interessent.user.nachname}}
                 </ion-label>
                 <ion-icon slot="end" name="information-circle-outline"></ion-icon>
-                <ion-icon slot="end" color="primary" name="checkmark-circle-outline"></ion-icon>
-                <ion-icon slot="end" color="secondary" name="close-circle-outline"></ion-icon>
+                <ion-icon slot="end" color="primary" name="checkmark-circle-outline" (click)="interessentAnnehmen(interessent.interessent)"></ion-icon>
+                <ion-icon slot="end" color="secondary" name="close-circle-outline" (click)="interessentEntfernen(interessent.interessent)"></ion-icon>
+            </ion-item>
+            <ion-item lines="none">
+                <ion-label slot="start">Fahrer:</ion-label>
+                <ion-label *ngIf="fahrer.length === 0"><em>Es wurden noch keine Interessenten angenommen.</em></ion-label>
+            </ion-item>
+            <ion-item lines="inset" *ngFor="let fahrer of this.fahrer">
+                <ion-avatar slot="start">
+                    <img src="{{fahrer.user.profileImage || 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'}}">
+                </ion-avatar>
+                <ion-label>
+                    {{fahrer.user.vorname}} {{fahrer.user.nachname}}
+                </ion-label>
+                <ion-icon slot="end" name="information-circle-outline"></ion-icon>
             </ion-item>
         </ng-container>
 

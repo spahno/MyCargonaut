@@ -11,6 +11,7 @@ import {User} from '../../../models/user';
 import {GesuchService} from '../../../services/gesuch/gesuch.service';
 import {FahrzeugService} from '../../../services/fahrzeug/fahrzeug.service';
 import {Fahrzeug} from '../../../models/fahrzeug';
+import {ProfilPopoverComponent} from '../profil-popover/profil-popover.component';
 
 @Component({
   selector: 'app-gesuch-card',
@@ -22,7 +23,8 @@ export class GesuchCardComponent implements OnInit {
   gesuch = new Gesuch();
   @Input() inputUser: User = new User('', '', '', '');
   user: User = new User('', '', '', '');
-  interessenten: User[] = [];
+  interessenten: {user: User, interessent: InteressentG}[] = [];
+  fahrer: {user: User, fahrer: InteressentG}[] = [];
   interessentenText: string;
   ersteller = new User( '', '', '', '');
   public dropdown = false;
@@ -31,7 +33,8 @@ export class GesuchCardComponent implements OnInit {
               private gesuchService: GesuchService,
               private fahrtService: FahrtService,
               private fahrzeugService: FahrzeugService,
-              public alertController: AlertController) {
+              public alertController: AlertController,
+              public modalController: ModalController) {
 
   }
 
@@ -41,6 +44,7 @@ export class GesuchCardComponent implements OnInit {
     const tmpInteressenten = this.gesuch.getInteressenten();
     this.setInteressenten(tmpInteressenten);
     this.setInteressentenText(tmpInteressenten.length);
+    this.setFahrer(this.gesuch.getFahrer());
     if (this.gesuch.erstellerId) {
       this.authService.findUserById(this.gesuch.erstellerId).then(ersteller => {
         Object.assign(this.ersteller, ersteller);
@@ -50,9 +54,18 @@ export class GesuchCardComponent implements OnInit {
 
   setInteressenten(interessenten: InteressentG[]) {
     this.interessenten = [];
-    interessenten.forEach(e => {
-      this.authService.findUserById(e.userId).then(u => {
-        this.interessenten.push(u);
+    interessenten.forEach(interessent => {
+      this.authService.findUserById(interessent.userId).then(user => {
+        this.interessenten.push({user, interessent});
+      });
+    });
+  }
+
+  setFahrer(fahrerArray: InteressentG[]) {
+    this.interessenten = [];
+    fahrerArray.forEach(fahrer => {
+      this.authService.findUserById(fahrer.userId).then(user => {
+        this.fahrer.push({ user, fahrer});
       });
     });
   }
@@ -67,8 +80,29 @@ export class GesuchCardComponent implements OnInit {
     }
   }
 
-  interessentAnnehmen(interessent) {
+  interessentAnnehmen(interessent: InteressentG) {
+    this.gesuch.addFahrer(interessent);
+    this.gesuch.deleteInteressent(interessent);
+    this.gesuchService.updateGesuch(this.gesuch).then(res => {
+      Object.assign(this.gesuch, res.gesuch);
+    }).catch(err => this.presentAlert('Fehler', 'Fehler beim Update des Gesuchs. Error: ' + err, 'Ok'));
+  }
 
+  interessentEntfernen(interessent: InteressentG) {
+    this.gesuch.deleteInteressent(interessent);
+    this.gesuchService.updateGesuch(this.gesuch).then(res => {
+      Object.assign(this.gesuch, res.gesuch);
+    }).catch(err => this.presentAlert('Fehler', 'Fehler beim Update des Gesuchs. Error: ' + err, 'Ok'));
+  }
+
+  async infoPopoverInteressent(interessent: InteressentG) {
+    const intUser = await this.authService.findUserById(interessent.userId);
+    const intFahrzeug = await this.fahrzeugService.findFahrzeugById(interessent.fahrzeugId);
+    const modal = await this.modalController.create({
+      component: ProfilPopoverComponent,
+      cssClass: 'my-custom-class'
+    });
+    return await modal.present();
   }
 
   starteFahrt() {

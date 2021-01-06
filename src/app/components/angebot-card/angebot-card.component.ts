@@ -5,6 +5,7 @@ import {AngebotService} from '../../../services/angebot/angebot.service';
 import {FahrtService} from '../../../services/fahrt/fahrt.service';
 import {AlertController} from '@ionic/angular';
 import {User} from '../../../models/user';
+import {LieferobjektService} from '../../../services/lieferobjekt/lieferobjekt.service';
 
 @Component({
   selector: 'app-angebot-card',
@@ -16,7 +17,8 @@ export class AngebotCardComponent implements OnInit {
   angebot = new Angebot();
   @Input() inputUser: User = new User('', '', '', '');
   user: User = new User('', '', '', '');
-  interessenten: User[] = [];
+  interessenten: {user: User, interessent: InteressentA}[] = [];
+  kunden: {user: User, kunde: InteressentA}[] = [];
   interessentenText: string;
   ersteller = new User( '', '', '', '');
   public dropdown = false;
@@ -24,6 +26,7 @@ export class AngebotCardComponent implements OnInit {
   constructor(public authService: AuthService,
               private angebotService: AngebotService,
               private fahrtService: FahrtService,
+              private lieferobjektService: LieferobjektService,
               public alertController: AlertController) {
     this.authService.loadPageSubscription(u => {
       Object.assign(this.user, u);
@@ -36,6 +39,7 @@ export class AngebotCardComponent implements OnInit {
     const tmpInteressenten = this.angebot.getInteressenten();
     this.setInteressenten(tmpInteressenten);
     this.setInteressentenText(tmpInteressenten.length);
+    this.setKunden(this.angebot.getKunden());
     if (this.angebot.erstellerId) {
       this.authService.findUserById(this.angebot.erstellerId).then(ersteller => {
         Object.assign(this.ersteller, ersteller);
@@ -45,9 +49,18 @@ export class AngebotCardComponent implements OnInit {
 
   setInteressenten(interessenten: InteressentA[]) {
     this.interessenten = [];
-    interessenten.forEach(e => {
-      this.authService.findUserById(e.userId).then(u => {
-        this.interessenten.push(u);
+    interessenten.forEach(interessent => {
+      this.authService.findUserById(interessent.userId).then(user => {
+        this.interessenten.push({user, interessent});
+      });
+    });
+  }
+
+  setKunden(kunden: InteressentA[]) {
+    this.kunden = [];
+    kunden.forEach(kunde => {
+      this.authService.findUserById(kunde.userId).then(user => {
+        this.kunden.push({user, kunde});
       });
     });
   }
@@ -60,6 +73,21 @@ export class AngebotCardComponent implements OnInit {
     } else {
       this.interessentenText = interessenten + ' Interessenten';
     }
+  }
+
+  interessentAnnehmen(interessent: InteressentA) {
+    this.angebot.addKunde(interessent);
+    this.angebot.deleteInteressent(interessent);
+    this.angebotService.updateAngebot(this.angebot).then(res => {
+      Object.assign(this.angebot, res.angebot);
+    }).catch(err => this.presentAlert('Fehler', 'Fehler beim Update des Angebots. Error: ' + err, 'Ok'));
+  }
+
+  interessentEntfernen(interessent: InteressentA) {
+    this.angebot.deleteInteressent(interessent);
+    this.angebotService.updateAngebot(this.angebot).then(res => {
+      Object.assign(this.angebot, res.angebot);
+    }).catch(err => this.presentAlert('Fehler', 'Fehler beim Update des Angebots. Error: ' + err, 'Ok'));
   }
 
   starteFahrt() {
@@ -169,10 +197,11 @@ export class AngebotCardComponent implements OnInit {
             handler: () => {}
           }, {
             text: 'Anfrage senden',
-            handler: (data) => {
+            handler: async (data) => {
               const sendInteressent = new InteressentA();
               sendInteressent.userId = this.authService.getUser().id;
-              sendInteressent.objectId = data;
+              const object = await this.lieferobjektService.addLieferobjekt(data);
+              sendInteressent.objectId = object.lieferobjekt._ID;
               this.angebot.addInteressent(sendInteressent);
               this.angebotService.updateAngebot(this.angebot).catch(err => {
                 this.presentAlert('Fehler!', 'Fehler beim speichern des Angebots entstanden. Error: ' + err, 'Ok');
