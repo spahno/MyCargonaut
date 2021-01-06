@@ -8,6 +8,7 @@ import {User} from '../../models/user';
 import {RouterTestingModule} from '@angular/router/testing';
 
 describe('AuthService', () => {
+    /*
     let service: AuthService;
     const testUser: User = new User(
         'test@test.de',
@@ -15,7 +16,7 @@ describe('AuthService', () => {
         'Testman',
         'McTest');
 
-    /*beforeEach(() => {
+    beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [
                 AngularFireModule.initializeApp(environment.testFirebaseConfig),
