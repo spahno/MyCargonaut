@@ -22,7 +22,7 @@ export class AngebotPage implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.authService.loadPageSubscription(u => this.user = u);
-        this.angebotService.observableAngebote().subscribe(async data => {
+        this.subAngebot = this.angebotService.observableAngebote().subscribe(async data => {
             this.angebote = [];
             this.filtertAngebote = [];
             this.angebote = data;
