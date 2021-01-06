@@ -1,17 +1,11 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Anfrage} from '../../../models/Anfrage';
 import {Gesuch, InteressentG} from '../../../models/Gesuch';
-import {Angebot, InteressentA} from '../../../models/Angebot';
 import {AuthService} from '../../../services/auth/auth.service';
-import {AngebotService} from '../../../services/angebot/angebot.service';
 import {FahrtService} from '../../../services/fahrt/fahrt.service';
 import {AlertController, ModalController} from '@ionic/angular';
-import {AddLieferobjektModalComponent} from '../add-lieferobjekt-modal/add-lieferobjekt-modal.component';
 import {User} from '../../../models/user';
 import {GesuchService} from '../../../services/gesuch/gesuch.service';
 import {FahrzeugService} from '../../../services/fahrzeug/fahrzeug.service';
-import {Fahrzeug} from '../../../models/fahrzeug';
-import {ProfilPopoverComponent} from '../profil-popover/profil-popover.component';
 import {Fahrt} from '../../../models/Fahrt';
 
 @Component({
@@ -43,6 +37,8 @@ export class GesuchCardComponent implements OnInit {
   ngOnInit() {
     Object.assign(this.user, this.inputUser);
     Object.assign(this.gesuch, this.inputGesuch);
+    console.log('Card:' + this.user.id);
+    console.log('Card:' + this.gesuch._ID);
     const tmpInteressenten = this.gesuch.getInteressenten();
     this.setInteressenten(tmpInteressenten);
     this.setInteressentenText(tmpInteressenten.length);
@@ -100,11 +96,11 @@ export class GesuchCardComponent implements OnInit {
   async infoPopoverInteressent(interessent: InteressentG) {
     const intUser = await this.authService.findUserById(interessent.userId);
     const intFahrzeug = await this.fahrzeugService.findFahrzeugById(interessent.fahrzeugId);
-    const modal = await this.modalController.create({
-      component: ProfilPopoverComponent,
-      cssClass: 'my-custom-class'
-    });
-    return await modal.present();
+    // const modal = await this.modalController.create({
+      // component: ProfilPopoverComponent,
+      // cssClass: 'my-custom-class'
+    // });
+    // return await modal.present();
   }
 
   starteFahrt() {

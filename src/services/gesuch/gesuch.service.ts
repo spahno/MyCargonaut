@@ -74,7 +74,9 @@ export class GesuchService {
     findGesuchById(id: string): Promise<Gesuch> {
         return new Promise((resolve, reject) => {
             this.gesuchCollection.doc(id).get().toPromise().then((res) => {
-                resolve(res.data());
+                const resGesuch = res.data();
+                resGesuch._ID = id;
+                resolve(resGesuch);
             }).catch(err => reject(err));
         });
     }

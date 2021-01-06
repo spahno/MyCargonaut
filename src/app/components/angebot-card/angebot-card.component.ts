@@ -30,9 +30,6 @@ export class AngebotCardComponent implements OnInit {
               private fahrtService: FahrtService,
               private lieferobjektService: LieferobjektService,
               public alertController: AlertController) {
-    this.authService.loadPageSubscription(u => {
-      Object.assign(this.user, u);
-      });
   }
 
   ngOnInit() {

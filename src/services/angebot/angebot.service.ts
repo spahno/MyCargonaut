@@ -76,7 +76,9 @@ export class AngebotService {
     findAngebotById(id: string): Promise<Angebot> {
         return new Promise((resolve, reject) => {
             this.angebotCollection.doc(id).get().toPromise().then((res) => {
-                resolve(res.data());
+                const resAngebot = res.data();
+                resAngebot._ID = id;
+                resolve(resAngebot);
             }).catch(err => reject(err));
         });
     }

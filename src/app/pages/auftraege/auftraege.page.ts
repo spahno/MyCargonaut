@@ -16,6 +16,8 @@ export class AuftraegePage implements OnInit {
     user: User = new User('', '', '', '');
     gesucheArr: Gesuch[] = [];
     angeboteArr: Angebot[] = [];
+    intGesucheArr: Gesuch[] = [];
+    intAngeboteArr: Angebot[] = [];
 
 
     constructor(private authService: AuthService,
@@ -26,7 +28,11 @@ export class AuftraegePage implements OnInit {
 
     ngOnInit() {
         this.authService.loadPageSubscription(u => {
-            this.user = u;
+            Object.assign(this.user, u);
+            this.gesucheArr = [];
+            this.angeboteArr = [];
+            this.intGesucheArr = [];
+            this.intAngeboteArr = [];
 
             // fetch Gesuche
             this.user.erstellteGesuche.forEach(g => {
@@ -42,6 +48,20 @@ export class AuftraegePage implements OnInit {
                 });
             });
 
+            // fetch Gesuche
+            this.user.interessierteGesuche.forEach(g => {
+                this.gesuchService.findGesuchById(g).then(foundItem => {
+                    this.intGesucheArr.push(foundItem);
+                });
+            });
+
+            // fetch Angebote
+            this.user.interessierteAngebote.forEach(a => {
+                this.angebotService.findAngebotById(a).then(foundItem => {
+                    this.intAngeboteArr.push(foundItem);
+                    console.log('Page Angebot' + foundItem.abfahrtOrt);
+                });
+            });
         });
 
     }
