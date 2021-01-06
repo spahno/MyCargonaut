@@ -46,7 +46,7 @@
 
                 <p>
                     <ion-icon name="call-outline" slot="start"></ion-icon>
-                    0123 456789
+                    {{this.authService.user.telefon || 'Noch keine Nummer hinterlegt...'}}
                 </p>
             </ion-item>
 
