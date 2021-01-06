@@ -76,7 +76,7 @@
                         <p>{{car.nummernschild}}</p>
                     </ion-label>
                     <ion-icon name="create-outline" slot="end" class="action-btn icon-green" (click)="this.openFahrzeugdetails(this.car, false, true)"></ion-icon>
-                    <ion-icon name="trash" slot="end" class="action-btn icon-yellow"></ion-icon>
+                    <ion-icon name="trash" slot="end" class="action-btn icon-yellow" (click)="this.deleteFahrzeug(car.id)"></ion-icon>
                     <ion-icon name="chevron-forward-outline" slot="end" class="forward-chevron" (click)="openFahrzeugdetails(this.car, true, false)"></ion-icon>
                 </ion-item>
             </ng-container>
@@ -90,11 +90,11 @@
         </ion-row>
 
 
-        <ion-row class="ion-justify-content-center">
-            <ion-button>
-                Button für Interessenten annehmen usw.
-            </ion-button>
-        </ion-row>
+<!--        <ion-row class="ion-justify-content-center">-->
+<!--            <ion-button>-->
+<!--                Button für Interessenten annehmen usw.-->
+<!--            </ion-button>-->
+<!--        </ion-row>-->
     </div>
 </ion-content>
 

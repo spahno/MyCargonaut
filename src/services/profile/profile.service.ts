@@ -1,13 +1,17 @@
 import {Injectable} from '@angular/core';
 import {ProfilPopoverComponent} from '../../app/components/profil-popover/profil-popover.component';
 import {ModalController} from '@ionic/angular';
+import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firestore';
+import {User} from '../../models/user';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ProfileService {
-
-    constructor(public modalController: ModalController) {
+    userCollection: AngularFirestoreCollection<User>;
+    constructor(public modalController: ModalController,
+                private afs: AngularFirestore) {
+      this.userCollection = this.afs.collection<User>('users');
     }
 
     async presentPopoverProfile() {

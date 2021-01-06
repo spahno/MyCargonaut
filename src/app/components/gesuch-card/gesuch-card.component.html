@@ -1,0 +1,158 @@
+<div *ngIf="this.user.id && gesuch._ID">
+    <ion-card class="border-card-green">
+        <ion-item lines="none">
+            <h3 slot="start">{{gesuch.lieferobjektId}}</h3>
+            <ion-badge color="primary" slot="end">{{interessentenText}}</ion-badge>
+        </ion-item>
+        <ion-item lines="none">
+            <h4 slot="start">{{gesuch.abfahrtOrt}}</h4>
+            <ion-icon class="center" name="arrow-forward"></ion-icon>
+            <h4 slot="end">{{gesuch.ankunftOrt}}</h4>
+        </ion-item>
+        <ion-item lines="full">
+            <p slot="start">Ankunft:</p>
+            <p slot="end">{{gesuch.ankunftDatum}}, {{gesuch.ankunftZeit}}</p>
+        </ion-item>
+        <ion-icon [class.spin]="dropdown" class="center transition pointer" size="large" name="chevron-down-outline"
+                  (click)="dropdown= !dropdown"></ion-icon>
+    </ion-card>
+    <!-- Dropdown -->
+    <ion-card [class.card-dropdown-disabled]="!dropdown" class="card-dropdown">
+
+        <!-- Fahrzeug -->
+        <ion-item lines="full" *ngIf="gesuch">
+            <ion-label slot="start">
+                Fahrzeug:
+            </ion-label>
+            <ion-label>
+                Mercedes Vito
+            </ion-label>
+        </ion-item>
+
+        <!-- Start Adresse -->
+        <ion-item lines="full">
+            <ion-label slot="start">
+                Start Adresse:
+            </ion-label>
+            <ion-label>
+                {{gesuch.abfahrtStrasse}},<br>
+                {{gesuch.abfahrtPlz}} {{gesuch.abfahrtOrt}}
+            </ion-label>
+        </ion-item>
+        <!-- Ziel Adresse -->
+        <ion-item lines="full">
+            <ion-label slot="start">
+                Ziel Adresse:
+            </ion-label>
+            <ion-label>
+                {{gesuch.ankunftStrasse}},<br>
+                {{gesuch.ankunftPlz}} {{gesuch.ankunftOrt}}
+            </ion-label>
+        </ion-item>
+        <!-- Profil -->
+        <ng-container *ngIf="this.gesuch.erstellerId">
+            <ion-item lines="full" >
+                <ion-label slot="start">
+                    Ersteller:
+                </ion-label>
+                <ion-avatar class="ion-margin">
+                    <img src="{{ersteller.profileImage || 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'}}">
+                </ion-avatar>
+                <ion-label>
+                    {{ersteller.vorname || 'Ladefehler'}} {{ersteller.nachname || 'Ladefehler'}}
+                </ion-label>
+            </ion-item>
+            <!-- Telefon -->
+            <ion-item lines="full">
+                <ion-label slot="start">
+                    Telefon:
+                </ion-label>
+                <ion-label>
+                    {{ersteller.telefon || 'Ladefehler'}}
+                </ion-label>
+            </ion-item>
+        </ng-container>
+        <ion-item lines="full" *ngIf="!(this.gesuch.erstellerId)">
+            <ion-label slot="start">
+                Ersteller:
+            </ion-label>
+            <ion-label>
+                <em>Fehler bei dem Darstellen des Erstellers!</em>
+            </ion-label>
+        </ion-item>
+        <!-- Bezahlung -->
+        <ion-item lines="full">
+            <ion-label slot="start">
+                Bezahlung:
+            </ion-label>
+            <ion-label>
+                {{gesuch.bezahlung}}
+            </ion-label>
+        </ion-item>
+        <!-- Interessenten -->
+        <ng-container *ngIf="this.user.id && this.user.id === this.gesuch.erstellerId && gesuch._ID">
+            <ion-item lines="none">
+                <ion-label slot="start">Interessenten:</ion-label>
+                <ion-label *ngIf="interessenten.length === 0"><em>Es gibt noch keine Interessenten.</em></ion-label>
+            </ion-item>
+            <ion-item lines="inset" *ngFor="let interessent of this.interessenten">
+                <ion-avatar slot="start">
+                    <img src="{{interessent.user.profileImage || 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'}}">
+                </ion-avatar>
+                <ion-label>
+                    {{interessent.user.vorname}} {{interessent.user.nachname}}
+                </ion-label>
+                <ion-icon slot="end" name="information-circle-outline"></ion-icon>
+                <ion-icon slot="end" color="primary" name="checkmark-circle-outline" (click)="interessentAnnehmen(interessent.interessent)"></ion-icon>
+                <ion-icon slot="end" color="secondary" name="close-circle-outline" (click)="interessentEntfernen(interessent.interessent)"></ion-icon>
+            </ion-item>
+            <ion-item lines="none">
+                <ion-label slot="start">Fahrer:</ion-label>
+                <ion-label *ngIf="fahrer.length === 0"><em>Es wurden noch keine Interessenten angenommen.</em></ion-label>
+            </ion-item>
+            <ion-item lines="inset" *ngFor="let fahrer of this.fahrer">
+                <ion-avatar slot="start">
+                    <img src="{{fahrer.user.profileImage || 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'}}">
+                </ion-avatar>
+                <ion-label>
+                    {{fahrer.user.vorname}} {{fahrer.user.nachname}}
+                </ion-label>
+                <ion-icon slot="end" name="information-circle-outline"></ion-icon>
+            </ion-item>
+        </ng-container>
+
+        <!-- Buttons Angebot -->
+        <div *ngIf="this.user.id && this.user.id === this.gesuch.erstellerId && gesuch._ID" class="ion-text-center ion-margin">
+            <ion-button *ngIf="!gesuch.fahrtId" (click)="starteFahrt()">Fahrt starten</ion-button>
+            <ion-button *ngIf="gesuch.fahrtId" (click)="fahrtBeenden()">Fahrt beenden</ion-button>
+        </div>
+        <div *ngIf="this.user.id && this.user.id !== this.gesuch.erstellerId && gesuch._ID" class="ion-text-center ion-margin">
+            <ion-button *ngIf="gesuch.fahrtId && gesuch.isInteressent(this.user.id)" disabled="true"><em>Anfrage ausstehend</em></ion-button>
+            <ion-button *ngIf="!gesuch.fahrtId && gesuch.isInteressent(this.user.id)" disabled="true"><em>Anfrage abgelehnt</em></ion-button>
+            <ion-button *ngIf="!gesuch.fahrtId && gesuch.isFahrer(this.user.id)" disabled="true"><em>Tracking gesendet</em></ion-button>
+            <ion-button *ngIf="gesuch.fahrtId && gesuch.isFahrer(this.user.id)" disabled="true"><em>Fahrt tracken</em></ion-button>
+            <ion-button *ngIf="!gesuch.isInteressent(this.user.id) && !gesuch.isFahrer(this.user.id)" (click)="gesuchAnfragen()">Anfragen</ion-button>
+        </div>
+    </ion-card>
+</div>
+
+<!-- Skeleton screen -->
+<div *ngIf="!(this.user.id && gesuch._ID)">
+    <ion-card class="ion-padding custom-skeleton border-card-green">
+        <ion-item lines="none">
+            <ion-skeleton-text slot="start" animated style="width: 30%"></ion-skeleton-text>
+            <ion-skeleton-text slot="end" animated style="width: 10%"></ion-skeleton-text>
+        </ion-item>
+        <ion-item lines="none">
+            <ion-skeleton-text slot="" animated style="width: 25%"></ion-skeleton-text>
+            <ion-icon class="center" name="arrow-forward"></ion-icon>
+            <ion-skeleton-text slot="" animated style="width: 25%"></ion-skeleton-text>
+        </ion-item>
+        <ion-item lines="full">
+            <ion-skeleton-text slot="start" animated style="width: 30%"></ion-skeleton-text>
+            <ion-skeleton-text slot="end" animated style="width: 10%"></ion-skeleton-text>
+            <ion-skeleton-text slot="end" animated style="width: 20%"></ion-skeleton-text>
+        </ion-item>
+        <ion-icon class="center" size="large" name="chevron-down-outline"></ion-icon>
+    </ion-card>
+</div>

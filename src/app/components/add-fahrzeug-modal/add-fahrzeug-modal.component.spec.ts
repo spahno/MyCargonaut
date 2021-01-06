@@ -1,25 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {IonicModule, NavController} from '@ionic/angular';
+import { IonicModule } from '@ionic/angular';
 
-import { AngebotPage } from './angebot.page';
+import { AddFahrzeugModalComponent } from './add-fahrzeug-modal.component';
+import {RouterTestingModule} from '@angular/router/testing';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../../../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
-import {RouterTestingModule} from '@angular/router/testing';
 
-describe('AngebotPage', () => {
-  let component: AngebotPage;
-  let fixture: ComponentFixture<AngebotPage>;
+describe('AddFahrzeugModalComponent', () => {
+  let component: AddFahrzeugModalComponent;
+  let fixture: ComponentFixture<AddFahrzeugModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AngebotPage ],
-      imports: [IonicModule.forRoot(), RouterTestingModule,
+      declarations: [ AddFahrzeugModalComponent ],
+      imports: [IonicModule.forRoot(),
         AngularFireModule.initializeApp(environment.testFirebaseConfig),
         AngularFirestoreModule]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AngebotPage);
+    fixture = TestBed.createComponent(AddFahrzeugModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

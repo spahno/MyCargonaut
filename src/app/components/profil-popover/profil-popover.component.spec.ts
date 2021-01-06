@@ -15,11 +15,11 @@ describe('ProfilPopoverComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             declarations: [ProfilPopoverComponent],
-            providers: [ProfileService],
+            providers: [ProfileService, RouterTestingModule],
             imports: [
                 IonicModule.forRoot(),
                 RouterTestingModule,
-                AngularFireModule.initializeApp(environment.firebaseConfig),
+                AngularFireModule.initializeApp(environment.testFirebaseConfig),
                 AngularFirestoreModule
             ]
         }).compileComponents();

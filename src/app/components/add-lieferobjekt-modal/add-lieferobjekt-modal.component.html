@@ -1,0 +1,9 @@
+<ion-item>
+  <ion-label position="stacked">Lieferobjekt hinzufügen</ion-label>
+  <ion-input placeholder="Name" [(ngModel)]="lieferobjekt.name"></ion-input>
+  <ion-input placeholder="Beschreibung" [(ngModel)]="lieferobjekt.beschreibung"></ion-input>
+  <ion-input placeholder="Preis" [(ngModel)]="lieferobjekt.preis"></ion-input>
+  <div class="ion-text-center ion-margin">
+    <ion-button (click)="closeModal()">Anfrage erstellen</ion-button>
+  </div>
+</ion-item>

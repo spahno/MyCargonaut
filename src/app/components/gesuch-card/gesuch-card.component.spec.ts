@@ -1,28 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { AnfrageCardComponent } from './anfrage-card.component';
+import { GesuchCardComponent } from './gesuch-card.component';
 import {Angebot} from '../../../models/Angebot';
-import {Input} from '@angular/core';
 import {Gesuch} from '../../../models/Gesuch';
+import {RouterTestingModule} from '@angular/router/testing';
+import {AngularFireModule} from '@angular/fire';
+import {environment} from '../../../environments/environment';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
 
 describe('AnfrageCardComponent', () => {
-  let component: AnfrageCardComponent;
-  let fixture: ComponentFixture<AnfrageCardComponent>;
+  let component: GesuchCardComponent;
+  let fixture: ComponentFixture<GesuchCardComponent>;
 
   /***
    * Test Daten
    */
-  const angebot: Angebot = new Angebot();
-  angebot.ankunftDatum = '17.12.2020';
-  angebot.ankunftZeit = '17:12 Uhr';
-  angebot.abfahrtStrasse = 'Gießenerstraße 299';
-  angebot.abfahrtPlz = '35390';
-  angebot.abfahrtOrt = 'Gießen';
-  angebot.ankunftStrasse = 'Berlinerstraße 399';
-  angebot.ankunftPlz = '10201';
-  angebot.ankunftOrt = 'Berlin';
-  angebot.bezahlung = '30€ VB';
   const gesuch: Gesuch = new Gesuch();
   gesuch.ankunftDatum = '18.12.2020';
   gesuch.ankunftZeit = '18:12 Uhr';
@@ -36,19 +29,20 @@ describe('AnfrageCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AnfrageCardComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [ GesuchCardComponent ],
+      imports: [IonicModule.forRoot(), RouterTestingModule,
+        AngularFireModule.initializeApp(environment.testFirebaseConfig),
+        AngularFirestoreModule],
+      providers: [RouterTestingModule]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AnfrageCardComponent);
+    fixture = TestBed.createComponent(GesuchCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));
 
   it('should create', () => {
-    component.inputAngebot = angebot;
     component.inputGesuch = gesuch;
-    component.page = 'none';
     expect(component).toBeTruthy();
   });
 });

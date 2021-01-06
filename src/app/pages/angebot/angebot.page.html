@@ -1,14 +1,19 @@
-<ion-header>
+<ion-header mode="ios">
   <ion-toolbar>
-    <ion-title>angebot</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Angebote</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <div class="cargo-content">
   <ng-container *ngIf="filtertAngebote.length < 1">
-    <app-anfrage-card *ngFor="let i of [0,1,2]" [page]="'angebot'"></app-anfrage-card>
+    <app-angebot-card *ngFor="let i of [0,1,2]" [inputAngebot]=""></app-angebot-card>
   </ng-container>
   <ng-container *ngIf="filtertAngebote.length > 0">
-    <app-anfrage-card *ngFor="let angebot of filtertAngebote" [inputAngebot]="angebot" [page]="'angebot'"></app-anfrage-card>
+    <app-angebot-card *ngFor="let angebot of filtertAngebote" [inputAngebot]="angebot" [inputUser]="user"></app-angebot-card>
   </ng-container>
+  </div>
 </ion-content>
