@@ -3,7 +3,6 @@ import {AngularFirestore, AngularFirestoreCollection, DocumentChangeAction} from
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Gesuch} from '../../models/Gesuch';
-import {start} from 'repl';
 import {Router} from '@angular/router';
 
 @Injectable({
@@ -117,6 +116,12 @@ export class GesuchService {
     });
   }
 
+  /**
+   * Passes search variables to the page that is to be filtered
+   * @param startort is the place where the ride starts
+   * @param zielort is the place where the ride ends
+   * @param abfahrtsdatum is the date on which the ride ends
+   */
   startSearch(startort: string, zielort: string, abfahrtsdatum: string) {
     this.startort = startort;
     this.zielort = zielort;
