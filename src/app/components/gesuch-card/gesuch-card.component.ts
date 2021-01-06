@@ -12,6 +12,7 @@ import {GesuchService} from '../../../services/gesuch/gesuch.service';
 import {FahrzeugService} from '../../../services/fahrzeug/fahrzeug.service';
 import {Fahrzeug} from '../../../models/fahrzeug';
 import {ProfilPopoverComponent} from '../profil-popover/profil-popover.component';
+import {Fahrt} from '../../../models/Fahrt';
 
 @Component({
   selector: 'app-gesuch-card',
@@ -25,6 +26,7 @@ export class GesuchCardComponent implements OnInit {
   user: User = new User('', '', '', '');
   interessenten: {user: User, interessent: InteressentG}[] = [];
   fahrer: {user: User, fahrer: InteressentG}[] = [];
+  fahrt: Fahrt = new Fahrt();
   interessentenText: string;
   ersteller = new User( '', '', '', '');
   public dropdown = false;
@@ -110,6 +112,7 @@ export class GesuchCardComponent implements OnInit {
       if (this.gesuch) {
         if (!this.gesuch.fahrtId) {
           this.fahrtService.startFahrt().then(res => {
+            this.fahrt = res.fahrt;
             this.gesuch.fahrtId = res.fahrt._ID;
             this.gesuchService.updateGesuch(this.gesuch).then(res2 => {
               this.presentAlert('Fahrt gestartet', 'Die fahrt von ' + res2.gesuch.abfahrtOrt +
@@ -135,6 +138,7 @@ export class GesuchCardComponent implements OnInit {
       if (this.gesuch) {
         if (this.gesuch.fahrtId){
           this.fahrtService.endFahrt(this.gesuch.fahrtId).then( async res => {
+            this.fahrt = res;
             this.fahrtBewerten(res._ID);
           });
         } else {
@@ -169,7 +173,9 @@ export class GesuchCardComponent implements OnInit {
         }, {
           text: 'Okay',
           handler: () => {
-            this.fahrtService.fahrtBewerten(fahrtId, bewertung).catch(reason => {
+            this.fahrtService.fahrtBewerten(fahrtId, bewertung).then(fahrt => {
+              this.fahrt = fahrt;
+            }).catch(reason => {
               this.presentAlert('Bewertung fehlgeschlagen!', 'Beim speichern der Bewertung ist etwas schiefgelaufen. Error: <br>' +
                   reason, 'Ok');
             });
@@ -207,38 +213,44 @@ export class GesuchCardComponent implements OnInit {
 
   async gesuchAnfragen() {
     if (this.gesuch) {
-      const radioInputs = await this.getFahrzeuge().catch(err => {
-
+      await this.getFahrzeuge().then(async radioInputs => {
+        if (radioInputs) {
+          const alert = await this.alertController.create({
+            cssClass: 'my-custom-class',
+            header: 'Fahrt anbieten',
+            message: 'Wähle dein Fahrzeug mit dem du die Fahrt anbieten möchtest:',
+            inputs: radioInputs,
+            buttons: [
+              {
+                text: 'Cancel',
+                role: 'cancel',
+                cssClass: 'secondary',
+                handler: () => {
+                }
+              }, {
+                text: 'Anfrage senden',
+                handler: (data) => {
+                  const sendInteressent = new InteressentG();
+                  const interesentUser = this.authService.getUser();
+                  interesentUser.interessierteGesuche.push(this.gesuch._ID);
+                  sendInteressent.userId = interesentUser.id;
+                  sendInteressent.fahrzeugId = data;
+                  this.gesuch.addInteressent(sendInteressent);
+                  this.authService.updateUser(interesentUser).catch(err => {
+                    this.presentAlert('Fehler!', 'Fehler beim update des Users der sich interessiert. Error: ' + err, 'Ok');
+                  });
+                  this.gesuchService.updateGesuch(this.gesuch).catch(err => {
+                    this.presentAlert('Fehler!', 'Fehler beim speichern des Angebots entstanden. Error: ' + err, 'Ok');
+                  });
+                }
+              }
+            ]
+          });
+          await alert.present();
+        }
+      }).catch(err => {
+        this.presentAlert('Fehler!', 'Fehler laden der Fahrzeuge. Error: ' + err, 'Ok');
       });
-      if (radioInputs) {
-        const alert = await this.alertController.create({
-          cssClass: 'my-custom-class',
-          header: 'Fahrt anbieten',
-          message: 'Wähle dein Fahrzeug mit dem du die Fahrt anbieten möchtest:',
-          inputs: radioInputs,
-          buttons: [
-            {
-              text: 'Cancel',
-              role: 'cancel',
-              cssClass: 'secondary',
-              handler: () => {
-              }
-            }, {
-              text: 'Anfrage senden',
-              handler: (data) => {
-                const sendInteressent = new InteressentG();
-                sendInteressent.userId = this.authService.getUser().id;
-                sendInteressent.fahrzeugId = data;
-                this.gesuch.addInteressent(sendInteressent);
-                this.gesuchService.updateGesuch(this.gesuch).catch(err => {
-                  this.presentAlert('Fehler!', 'Fehler beim speichern des Angebots entstanden. Error: ' + err, 'Ok');
-                });
-              }
-            }
-          ]
-        });
-        await alert.present();
-      }
     }
   }
 

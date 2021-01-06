@@ -6,6 +6,7 @@ import {FahrtService} from '../../../services/fahrt/fahrt.service';
 import {AlertController} from '@ionic/angular';
 import {User} from '../../../models/user';
 import {LieferobjektService} from '../../../services/lieferobjekt/lieferobjekt.service';
+import {Fahrt} from '../../../models/Fahrt';
 
 @Component({
   selector: 'app-angebot-card',
@@ -19,6 +20,7 @@ export class AngebotCardComponent implements OnInit {
   user: User = new User('', '', '', '');
   interessenten: {user: User, interessent: InteressentA}[] = [];
   kunden: {user: User, kunde: InteressentA}[] = [];
+  fahrt: Fahrt = new Fahrt();
   interessentenText: string;
   ersteller = new User( '', '', '', '');
   public dropdown = false;
@@ -95,6 +97,7 @@ export class AngebotCardComponent implements OnInit {
       if (this.angebot) {
         if (!this.angebot.fahrtId) {
           this.fahrtService.startFahrt().then(res => {
+            this.fahrt = res.fahrt;
             this.angebot.fahrtId = res.fahrt._ID;
             this.angebotService.updateAngebot(this.angebot).then(res2 => {
               this.presentAlert('Fahrt gestartet', 'Die fahrt von ' + res2.angebot.abfahrtOrt +
@@ -120,6 +123,7 @@ export class AngebotCardComponent implements OnInit {
       if (this.angebot) {
         if (this.angebot.fahrtId){
           this.fahrtService.endFahrt(this.angebot.fahrtId).then( async res => {
+            this.fahrt = res;
             this.fahrtBewerten(res._ID);
           });
         } else {
@@ -154,7 +158,9 @@ export class AngebotCardComponent implements OnInit {
         }, {
           text: 'Okay',
           handler: () => {
-            this.fahrtService.fahrtBewerten(fahrtId, bewertung).catch(reason => {
+            this.fahrtService.fahrtBewerten(fahrtId, bewertung).then(fahrt => {
+              this.fahrt = fahrt;
+            }).catch(reason => {
               this.presentAlert('Bewertung fehlgeschlagen!', 'Beim speichern der Bewertung ist etwas schiefgelaufen. Error: <br>' +
               reason, 'Ok');
             });
@@ -198,10 +204,15 @@ export class AngebotCardComponent implements OnInit {
             text: 'Anfrage senden',
             handler: async (data) => {
               const sendInteressent = new InteressentA();
-              sendInteressent.userId = this.authService.getUser().id;
+              const interesentUser = this.authService.getUser();
+              sendInteressent.userId = interesentUser.id;
+              interesentUser.interessierteAngebote.push(this.angebot._ID);
               const object = await this.lieferobjektService.addLieferobjekt(data);
               sendInteressent.objectId = object.lieferobjekt._ID;
               this.angebot.addInteressent(sendInteressent);
+              this.authService.updateUser(interesentUser).catch(err => {
+                this.presentAlert('Fehler!', 'Fehler beim update des Users der sich interessiert. Error: ' + err, 'Ok');
+              });
               this.angebotService.updateAngebot(this.angebot).catch(err => {
                 this.presentAlert('Fehler!', 'Fehler beim speichern des Angebots entstanden. Error: ' + err, 'Ok');
               });

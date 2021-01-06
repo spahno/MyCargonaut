@@ -124,7 +124,8 @@
         <!-- Buttons Angebot -->
         <div *ngIf="this.user.id && this.user.id === this.gesuch.erstellerId && gesuch._ID" class="ion-text-center ion-margin">
             <ion-button *ngIf="!gesuch.fahrtId" (click)="starteFahrt()">Fahrt starten</ion-button>
-            <ion-button *ngIf="gesuch.fahrtId" (click)="fahrtBeenden()">Fahrt beenden</ion-button>
+            <ion-button *ngIf="gesuch.fahrtId && !fahrt.beendet" (click)="fahrtBeenden()">Fahrt beenden</ion-button>
+            <ion-button *ngIf="gesuch.fahrtId && fahrt.beendet" disabled="true"><em>Fahrt wurde beendet</em></ion-button>
         </div>
         <div *ngIf="this.user.id && this.user.id !== this.gesuch.erstellerId && gesuch._ID" class="ion-text-center ion-margin">
             <ion-button *ngIf="gesuch.fahrtId && gesuch.isInteressent(this.user.id)" disabled="true"><em>Anfrage ausstehend</em></ion-button>
