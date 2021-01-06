@@ -34,7 +34,6 @@ export class GesuchPage implements OnInit, OnDestroy {
     }
 
     filterGesuche() {
-        this.filtertGesuche = [];
         const startort = this.gesuchService.startort.toLowerCase();
         const zielort = this.gesuchService.zielort.toLowerCase();
         const endDate = this.gesuchService.endDate;
@@ -47,6 +46,8 @@ export class GesuchPage implements OnInit, OnDestroy {
                     this.filtertGesuche.push(gesuch);
                 }
             }
+        } else {
+            this.filtertGesuche = this.gesuche;
         }
     }
 }

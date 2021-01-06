@@ -13,9 +13,9 @@ export class AngebotService {
     /**
      * Filtervariablen
      */
-    startort: string;
-    zielort: string;
-    endDate: string;
+    startort = '';
+    zielort = '';
+    endDate = '';
 
     /***
      * This service implements the CRUD of an Angebot.
