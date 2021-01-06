@@ -9,9 +9,10 @@ export class User {
     public telefon?: number;
     public bewertung: number;
     public fahrzeuge: string[];
-    public angebote: string[];
-    public gesuche: string[];
-    public anfragen: string[];
+    public interessierteAngebote: string[];
+    public interessierteGesuche: string[];
+    public erstellteAngebote: string[];
+    public erstellteGesuche: string[];
 
     constructor(email: string, username: string, vorname: string, nachname: string) {
         this.email = email;
