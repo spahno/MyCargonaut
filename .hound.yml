@@ -1,15 +1,2 @@
-fail_on_violations: false
-
-scss:
-  enabled: true
-
-jshint:
-  enabled: true
-
-eslint:
-  enabled: true
-
 tslint:
-  enabled: true
-
-
+  config_file: tslint.json
