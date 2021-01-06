@@ -1,24 +1,33 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { ProfileEditPage } from './profile-edit.page';
+import {ProfileEditPage} from './profile-edit.page';
+import {AngularFireModule} from '@angular/fire';
+import {environment} from '../../../../environments/environment';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('ProfileEditPage', () => {
-  let component: ProfileEditPage;
-  let fixture: ComponentFixture<ProfileEditPage>;
+    let component: ProfileEditPage;
+    let fixture: ComponentFixture<ProfileEditPage>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [ ProfileEditPage ],
-      imports: [IonicModule.forRoot()]
-    }).compileComponents();
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            declarations: [ProfileEditPage],
+            imports: [
+                IonicModule.forRoot(),
+                AngularFireModule.initializeApp(environment.testFirebaseConfig),
+                AngularFirestoreModule,
+                RouterTestingModule
+            ]
+        }).compileComponents();
 
-    fixture = TestBed.createComponent(ProfileEditPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  }));
+        fixture = TestBed.createComponent(ProfileEditPage);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
+    }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+   /* it('should create', () => {
+        expect(component).toBeTruthy();
+    });*/
 });
