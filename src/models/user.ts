@@ -6,7 +6,7 @@ export class User {
     public nachname: string;
     public gebDat?: string;
     public profileImage?: string;
-    public telefon?: string;
+    public telefon?: number;
     public bewertung: number;
     public fahrzeuge: string[];
     public angebote: string[];
