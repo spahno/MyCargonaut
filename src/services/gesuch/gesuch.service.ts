@@ -3,11 +3,19 @@ import {AngularFirestore, AngularFirestoreCollection, DocumentChangeAction} from
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Gesuch} from '../../models/Gesuch';
+import {start} from 'repl';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GesuchService {
+  /**
+   * Filtervariablen
+   */
+  startort: string;
+  zielort: string;
+  endDate: string;
+
   /***
    * This service implements the CRUD of an Angebot.
    */
@@ -106,4 +114,11 @@ export class GesuchService {
       });
     });
   }
+
+  startSearch(startort: string, zielort: string, abfahrtsdatum: string) {
+    this.startort = startort;
+    this.zielort = zielort;
+    this.endDate = abfahrtsdatum;
+  }
 }
+

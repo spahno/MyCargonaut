@@ -9,6 +9,13 @@ import {IError} from 'protractor/built/exitCodes';
   providedIn: 'root'
 })
 export class AngebotService {
+    /**
+     * Filtervariablen
+     */
+    startort: string;
+    zielort: string;
+    endDate: string;
+
     /***
      * This service implements the CRUD of an Angebot.
      */
@@ -98,5 +105,11 @@ export class AngebotService {
                 reject('Error editing document: ' + error);
             });
         });
+    }
+
+    startSearch(startort: string, zielort: string, abfahrtsdatum: string) {
+        this.startort = startort;
+        this.zielort = zielort;
+        this.endDate = abfahrtsdatum;
     }
 }

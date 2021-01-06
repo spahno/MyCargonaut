@@ -1,6 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ModalController} from '@ionic/angular';
 import {Fahrzeug} from '../../../models/fahrzeug';
+import {FahrzeugService} from '../../../services/fahrzeug/fahrzeug.service';
+import {AuthService} from '../../../services/auth/auth.service';
 
 @Component({
   selector: 'app-fahrzeugdetails',
@@ -18,7 +20,9 @@ export class FahrzeugdetailsComponent implements OnInit {
 
   errors: Map<string, string> = new Map<string, string>();
 
-  constructor(private modalController: ModalController) { }
+  constructor(public modalController: ModalController,
+              public fahrzeugService: FahrzeugService,
+              public authService: AuthService) { }
 
   ngOnInit() {
     // console.log(
@@ -67,7 +71,11 @@ export class FahrzeugdetailsComponent implements OnInit {
         this.errors.clear();
         this.dismiss();
       } else {
-        console.log('schreibt eine addFahrzeug ihr lappen');
+        this.fahrzeugService.addFahrzeug(this.fahrzeug).then(res => {
+          const user = this.authService.getUser();
+          user.fahrzeuge.push(res.fahrzeug.id);
+          this.authService.persist(user, user.id);
+        });
         this.errors.clear();
         this.dismiss();
       }

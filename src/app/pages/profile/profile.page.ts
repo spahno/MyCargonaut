@@ -4,6 +4,8 @@ import {AuthService} from '../../../services/auth/auth.service';
 import {ProfileService} from '../../../services/profile/profile.service';
 import {FahrzeugdetailsComponent} from '../../components/fahrzeugdetails/fahrzeugdetails.component';
 import {ModalController} from '@ionic/angular';
+import {User} from '../../../models/user';
+import {FahrzeugService} from '../../../services/fahrzeug/fahrzeug.service';
 
 @Component({
     selector: 'app-profile',
@@ -11,6 +13,9 @@ import {ModalController} from '@ionic/angular';
     styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+
+    public user: User = new User('', '', '', '');
+    public subFahrzeuge;
 
     car: Fahrzeug = {
         nummernschild: '',
@@ -28,10 +33,16 @@ export class ProfilePage implements OnInit {
 
     constructor(public authService: AuthService,
                 public profileService: ProfileService,
-                public modalController: ModalController) {
+                public modalController: ModalController,
+                public fahrzeugService: FahrzeugService) {
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.user = this.authService.user;
+        this.getUserFahrzeuge();
+        console.log(this.user);
+        console.log(this.cars);
+    }
 
     async openFahrzeugdetails(fahrzeug: Fahrzeug, detailmode: boolean, editmode: boolean) {
         const modal = await this.modalController.create({
@@ -46,4 +57,24 @@ export class ProfilePage implements OnInit {
         return await modal.present();
     }
 
+    getUserFahrzeuge() {
+        this.cars = [];
+        this.user.fahrzeuge.forEach(id => {
+            const sub = this.fahrzeugService.findFahrzeugById(id).subscribe(fahrzeug => {
+                sub.unsubscribe();
+                this.cars.push(fahrzeug);
+            });
+        });
+    }
+
+    deleteFahrzeug(fahrzeug: Fahrzeug) {
+        this.fahrzeugService.deleteFahrzeug(fahrzeug.id).then(res => {
+            const user = this.authService.getUser();
+            let fahrzeugIndex = user.fahrzeuge.indexOf(fahrzeug.id);
+            user.fahrzeuge.splice(fahrzeugIndex, 1);
+            this.authService.persist(user, user.id);
+            fahrzeugIndex = this.cars.indexOf(fahrzeug);
+            this.cars.splice(fahrzeugIndex, 1);
+        });
+    }
 }
