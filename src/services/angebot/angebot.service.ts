@@ -4,17 +4,26 @@ import {Observable} from 'rxjs';
 import {Angebot} from '../../models/Angebot';
 import {map} from 'rxjs/operators';
 import {IError} from 'protractor/built/exitCodes';
+import {Router} from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AngebotService {
+    /**
+     * Filtervariablen
+     */
+    startort = '';
+    zielort = '';
+    endDate = '';
+
     /***
      * This service implements the CRUD of an Angebot.
      */
     angebotCollection: AngularFirestoreCollection<Angebot>;
 
-    constructor(private afs: AngularFirestore) {
+    constructor(private afs: AngularFirestore,
+                private router: Router) {
         this.angebotCollection = afs.collection<Angebot>('angebote');
     }
 
@@ -98,5 +107,12 @@ export class AngebotService {
                 reject('Error editing document: ' + error);
             });
         });
+    }
+
+    startSearch(startort: string, zielort: string, abfahrtsdatum: string) {
+        this.startort = startort;
+        this.zielort = zielort;
+        this.endDate = abfahrtsdatum;
+        this.router.navigate(['/angebot']);
     }
 }

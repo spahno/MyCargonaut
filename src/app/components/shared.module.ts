@@ -13,10 +13,10 @@ import {AddLieferobjektModalComponent} from './add-lieferobjekt-modal/add-liefer
 
 @NgModule({
     declarations: [AngebotCardComponent, GesuchCardComponent, ProfilPopoverComponent, NavbarComponent,
-        AddFahrzeugModalComponent, AddLieferobjektModalComponent],
+        AddFahrzeugModalComponent, AddLieferobjektModalComponent, FahrzeugdetailsComponent],
     imports: [CommonModule, IonicModule, RouterModule, FormsModule],
     exports: [AngebotCardComponent, GesuchCardComponent, ProfilPopoverComponent, NavbarComponent,
-        AddFahrzeugModalComponent, AddLieferobjektModalComponent]
+        AddFahrzeugModalComponent, AddLieferobjektModalComponent, FahrzeugdetailsComponent]
 })
 export class SharedModule {
 }

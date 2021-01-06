@@ -3,6 +3,8 @@ import {AngularFirestore, AngularFirestoreCollection} from '@angular/fire/firest
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {Fahrzeug} from '../../models/fahrzeug';
+import {rejects} from 'assert';
+import {User} from '../../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -10,9 +12,11 @@ import {Fahrzeug} from '../../models/fahrzeug';
 export class FahrzeugService {
 
   fahrzeugCollection: AngularFirestoreCollection<Fahrzeug>;
+  userCollection: AngularFirestoreCollection<User>;
 
   constructor(private afs: AngularFirestore) {
     this.fahrzeugCollection = this.afs.collection<Fahrzeug>('fahrzeug');
+    this.userCollection = this.afs.collection<User>('users');
   }
 
   static copyAndPrepare(fahrzeug: Fahrzeug): Fahrzeug {

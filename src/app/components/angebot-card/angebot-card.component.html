@@ -2,7 +2,7 @@
     <ion-card class="border-card-orange">
         <ion-item lines="none">
             <h3 slot="start">{{angebot.fahrzeugId}}</h3>
-            <ion-badge slot="end">{{interessenten}}</ion-badge>
+            <ion-badge color="secondary" slot="end">{{interessenten}}</ion-badge>
         </ion-item>
         <ion-item lines="none">
             <h4 slot="start">{{angebot.abfahrtOrt}}</h4>
@@ -86,10 +86,13 @@
             <ion-button *ngIf="angebot.fahrtId" (click)="fahrtBeenden()">Fahrt beenden</ion-button>
         </div>
         <div *ngIf="this.user.id && this.user.id !== this.angebot.erstellerId && angebot._ID"class="ion-text-center ion-margin">
-            <ion-button *ngIf="angebot.fahrtId && angebot.isInteressent(this.user.id)" disabled="true"><em>Anfrage ausstehend</em></ion-button>
-            <ion-button *ngIf="!angebot.fahrtId && angebot.isInteressent(this.user.id)" disabled="true"><em>Anfrage abgelehnt</em></ion-button>
-            <ion-button *ngIf="!angebot.fahrtId && angebot.isKunde(this.user.id)" disabled="true"><em>Tracking gesendet</em></ion-button>
-            <ion-button *ngIf="angebot.fahrtId && angebot.isKunde(this.user.id)" disabled="true"><em>Fahrt tracken</em></ion-button>
+            <ion-button *ngIf="!angebot.fahrtId && angebot.isInteressent(this.user.id) && !angebot.isKunde(this.user.id)" disabled="true"><em>Anfrage ausstehend</em></ion-button>
+            <ion-button *ngIf="angebot.fahrtId && angebot.isInteressent(this.user.id) && !angebot.isKunde(this.user.id)" disabled="true"><em>Anfrage abgelehnt</em></ion-button>
+            <ng-container *ngIf="!angebot.fahrtId && angebot.isKunde(this.user.id)">
+                <em>Sobald der Fahrer die Fahrt beginnt ist das Tracking möglich.</em><br>
+                <ion-button class="ion-margin-top" disabled="true"><em>Fahrt tracken</em></ion-button>
+            </ng-container>
+            <ion-button *ngIf="angebot.fahrtId && angebot.isKunde(this.user.id)">Fahrt tracken</ion-button>
             <ion-button *ngIf="!angebot.isInteressent(this.user.id) && !angebot.isKunde(this.user.id)" (click)="angebotAnfragen()">Anfragen</ion-button>
         </div>
     </ion-card>

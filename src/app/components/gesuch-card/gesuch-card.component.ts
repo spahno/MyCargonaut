@@ -9,51 +9,64 @@ import {AlertController, ModalController} from '@ionic/angular';
 import {AddLieferobjektModalComponent} from '../add-lieferobjekt-modal/add-lieferobjekt-modal.component';
 import {User} from '../../../models/user';
 import {GesuchService} from '../../../services/gesuch/gesuch.service';
+import {FahrzeugService} from '../../../services/fahrzeug/fahrzeug.service';
+import {Fahrzeug} from '../../../models/fahrzeug';
 
 @Component({
   selector: 'app-gesuch-card',
   templateUrl: './gesuch-card.component.html',
-  styleUrls: ['./gesuch-card.component.scss'],
+  styleUrls: ['../angebot-card/angebot-card.component.scss'],
 })
 export class GesuchCardComponent implements OnInit {
   @Input() inputGesuch = new Gesuch();
   gesuch = new Gesuch();
+  @Input() inputUser: User = new User('', '', '', '');
   user: User = new User('', '', '', '');
-  interessenten: string;
-  erstellerName: string;
+  interessenten: User[] = [];
+  interessentenText: string;
+  erstellerName = 'Kein Ersteller gespeichert!';
   erstellerBild = 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y';
   public dropdown = false;
 
   constructor(public authService: AuthService,
               private gesuchService: GesuchService,
               private fahrtService: FahrtService,
+              private fahrzeugService: FahrzeugService,
               public alertController: AlertController) {
-    this.authService.loadPageSubscription(u => {
-      Object.assign(this.user, u);
-    });
+
   }
 
   ngOnInit() {
+    Object.assign(this.user, this.inputUser);
     Object.assign(this.gesuch, this.inputGesuch);
-    this.setInteressenten(this.gesuch.getInteressenten().length);
+    const tmpInteressenten = this.gesuch.getInteressenten();
+    this.setInteressenten(tmpInteressenten);
+    this.setInteressentenText(tmpInteressenten.length);
     if (this.gesuch.erstellerId) {
-      const sub = this.authService.findById(this.gesuch.erstellerId).subscribe(res => {
-        sub.unsubscribe();
-        this.erstellerName = res.vorname + ' ' + res.nachname;
-        this.erstellerBild = res.profileImage || 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y';
+      this.authService.findUserById(this.gesuch.erstellerId).then(ersteller => {
+        this.erstellerName = ersteller.vorname + ' ' + ersteller.nachname;
+        this.erstellerBild = ersteller.profileImage || 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y';
       });
-    } else {
-      this.erstellerName = 'Kein Ersteller gespeichert!';
     }
   }
 
-  setInteressenten(interessenten: number) {
+  setInteressenten(interessenten: InteressentG[]) {
+    this.interessenten = [];
+    interessenten.forEach(e => {
+      this.authService.findUserById(e.userId).then(u => {
+        this.interessenten.push(u);
+        console.log('Interessenten: ' + u.vorname);
+      });
+    });
+  }
+
+  setInteressentenText(interessenten: number) {
     if (interessenten === 0) {
-      this.interessenten = 'Keine Interessenten';
+      this.interessentenText = 'Keine Interessenten';
     } else if (interessenten === 1) {
-      this.interessenten = '1 Interessent';
+      this.interessentenText = '1 Interessent';
     } else {
-      this.interessenten = interessenten + ' Interessenten';
+      this.interessentenText = interessenten + ' Interessenten';
     }
   }
 
@@ -133,48 +146,64 @@ export class GesuchCardComponent implements OnInit {
     await alert.present();
   }
 
-  async angebotAnfragen() {
-    if (this.gesuch) {
-      const alert = await this.alertController.create({
-        cssClass: 'my-custom-class',
-        header: 'Prompt!',
-        inputs: [
-          {
-            name: 'name',
-            type: 'text',
-            placeholder: 'name des Lieferobjekts'
-          },
-          {
-            name: 'beschreibung',
-            type: 'text',
-            placeholder: 'beschreibung'
-          },
-          {
-            name: 'preis',
-            type: 'text',
-            placeholder: 'Preisvorschlag'
-          }],
-        buttons: [
-          {
-            text: 'Cancel',
-            role: 'cancel',
-            cssClass: 'secondary',
-            handler: () => {}
-          }, {
-            text: 'Anfrage senden',
-            handler: (data) => {
-              const interessent = new InteressentA();
-              interessent.userId = this.authService.getUser().id;
-              interessent.objectId = data;
-              this.gesuch.addInteressent(new InteressentG());
-              this.gesuchService.updateGesuch(this.gesuch).catch(err => {
-                this.presentAlert('Fehler!', 'Fehler beim speichern des Angebots entstanden. Error: ' + err, 'Ok');
-              });
+  getFahrzeuge(): Promise<{ name: string, type: 'radio', label: string, value: string, checked: boolean}[]> {
+    return new Promise( (resolve, reject) => {
+      if (this.user.fahrzeuge && this.user.fahrzeuge.length === 0) {
+        reject('Keine Fahrzeuge gespeichert');
+      } else {
+        const radioInputs: { name: string, type: 'radio', label: string, value: string, checked: boolean }[] = [];
+        let first = true;
+        this.user.fahrzeuge.forEach(fahrzeugId => {
+          const sub = this.fahrzeugService.findFahrzeugById(fahrzeugId).subscribe(fahrzeug => {
+            sub.unsubscribe();
+            radioInputs.push({
+              name: fahrzeugId, type: 'radio', label: fahrzeug.marke + ' ' +
+                  fahrzeug.modell, value: fahrzeugId, checked: first
+            });
+            first = false;
+            if (radioInputs.length === this.user.fahrzeuge.length) {
+              resolve(radioInputs);
             }
-          }
-        ]
+          });
+        });
+      }
+    });
+  }
+
+  async gesuchAnfragen() {
+    if (this.gesuch) {
+      const radioInputs = await this.getFahrzeuge().catch(err => {
+
       });
-      await alert.present();
+      if (radioInputs) {
+        const alert = await this.alertController.create({
+          cssClass: 'my-custom-class',
+          header: 'Fahrt anbieten',
+          message: 'Wähle dein Fahrzeug mit dem du die Fahrt anbieten möchtest:',
+          inputs: radioInputs,
+          buttons: [
+            {
+              text: 'Cancel',
+              role: 'cancel',
+              cssClass: 'secondary',
+              handler: () => {
+              }
+            }, {
+              text: 'Anfrage senden',
+              handler: (data) => {
+                const sendInteressent = new InteressentG();
+                sendInteressent.userId = this.authService.getUser().id;
+                sendInteressent.fahrzeugId = data;
+                this.gesuch.addInteressent(sendInteressent);
+                this.gesuchService.updateGesuch(this.gesuch).catch(err => {
+                  this.presentAlert('Fehler!', 'Fehler beim speichern des Angebots entstanden. Error: ' + err, 'Ok');
+                });
+              }
+            }
+          ]
+        });
+        await alert.present();
+      }
     }
   }
 
