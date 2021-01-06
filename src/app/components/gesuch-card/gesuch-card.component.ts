@@ -24,8 +24,7 @@ export class GesuchCardComponent implements OnInit {
   user: User = new User('', '', '', '');
   interessenten: User[] = [];
   interessentenText: string;
-  erstellerName = 'Kein Ersteller gespeichert!';
-  erstellerBild = 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y';
+  ersteller = new User( '', '', '', '');
   public dropdown = false;
 
   constructor(public authService: AuthService,
@@ -44,8 +43,7 @@ export class GesuchCardComponent implements OnInit {
     this.setInteressentenText(tmpInteressenten.length);
     if (this.gesuch.erstellerId) {
       this.authService.findUserById(this.gesuch.erstellerId).then(ersteller => {
-        this.erstellerName = ersteller.vorname + ' ' + ersteller.nachname;
-        this.erstellerBild = ersteller.profileImage || 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y';
+        Object.assign(this.ersteller, ersteller);
       });
     }
   }
@@ -55,7 +53,6 @@ export class GesuchCardComponent implements OnInit {
     interessenten.forEach(e => {
       this.authService.findUserById(e.userId).then(u => {
         this.interessenten.push(u);
-        console.log('Interessenten: ' + u.vorname);
       });
     });
   }
@@ -68,6 +65,10 @@ export class GesuchCardComponent implements OnInit {
     } else {
       this.interessentenText = interessenten + ' Interessenten';
     }
+  }
+
+  interessentAnnehmen(interessent) {
+
   }
 
   starteFahrt() {

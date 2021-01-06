@@ -1,12 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Anfrage} from '../../../models/Anfrage';
-import {Gesuch, InteressentG} from '../../../models/Gesuch';
 import {Angebot, InteressentA} from '../../../models/Angebot';
 import {AuthService} from '../../../services/auth/auth.service';
 import {AngebotService} from '../../../services/angebot/angebot.service';
 import {FahrtService} from '../../../services/fahrt/fahrt.service';
-import {AlertController, ModalController} from '@ionic/angular';
-import {AddLieferobjektModalComponent} from '../add-lieferobjekt-modal/add-lieferobjekt-modal.component';
+import {AlertController} from '@ionic/angular';
 import {User} from '../../../models/user';
 
 @Component({
@@ -17,43 +14,51 @@ import {User} from '../../../models/user';
 export class AngebotCardComponent implements OnInit {
   @Input() inputAngebot = new Angebot();
   angebot = new Angebot();
+  @Input() inputUser: User = new User('', '', '', '');
   user: User = new User('', '', '', '');
-  interessenten: string;
-  erstellerName: string;
-  erstellerBild = 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y';
+  interessenten: User[] = [];
+  interessentenText: string;
+  ersteller = new User( '', '', '', '');
   public dropdown = false;
 
   constructor(public authService: AuthService,
               private angebotService: AngebotService,
               private fahrtService: FahrtService,
-              public alertController: AlertController,
-              public modalController: ModalController) {
+              public alertController: AlertController) {
     this.authService.loadPageSubscription(u => {
       Object.assign(this.user, u);
       });
   }
 
   ngOnInit() {
+    Object.assign(this.user, this.inputUser);
     Object.assign(this.angebot, this.inputAngebot);
-    this.setInteressenten(this.angebot.getInteressenten().length);
+    const tmpInteressenten = this.angebot.getInteressenten();
+    this.setInteressenten(tmpInteressenten);
+    this.setInteressentenText(tmpInteressenten.length);
     if (this.angebot.erstellerId) {
-      const sub = this.authService.findById(this.angebot.erstellerId).subscribe(res => {
-        sub.unsubscribe();
-        this.erstellerName = res.vorname + ' ' + res.nachname;
-        this.erstellerBild = res.profileImage || 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y';
+      this.authService.findUserById(this.angebot.erstellerId).then(ersteller => {
+        Object.assign(this.ersteller, ersteller);
       });
-    } else {
-      this.erstellerName = 'Kein Ersteller gespeichert!';
     }
   }
 
-  setInteressenten(interessenten: number) {
+  setInteressenten(interessenten: InteressentA[]) {
+    this.interessenten = [];
+    interessenten.forEach(e => {
+      this.authService.findUserById(e.userId).then(u => {
+        this.interessenten.push(u);
+      });
+    });
+  }
+
+  setInteressentenText(interessenten: number) {
     if (interessenten === 0) {
-      this.interessenten = 'Keine Interessenten';
+      this.interessentenText = 'Keine Interessenten';
     } else if (interessenten === 1) {
-      this.interessenten = '1 Interessent';
+      this.interessentenText = '1 Interessent';
     } else {
-      this.interessenten = interessenten + ' Interessenten';
+      this.interessentenText = interessenten + ' Interessenten';
     }
   }
 

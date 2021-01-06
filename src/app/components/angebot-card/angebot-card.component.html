@@ -2,7 +2,7 @@
     <ion-card class="border-card-orange">
         <ion-item lines="none">
             <h3 slot="start">{{angebot.fahrzeugId}}</h3>
-            <ion-badge color="secondary" slot="end">{{interessenten}}</ion-badge>
+            <ion-badge color="secondary" slot="end">{{interessentenText}}</ion-badge>
         </ion-item>
         <ion-item lines="none">
             <h4 slot="start">{{angebot.abfahrtOrt}}</h4>
@@ -50,24 +50,34 @@
             </ion-label>
         </ion-item>
         <!-- Profil -->
-        <ion-item lines="full">
+        <ng-container *ngIf="this.angebot.erstellerId">
+            <ion-item lines="full" >
+                <ion-label slot="start">
+                    Ersteller:
+                </ion-label>
+                <ion-avatar class="ion-margin">
+                    <img src="{{ersteller.profileImage || 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'}}">
+                </ion-avatar>
+                <ion-label>
+                    {{ersteller.vorname || 'Ladefehler'}} {{ersteller.nachname || 'Ladefehler'}}
+                </ion-label>
+            </ion-item>
+            <!-- Telefon -->
+            <ion-item lines="full">
+                <ion-label slot="start">
+                    Telefon:
+                </ion-label>
+                <ion-label>
+                    {{ersteller.telefon || 'Ladefehler'}}
+                </ion-label>
+            </ion-item>
+        </ng-container>
+        <ion-item lines="full" *ngIf="!(this.angebot.erstellerId)">
             <ion-label slot="start">
                 Ersteller:
             </ion-label>
-            <ion-avatar *ngIf="this.angebot.erstellerId" class="ion-margin">
-                <img src="{{erstellerBild}}">
-            </ion-avatar>
             <ion-label>
-                {{erstellerName}}
-            </ion-label>
-        </ion-item>
-        <!-- Telefon -->
-        <ion-item lines="full">
-            <ion-label slot="start">
-                Telefon:
-            </ion-label>
-            <ion-label>
-                0123 456789
+                <em>Fehler bei dem Darstellen des Erstellers!</em>
             </ion-label>
         </ion-item>
         <!-- Bezahlung -->
@@ -79,6 +89,24 @@
                 {{angebot.bezahlung}}
             </ion-label>
         </ion-item>
+        <!-- Interessenten -->
+        <ng-container *ngIf="this.user.id && this.user.id === this.angebot.erstellerId && angebot._ID">
+            <ion-item lines="none">
+                <ion-label slot="start">Interessenten:</ion-label>
+                <ion-label *ngIf="interessenten.length === 0"><em>Es gibt noch keine interessenten.</em></ion-label>
+            </ion-item>
+            <ion-item lines="inset" *ngFor="let interessent of this.interessenten">
+                <ion-avatar slot="start">
+                    <img src="{{interessent.profileImage || 'https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y'}}">
+                </ion-avatar>
+                <ion-label>
+                    {{interessent.vorname}} {{interessent.nachname}}
+                </ion-label>
+                <ion-icon slot="end" name="information-circle-outline"></ion-icon>
+                <ion-icon slot="end" color="primary" name="checkmark-circle-outline"></ion-icon>
+                <ion-icon slot="end" color="secondary" name="close-circle-outline"></ion-icon>
+            </ion-item>
+        </ng-container>
 
         <!-- Buttons Angebot -->
         <div *ngIf="this.user.id && this.user.id === this.angebot.erstellerId && angebot._ID" class="ion-text-center ion-margin">
