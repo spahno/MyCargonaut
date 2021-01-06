@@ -5,6 +5,7 @@ import {AngularFireModule} from '@angular/fire';
 import {environment} from '../../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 import {Angebot, InteressentA} from '../../models/Angebot';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('AngebotService', () => {
     let service: AngebotService;
@@ -40,6 +41,7 @@ describe('AngebotService', () => {
             imports: [
                 AngularFireModule.initializeApp(environment.testFirebaseConfig),
                 AngularFirestoreModule,
+                RouterTestingModule
             ]
         });
         service = TestBed.inject(AngebotService);
