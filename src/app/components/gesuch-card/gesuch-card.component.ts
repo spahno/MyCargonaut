@@ -7,6 +7,8 @@ import {User} from '../../../models/user';
 import {GesuchService} from '../../../services/gesuch/gesuch.service';
 import {FahrzeugService} from '../../../services/fahrzeug/fahrzeug.service';
 import {Fahrt} from '../../../models/Fahrt';
+import {Lieferobjekt} from '../../../models/Lieferobjekt';
+import {LieferobjektService} from '../../../services/lieferobjekt/lieferobjekt.service';
 
 @Component({
   selector: 'app-gesuch-card',
@@ -18,6 +20,7 @@ export class GesuchCardComponent implements OnInit {
   gesuch = new Gesuch();
   @Input() inputUser: User = new User('', '', '', '');
   user: User = new User('', '', '', '');
+  lieferobjekt: Lieferobjekt = new Lieferobjekt();
   interessenten: {user: User, interessent: InteressentG}[] = [];
   fahrer: {user: User, fahrer: InteressentG}[] = [];
   fahrt: Fahrt = new Fahrt();
@@ -28,6 +31,7 @@ export class GesuchCardComponent implements OnInit {
   constructor(public authService: AuthService,
               private gesuchService: GesuchService,
               private fahrtService: FahrtService,
+              private lieferobjektService: LieferobjektService,
               private fahrzeugService: FahrzeugService,
               public alertController: AlertController,
               public modalController: ModalController) {
@@ -46,6 +50,11 @@ export class GesuchCardComponent implements OnInit {
     if (this.gesuch.erstellerId) {
       this.authService.findUserById(this.gesuch.erstellerId).then(ersteller => {
         Object.assign(this.ersteller, ersteller);
+      });
+    }
+    if (this.gesuch.lieferobjektId) {
+      this.lieferobjektService.findLieferobjektById(this.gesuch.lieferobjektId).subscribe(lieferobjekt => {
+        Object.assign(this.lieferobjekt, lieferobjekt);
       });
     }
   }

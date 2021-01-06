@@ -1,7 +1,7 @@
 <div *ngIf="this.user.id && angebot._ID">
     <ion-card class="border-card-orange">
         <ion-item lines="none">
-            <h3 slot="start">{{angebot.fahrzeugId}}</h3>
+            <h3 slot="start">{{fahrzeug.marke || 'Fahrzeug nicht hinterlegt'}} {{fahrzeug.modell || ''}}</h3>
             <ion-badge color="secondary" slot="end">{{interessentenText}}</ion-badge>
         </ion-item>
         <ion-item lines="none">
@@ -25,7 +25,7 @@
                 Fahrzeug:
             </ion-label>
             <ion-label>
-                Mercedes Vito
+                {{fahrzeug.marke || 'Fahrzeug nicht hinterlegt'}} {{fahrzeug.modell || ''}}
             </ion-label>
         </ion-item>
 

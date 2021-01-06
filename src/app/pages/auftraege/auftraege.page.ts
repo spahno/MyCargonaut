@@ -56,9 +56,6 @@ export class AuftraegePage implements OnInit {
                         this.gesucheArr.push(foundItem);
                     });
                 });
-
-
-
                 // fetch Gesuche
                 this.user.interessierteGesuche.forEach(g => {
                     this.gesuchService.findGesuchById(g).then(foundItem => {

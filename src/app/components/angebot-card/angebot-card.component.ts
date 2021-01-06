@@ -7,6 +7,8 @@ import {AlertController} from '@ionic/angular';
 import {User} from '../../../models/user';
 import {LieferobjektService} from '../../../services/lieferobjekt/lieferobjekt.service';
 import {Fahrt} from '../../../models/Fahrt';
+import {Fahrzeug} from '../../../models/fahrzeug';
+import {FahrzeugService} from '../../../services/fahrzeug/fahrzeug.service';
 
 @Component({
   selector: 'app-angebot-card',
@@ -18,6 +20,7 @@ export class AngebotCardComponent implements OnInit {
   angebot = new Angebot();
   @Input() inputUser: User = new User('', '', '', '');
   user: User = new User('', '', '', '');
+  fahrzeug: Fahrzeug = new Fahrzeug();
   interessenten: {user: User, interessent: InteressentA}[] = [];
   kunden: {user: User, kunde: InteressentA}[] = [];
   fahrt: Fahrt = new Fahrt();
@@ -29,7 +32,8 @@ export class AngebotCardComponent implements OnInit {
               private angebotService: AngebotService,
               private fahrtService: FahrtService,
               private lieferobjektService: LieferobjektService,
-              public alertController: AlertController) {
+              public alertController: AlertController,
+              private fahrzeugService: FahrzeugService) {
   }
 
   ngOnInit() {
@@ -42,6 +46,11 @@ export class AngebotCardComponent implements OnInit {
     if (this.angebot.erstellerId) {
       this.authService.findUserById(this.angebot.erstellerId).then(ersteller => {
         Object.assign(this.ersteller, ersteller);
+      });
+    }
+    if (this.angebot.fahrzeugId) {
+      this.fahrzeugService.findFahrzeugById(this.angebot.fahrzeugId).subscribe(fahrzeug => {
+        Object.assign(this.fahrzeug, fahrzeug);
       });
     }
   }

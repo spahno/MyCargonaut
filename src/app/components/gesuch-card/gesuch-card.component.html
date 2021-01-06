@@ -1,7 +1,7 @@
 <div *ngIf="this.user.id && gesuch._ID">
     <ion-card class="border-card-green">
         <ion-item lines="none">
-            <h3 slot="start">{{gesuch.lieferobjektId}}</h3>
+            <h3 slot="start">{{lieferobjekt.name || 'Lieferobjekt nicht hinterlegt'}}</h3>
             <ion-badge color="primary" slot="end">{{interessentenText}}</ion-badge>
         </ion-item>
         <ion-item lines="none">
@@ -19,13 +19,13 @@
     <!-- Dropdown -->
     <ion-card [class.card-dropdown-disabled]="!dropdown" class="card-dropdown">
 
-        <!-- Fahrzeug -->
+        <!-- Lieferobjekt -->
         <ion-item lines="full" *ngIf="gesuch">
             <ion-label slot="start">
-                Fahrzeug:
+                Lieferobjekt
             </ion-label>
             <ion-label>
-                Mercedes Vito
+                {{lieferobjekt.name || 'Lieferobjekt nicht hinterlegt'}}
             </ion-label>
         </ion-item>
 
