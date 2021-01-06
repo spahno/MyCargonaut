@@ -32,6 +32,10 @@ export class AuthService {
 
         copy.email = copy.email || null;
         copy.username = copy.username || null;
+        copy.anfragen = copy.anfragen || [];
+        copy.angebote = copy.angebote || [];
+        copy.gesuche = copy.gesuche || [];
+        copy.fahrzeuge = copy.fahrzeuge || [];
 
         return copy;
     }
@@ -59,6 +63,19 @@ export class AuthService {
                     }
                     return {...data};
                 }));
+    }
+
+    /**
+     * Method to find a user by id
+     * @param id id of a user
+     * @return Promise<User> user that was found
+     */
+    findUserById(id: string): Promise<User> {
+        return new Promise((resolve, reject) => {
+            this.userCollection.doc(id).get().toPromise().then((res) => {
+                resolve(res.data());
+            }).catch(err => reject(err));
+        });
     }
 
     /**

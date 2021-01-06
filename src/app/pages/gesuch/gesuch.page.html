@@ -5,10 +5,12 @@
 </ion-header>
 
 <ion-content>
+  <div class="cargo-content">
   <ng-container *ngIf="filtertGesuche.length < 1">
     <app-gesuch-card *ngFor="let i of [0,1,2]"></app-gesuch-card>
   </ng-container>
   <ng-container *ngIf="filtertGesuche.length > 0">
-    <app-gesuch-card *ngFor="let gesuch of filtertGesuche" [inputGesuch]="gesuch"></app-gesuch-card>
+    <app-gesuch-card *ngFor="let gesuch of filtertGesuche" [inputGesuch]="gesuch" [inputUser]="user"></app-gesuch-card>
   </ng-container>
+  </div>
 </ion-content>
