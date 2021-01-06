@@ -53,10 +53,10 @@
 
             <ion-row class="ion-justify-content-center">
                 <ion-col size="6">
-                    <ion-button expand="block" class="bg-yellow">Profil löschen</ion-button>
+                    <ion-button (click)="delete()" expand="block" class="bg-yellow">Profil löschen</ion-button>
                 </ion-col>
                 <ion-col size="6">
-                    <ion-button expand="block" class="bg-green">Profil editieren</ion-button>
+                    <ion-button (click)="openProfilBearbeiten()" expand="block" class="bg-green">Profil editieren</ion-button>
                 </ion-col>
             </ion-row>
         </ion-card>
@@ -76,7 +76,7 @@
                         <p>{{car.nummernschild}}</p>
                     </ion-label>
                     <ion-icon name="create-outline" slot="end" class="action-btn icon-green" (click)="this.openFahrzeugdetails(this.car, false, true)"></ion-icon>
-                    <ion-icon name="trash" slot="end" class="action-btn icon-yellow" (click)="this.deleteFahrzeug(car.id)"></ion-icon>
+                    <ion-icon name="trash" slot="end" class="action-btn icon-yellow" (click)="this.deleteFahrzeug(car)"></ion-icon>
                     <ion-icon name="chevron-forward-outline" slot="end" class="forward-chevron" (click)="openFahrzeugdetails(this.car, true, false)"></ion-icon>
                 </ion-item>
             </ng-container>

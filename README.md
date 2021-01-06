@@ -39,7 +39,7 @@ To start the app, run ``npm run ion`` in the root folder.
   
 * *Optional:* Run ``npm run coverage`` to observe test coverage.
 
-**Testing Strategy:** White-box-tests (unit testing)
+**Testing Strategy:** White-box-tests (unit testing) with the [Jasmine test framework](https://jasmine.github.io)
 
 ## Deployment
 When pushing to the main branch ``release``, the Travis bot will automatically commit the changes

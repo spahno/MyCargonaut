@@ -58,7 +58,7 @@ export class LoginPage implements ViewDidEnter {
     }
 
     ionViewDidEnter() {
-        if (this.authService.getUserID()) {
+        if (this.authService.getUser()) {
             this.changePage.route('profile');
         }
         setTimeout(() => this.emailRef.setFocus(), 10);
