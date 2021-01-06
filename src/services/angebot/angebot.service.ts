@@ -109,6 +109,12 @@ export class AngebotService {
         });
     }
 
+    /**
+     * Passes search variables to the page that is to be filtered
+     * @param startort is the place where the ride starts
+     * @param zielort is the place where the ride ends
+     * @param abfahrtsdatum is the date on which the ride ends
+     */
     startSearch(startort: string, zielort: string, abfahrtsdatum: string) {
         this.startort = startort;
         this.zielort = zielort;
