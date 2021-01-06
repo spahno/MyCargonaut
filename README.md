@@ -1,10 +1,13 @@
 # *MyCargonaut*
+
 ###### *CS2016 Konzepte moderner Softwareentwicklung - Wintersemester 2020/2021*
 
 ## Build Status
+
 [![Build Status](https://travis-ci.com/spahno/MyCargonaut.svg?branch=release)](https://travis-ci.com/spahno/MyCargonaut)
 
 ## Contributors
+
 <a href="https://github.com/spahno">
 <img alt="Julian Hermanspahn" src="https://avatars2.githubusercontent.com/u/56961433?s=460&u=ac9733d7c9f2d064ee6ee34afd30256d660f4e47&v=4" width="150" height="150"/>
 </a>
@@ -18,6 +21,7 @@
 </a>
 
 ## Content
+
 * [Installation](#installation)
 * [Technology stack](#technology-stack)
 * [Infrastructure](#infrastructure)
@@ -27,25 +31,30 @@
 * [Mockup](#mockup)
 
 ## Installation
+
 To install the dependencies, run ``npm i``.
 
 To start the app, run ``npm run ion`` in the root folder.
 
 ## Testing
+
 **Before commiting** to the repository, run the following scripts.
+
 * Run ``npm run test`` for unit testing.
 * Run ``npm run e2e`` for end-to-end testing.
 * Run ``npm run lint`` to find linting issues.
-  
+
 * *Optional:* Run ``npm run coverage`` to observe test coverage.
 
 **Testing Strategy:** White-box-tests (unit testing) with the [Jasmine test framework](https://jasmine.github.io)
 
 ## Deployment
-When pushing to the main branch ``release``, the Travis bot will automatically commit the changes
-to the ``gh-pages`` branch and deploy the app to [MyCargonaut](https://spahno.github.io/MyCargonaut).
+
+When pushing to the main branch ``release``, the Travis bot will automatically commit the changes to the ``gh-pages``
+branch and deploy the app to [MyCargonaut](https://spahno.github.io/MyCargonaut).
 
 ## Technology stack
+
 Technology | Usage
 ---------------------|----------
 [WebStorm](https://www.jetbrains.com/webstorm) | IDE
@@ -59,16 +68,22 @@ Technology | Usage
 [Github Pages](https://pages.github.com) | Deployment
 
 ## Infrastructure
+
 **GitHub - GitHub Pages - Travis CI**
 
 ## Domain model
-![Domain model](./docs/domain_diagram.png)
+
+![Domain model](./docs/domain_model.png)
 
 ## Class diagram
-Lorem Ipsum
+
+![Class diagram](./docs/class_diagram.jpeg)
 
 ## Wireframe
+
 [Wireframes in Adobe XD](https://xd.adobe.com/view/3972f6df-4178-426e-bcd4-7858681e2eda-6c21/?fullscreen)
+
 ## Mockup
+
 [Mockup in Adbobe XD](https://xd.adobe.com/view/f2ef1bff-8858-4cd0-b83e-3012263a7b20-a7bc/?fullscreen)
 

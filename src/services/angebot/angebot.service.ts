@@ -5,6 +5,7 @@ import {Angebot} from '../../models/Angebot';
 import {map} from 'rxjs/operators';
 import {IError} from 'protractor/built/exitCodes';
 import {Router} from '@angular/router';
+import {User} from '../../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +66,19 @@ export class AngebotService {
                 data._ID = a.payload.doc.id;
                 return data;
             })));
+    }
+
+    /**
+     * Method to find a Angebot by id
+     * @param id id of a Angebot
+     * @return Promise<Angebot> Angebot that was found
+     */
+    findAngebotById(id: string): Promise<Angebot> {
+        return new Promise((resolve, reject) => {
+            this.angebotCollection.doc(id).get().toPromise().then((res) => {
+                resolve(res.data());
+            }).catch(err => reject(err));
+        });
     }
 
     /**

@@ -1,0 +1,43 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Aktuelle Aufträge</ion-title>
+        <ion-buttons slot="start">
+            <!--<ion-back-button></ion-back-button>-->
+            <ion-back-button defaultHref="login"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+
+
+    <ion-list-header>Meine Suche</ion-list-header>
+
+
+    <ng-container *ngIf="!user">
+        <app-gesuch-card *ngFor="let i of [0,1,2]"></app-gesuch-card>
+    </ng-container>
+
+    <div *ngIf="gesucheArr.length > 0 else keineGesuche">
+        <app-gesuch-card *ngFor="let g of user.erstellteGesuche; let index" [inputGesuch]="gesucheArr[index]" [inputUser]="user"></app-gesuch-card>
+    </div>
+
+    <ion-list-header>Meine Angebote</ion-list-header>
+
+    <ng-container *ngIf="!user">
+        <app-gesuch-card *ngFor="let i of [0,1,2]"></app-gesuch-card>
+    </ng-container>
+
+    <div *ngIf="angeboteArr.length > 0 else keineAngebote">
+        <app-angebot-card *ngFor="let a of user.erstellteAngebote; let index" [inputAngebot]="angeboteArr[index]" [inputUser]="user"></app-angebot-card>
+    </div>
+</ion-content>
+
+<ng-template #keineGesuche>
+    <p>Sie haben bisher kein Gesuch erstellt.</p>
+</ng-template>
+
+<ng-template #keineAngebote>
+    <p>Sie haben bisher kein Angebot erstellt.</p>
+</ng-template>
