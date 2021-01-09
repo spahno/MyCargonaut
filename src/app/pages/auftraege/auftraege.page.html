@@ -11,46 +11,65 @@
 <ion-content>
     <div class="cargo-content">
 
+        <ion-row class="ion-align-items-center">
+            <ion-col size="auto">
+                    <ion-list-header>Meine Suche
+                        <ion-button size="small" class="small-add" (click)="this.openGesuchedetails(this.gesuch, false, false)">
+                            <ion-icon name="add" slot="icon-only"></ion-icon>
+                        </ion-button>
+                    </ion-list-header>
+            </ion-col>
+            <ion-col size="auto">
 
-    <ion-list-header>Meine Suche</ion-list-header>
+            </ion-col>
 
-    <ng-container *ngIf="!user">
-        <app-gesuch-card *ngFor="let i of [0,1,2]"></app-gesuch-card>
-    </ng-container>
+        </ion-row>
 
-    <div *ngIf="gesucheArr.length > 0 else keineGesuche">
-        <app-gesuch-card *ngFor="let gesuch of gesucheArr" [inputGesuch]="gesuch" [inputUser]="user"></app-gesuch-card>
-    </div>
+        <ng-container *ngIf="!user">
+            <app-gesuch-card *ngFor="let i of [0,1,2]"></app-gesuch-card>
+        </ng-container>
 
-    <ion-list-header>Meine Angebote</ion-list-header>
+        <div *ngIf="gesucheArr.length > 0 else keineGesuche">
+            <app-gesuch-card *ngFor="let gesuch of gesucheArr" [inputGesuch]="gesuch"
+                             [inputUser]="user"></app-gesuch-card>
+        </div>
 
-    <ng-container *ngIf="!user">
-        <app-gesuch-card *ngFor="let i of [0,1,2]"></app-gesuch-card>
-    </ng-container>
+        <ion-list-header>Meine Angebote
+            <ion-button size="small" class="small-add">
+                <ion-icon name="add" slot="icon-only"></ion-icon>
+            </ion-button>
+        </ion-list-header>
 
-    <div *ngIf="angeboteArr.length > 0 else keineAngebote">
-        <app-angebot-card *ngFor="let angebot of angeboteArr" [inputAngebot]="angebot" [inputUser]="user"></app-angebot-card>
-    </div>
+        <ng-container *ngIf="!user">
+            <app-gesuch-card *ngFor="let i of [0,1,2]"></app-gesuch-card>
+        </ng-container>
 
-    <ion-list-header>Interessierte Gesuche</ion-list-header>
+        <div *ngIf="angeboteArr.length > 0 else keineAngebote">
+            <app-angebot-card *ngFor="let angebot of angeboteArr" [inputAngebot]="angebot"
+                              [inputUser]="user"></app-angebot-card>
+        </div>
 
-    <ng-container *ngIf="!user">
-        <app-gesuch-card *ngFor="let i of [0,1,2]"></app-gesuch-card>
-    </ng-container>
+        <ion-list-header>Interessierte Gesuche</ion-list-header>
 
-    <div *ngIf="intGesucheArr.length > 0 else keineGesuche">
-        <app-gesuch-card *ngFor="let gesuch of intGesucheArr" [inputGesuch]="gesuch" [inputUser]="user"></app-gesuch-card>
-    </div>
+        <ng-container *ngIf="!user">
+            <app-gesuch-card *ngFor="let i of [0,1,2]"></app-gesuch-card>
+        </ng-container>
 
-    <ion-list-header>Interessierte Angebote</ion-list-header>
+        <div *ngIf="intGesucheArr.length > 0 else keineGesuche">
+            <app-gesuch-card *ngFor="let gesuch of intGesucheArr" [inputGesuch]="gesuch"
+                             [inputUser]="user"></app-gesuch-card>
+        </div>
 
-    <ng-container *ngIf="!user">
-        <app-gesuch-card *ngFor="let i of [0,1,2]"></app-gesuch-card>
-    </ng-container>
+        <ion-list-header>Interessierte Angebote</ion-list-header>
 
-    <div *ngIf="intAngeboteArr.length > 0 else keineAngebote">
-        <app-angebot-card *ngFor="let angebot of intAngeboteArr" [inputAngebot]="angebot" [inputUser]="user"></app-angebot-card>
-    </div>
+        <ng-container *ngIf="!user">
+            <app-gesuch-card *ngFor="let i of [0,1,2]"></app-gesuch-card>
+        </ng-container>
+
+        <div *ngIf="intAngeboteArr.length > 0 else keineAngebote">
+            <app-angebot-card *ngFor="let angebot of intAngeboteArr" [inputAngebot]="angebot"
+                              [inputUser]="user"></app-angebot-card>
+        </div>
     </div>
 </ion-content>
 <app-navbar></app-navbar>

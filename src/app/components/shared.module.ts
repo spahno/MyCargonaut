@@ -10,13 +10,14 @@ import {FormsModule} from '@angular/forms';
 import {GesuchCardComponent} from './gesuch-card/gesuch-card.component';
 import {AddFahrzeugModalComponent} from './add-fahrzeug-modal/add-fahrzeug-modal.component';
 import {AddLieferobjektModalComponent} from './add-lieferobjekt-modal/add-lieferobjekt-modal.component';
+import {GesuchedetailsComponent} from './gesuchedetails/gesuchedetails.component';
 
 @NgModule({
     declarations: [AngebotCardComponent, GesuchCardComponent, ProfilPopoverComponent, NavbarComponent,
-        AddFahrzeugModalComponent, AddLieferobjektModalComponent, FahrzeugdetailsComponent],
+        AddFahrzeugModalComponent, AddLieferobjektModalComponent, FahrzeugdetailsComponent, GesuchedetailsComponent],
     imports: [CommonModule, IonicModule, RouterModule, FormsModule],
     exports: [AngebotCardComponent, GesuchCardComponent, ProfilPopoverComponent, NavbarComponent,
-        AddFahrzeugModalComponent, AddLieferobjektModalComponent, FahrzeugdetailsComponent]
+        AddFahrzeugModalComponent, AddLieferobjektModalComponent, FahrzeugdetailsComponent, GesuchedetailsComponent]
 })
 export class SharedModule {
 }
