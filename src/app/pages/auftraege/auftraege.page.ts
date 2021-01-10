@@ -9,6 +9,8 @@ import {Fahrzeug} from '../../../models/fahrzeug';
 import {FahrzeugdetailsComponent} from '../../components/fahrzeugdetails/fahrzeugdetails.component';
 import {ModalController} from '@ionic/angular';
 import {GesuchedetailsComponent} from '../../components/gesuchedetails/gesuchedetails.component';
+import {AngebotedetailsComponent} from '../../components/angebotedetails/angebotedetails.component';
+import {AddFahrzeugModalComponent} from '../../components/add-fahrzeug-modal/add-fahrzeug-modal.component';
 
 @Component({
     selector: 'app-auftraege',
@@ -92,7 +94,7 @@ export class AuftraegePage implements OnInit {
 
     async openAngebotdetails(angebot: Angebot, detailmode: boolean, editmode: boolean) {
         const modal = await this.modalController.create({
-            component: FahrzeugdetailsComponent,
+            component: AngebotedetailsComponent,
             cssClass: 'my-custom-class',
             componentProps: {
                 angebot,

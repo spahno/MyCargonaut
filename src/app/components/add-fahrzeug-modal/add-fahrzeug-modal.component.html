@@ -1,4 +1,19 @@
-<ion-item>
-  <ion-label position="stacked">Fahrzeug auswählen</ion-label>
-  <ion-input></ion-input>
-</ion-item>
+<ion-header translucent>
+    <ion-toolbar>
+        <ion-title>Fahrzeug auswählen</ion-title>
+        <ion-buttons slot="end">
+            <ion-button onclick="dismissModal()">Close</ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+<ion-content fullscreen>
+    <ion-list>
+        <ion-item *ngFor="let fahrzeug of this.userFahrzeuge" (click)="this.selectFahrzeug(fahrzeug)">
+            <ion-label>
+                <h2>{{fahrzeug.marke}} {{fahrzeug.modell}}</h2>
+                <h3>{{fahrzeug.fahrzeugart}}</h3>
+                <p>{{fahrzeug.nummernschild}}</p>
+            </ion-label>
+        </ion-item>
+    </ion-list>
+</ion-content>
