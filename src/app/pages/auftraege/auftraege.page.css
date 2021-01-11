@@ -6,7 +6,6 @@
     margin-right: auto;
   }
 }
-
 ion-title {
   text-align: center;
 }
@@ -45,5 +44,7 @@ ion-list-header .small-add {
   --background-hover: #005B52;
   height: 1.5rem;
   width: 2.5rem;
-  margin-left: 0.8rem
+  margin-left: 0.8rem;
 }
+
+/*# sourceMappingURL=auftraege.page.css.map */

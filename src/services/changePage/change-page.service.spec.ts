@@ -1,12 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ChangePageService } from './change-page.service';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('ChangePageService', () => {
   let service: ChangePageService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      imports: [RouterTestingModule]
+    });
     service = TestBed.inject(ChangePageService);
   });
 

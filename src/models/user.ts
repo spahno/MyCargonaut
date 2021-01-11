@@ -1,3 +1,6 @@
+import {InteressentG} from './Gesuch';
+import {Fahrzeug} from './fahrzeug';
+
 export class User {
     public id: string;
     public email: string;
