@@ -1,0 +1,64 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Aktuelle Aufträge</ion-title>
+        <ion-buttons slot="start">
+            <!--<ion-back-button></ion-back-button>-->
+            <ion-back-button defaultHref="login"></ion-back-button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="cargo-content">
+
+
+    <ion-list-header>Meine Suche</ion-list-header>
+
+    <ng-container *ngIf="!user">
+        <app-gesuch-card *ngFor="let i of [0,1,2]"></app-gesuch-card>
+    </ng-container>
+
+    <div *ngIf="gesucheArr.length > 0 else keineGesuche">
+        <app-gesuch-card *ngFor="let gesuch of gesucheArr" [inputGesuch]="gesuch" [inputUser]="user"></app-gesuch-card>
+    </div>
+
+    <ion-list-header>Meine Angebote</ion-list-header>
+
+    <ng-container *ngIf="!user">
+        <app-gesuch-card *ngFor="let i of [0,1,2]"></app-gesuch-card>
+    </ng-container>
+
+    <div *ngIf="angeboteArr.length > 0 else keineAngebote">
+        <app-angebot-card *ngFor="let angebot of angeboteArr" [inputAngebot]="angebot" [inputUser]="user"></app-angebot-card>
+    </div>
+
+    <ion-list-header>Interessierte Gesuche</ion-list-header>
+
+    <ng-container *ngIf="!user">
+        <app-gesuch-card *ngFor="let i of [0,1,2]"></app-gesuch-card>
+    </ng-container>
+
+    <div *ngIf="intGesucheArr.length > 0 else keineGesuche">
+        <app-gesuch-card *ngFor="let gesuch of intGesucheArr" [inputGesuch]="gesuch" [inputUser]="user"></app-gesuch-card>
+    </div>
+
+    <ion-list-header>Interessierte Angebote</ion-list-header>
+
+    <ng-container *ngIf="!user">
+        <app-gesuch-card *ngFor="let i of [0,1,2]"></app-gesuch-card>
+    </ng-container>
+
+    <div *ngIf="intAngeboteArr.length > 0 else keineAngebote">
+        <app-angebot-card *ngFor="let angebot of intAngeboteArr" [inputAngebot]="angebot" [inputUser]="user"></app-angebot-card>
+    </div>
+    </div>
+</ion-content>
+<app-navbar></app-navbar>
+
+<ng-template #keineGesuche>
+    <p>Sie haben bisher kein Gesuch erstellt.</p>
+</ng-template>
+
+<ng-template #keineAngebote>
+    <p>Sie haben bisher kein Angebot erstellt.</p>
+</ng-template>

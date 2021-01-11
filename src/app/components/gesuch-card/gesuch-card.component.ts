@@ -1,17 +1,14 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Anfrage} from '../../../models/Anfrage';
 import {Gesuch, InteressentG} from '../../../models/Gesuch';
-import {Angebot, InteressentA} from '../../../models/Angebot';
 import {AuthService} from '../../../services/auth/auth.service';
-import {AngebotService} from '../../../services/angebot/angebot.service';
 import {FahrtService} from '../../../services/fahrt/fahrt.service';
 import {AlertController, ModalController} from '@ionic/angular';
-import {AddLieferobjektModalComponent} from '../add-lieferobjekt-modal/add-lieferobjekt-modal.component';
 import {User} from '../../../models/user';
 import {GesuchService} from '../../../services/gesuch/gesuch.service';
 import {FahrzeugService} from '../../../services/fahrzeug/fahrzeug.service';
-import {Fahrzeug} from '../../../models/fahrzeug';
-import {ProfilPopoverComponent} from '../profil-popover/profil-popover.component';
+import {Fahrt} from '../../../models/Fahrt';
+import {Lieferobjekt} from '../../../models/Lieferobjekt';
+import {LieferobjektService} from '../../../services/lieferobjekt/lieferobjekt.service';
 
 @Component({
   selector: 'app-gesuch-card',
@@ -23,8 +20,10 @@ export class GesuchCardComponent implements OnInit {
   gesuch = new Gesuch();
   @Input() inputUser: User = new User('', '', '', '');
   user: User = new User('', '', '', '');
+  lieferobjekt: Lieferobjekt = new Lieferobjekt();
   interessenten: {user: User, interessent: InteressentG}[] = [];
   fahrer: {user: User, fahrer: InteressentG}[] = [];
+  fahrt: Fahrt = new Fahrt();
   interessentenText: string;
   ersteller = new User( '', '', '', '');
   public dropdown = false;
@@ -32,6 +31,7 @@ export class GesuchCardComponent implements OnInit {
   constructor(public authService: AuthService,
               private gesuchService: GesuchService,
               private fahrtService: FahrtService,
+              private lieferobjektService: LieferobjektService,
               private fahrzeugService: FahrzeugService,
               public alertController: AlertController,
               public modalController: ModalController) {
@@ -41,6 +41,8 @@ export class GesuchCardComponent implements OnInit {
   ngOnInit() {
     Object.assign(this.user, this.inputUser);
     Object.assign(this.gesuch, this.inputGesuch);
+    console.log('Card:' + this.user.id);
+    console.log('Card:' + this.gesuch._ID);
     const tmpInteressenten = this.gesuch.getInteressenten();
     this.setInteressenten(tmpInteressenten);
     this.setInteressentenText(tmpInteressenten.length);
@@ -48,6 +50,11 @@ export class GesuchCardComponent implements OnInit {
     if (this.gesuch.erstellerId) {
       this.authService.findUserById(this.gesuch.erstellerId).then(ersteller => {
         Object.assign(this.ersteller, ersteller);
+      });
+    }
+    if (this.gesuch.lieferobjektId) {
+      this.lieferobjektService.findLieferobjektById(this.gesuch.lieferobjektId).subscribe(lieferobjekt => {
+        Object.assign(this.lieferobjekt, lieferobjekt);
       });
     }
   }
@@ -98,11 +105,11 @@ export class GesuchCardComponent implements OnInit {
   async infoPopoverInteressent(interessent: InteressentG) {
     const intUser = await this.authService.findUserById(interessent.userId);
     const intFahrzeug = await this.fahrzeugService.findFahrzeugById(interessent.fahrzeugId);
-    const modal = await this.modalController.create({
-      component: ProfilPopoverComponent,
-      cssClass: 'my-custom-class'
-    });
-    return await modal.present();
+    // const modal = await this.modalController.create({
+      // component: ProfilPopoverComponent,
+      // cssClass: 'my-custom-class'
+    // });
+    // return await modal.present();
   }
 
   starteFahrt() {
@@ -110,6 +117,7 @@ export class GesuchCardComponent implements OnInit {
       if (this.gesuch) {
         if (!this.gesuch.fahrtId) {
           this.fahrtService.startFahrt().then(res => {
+            this.fahrt = res.fahrt;
             this.gesuch.fahrtId = res.fahrt._ID;
             this.gesuchService.updateGesuch(this.gesuch).then(res2 => {
               this.presentAlert('Fahrt gestartet', 'Die fahrt von ' + res2.gesuch.abfahrtOrt +
@@ -135,6 +143,7 @@ export class GesuchCardComponent implements OnInit {
       if (this.gesuch) {
         if (this.gesuch.fahrtId){
           this.fahrtService.endFahrt(this.gesuch.fahrtId).then( async res => {
+            this.fahrt = res;
             this.fahrtBewerten(res._ID);
           });
         } else {
@@ -169,7 +178,9 @@ export class GesuchCardComponent implements OnInit {
         }, {
           text: 'Okay',
           handler: () => {
-            this.fahrtService.fahrtBewerten(fahrtId, bewertung).catch(reason => {
+            this.fahrtService.fahrtBewerten(fahrtId, bewertung).then(fahrt => {
+              this.fahrt = fahrt;
+            }).catch(reason => {
               this.presentAlert('Bewertung fehlgeschlagen!', 'Beim speichern der Bewertung ist etwas schiefgelaufen. Error: <br>' +
                   reason, 'Ok');
             });
@@ -207,38 +218,44 @@ export class GesuchCardComponent implements OnInit {
 
   async gesuchAnfragen() {
     if (this.gesuch) {
-      const radioInputs = await this.getFahrzeuge().catch(err => {
-
+      await this.getFahrzeuge().then(async radioInputs => {
+        if (radioInputs) {
+          const alert = await this.alertController.create({
+            cssClass: 'my-custom-class',
+            header: 'Fahrt anbieten',
+            message: 'Wähle dein Fahrzeug mit dem du die Fahrt anbieten möchtest:',
+            inputs: radioInputs,
+            buttons: [
+              {
+                text: 'Cancel',
+                role: 'cancel',
+                cssClass: 'secondary',
+                handler: () => {
+                }
+              }, {
+                text: 'Anfrage senden',
+                handler: (data) => {
+                  const sendInteressent = new InteressentG();
+                  const interesentUser = this.authService.getUser();
+                  interesentUser.interessierteGesuche.push(this.gesuch._ID);
+                  sendInteressent.userId = interesentUser.id;
+                  sendInteressent.fahrzeugId = data;
+                  this.gesuch.addInteressent(sendInteressent);
+                  this.authService.updateUser(interesentUser).catch(err => {
+                    this.presentAlert('Fehler!', 'Fehler beim update des Users der sich interessiert. Error: ' + err, 'Ok');
+                  });
+                  this.gesuchService.updateGesuch(this.gesuch).catch(err => {
+                    this.presentAlert('Fehler!', 'Fehler beim speichern des Angebots entstanden. Error: ' + err, 'Ok');
+                  });
+                }
+              }
+            ]
+          });
+          await alert.present();
+        }
+      }).catch(err => {
+        this.presentAlert('Fehler!', 'Fehler laden der Fahrzeuge. Error: ' + err, 'Ok');
       });
-      if (radioInputs) {
-        const alert = await this.alertController.create({
-          cssClass: 'my-custom-class',
-          header: 'Fahrt anbieten',
-          message: 'Wähle dein Fahrzeug mit dem du die Fahrt anbieten möchtest:',
-          inputs: radioInputs,
-          buttons: [
-            {
-              text: 'Cancel',
-              role: 'cancel',
-              cssClass: 'secondary',
-              handler: () => {
-              }
-            }, {
-              text: 'Anfrage senden',
-              handler: (data) => {
-                const sendInteressent = new InteressentG();
-                sendInteressent.userId = this.authService.getUser().id;
-                sendInteressent.fahrzeugId = data;
-                this.gesuch.addInteressent(sendInteressent);
-                this.gesuchService.updateGesuch(this.gesuch).catch(err => {
-                  this.presentAlert('Fehler!', 'Fehler beim speichern des Angebots entstanden. Error: ' + err, 'Ok');
-                });
-              }
-            }
-          ]
-        });
-        await alert.present();
-      }
     }
   }
 

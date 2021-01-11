@@ -8,7 +8,7 @@
 <ion-content>
     <ion-list class="ion-margin-horizontal">
         <h2 class="ion-text-center">Fahrzeugdetails</h2>
-        <ion-item>
+
             <ion-label position="stacked">Nummernschild</ion-label>
             <ion-input [autofocus]="true" [readonly]="detailmode" [(ngModel)]="fahrzeug.nummernschild"></ion-input>
             <ion-text class="ion-text-end ion-padding-end"
@@ -16,8 +16,7 @@
                *ngIf="errors.get('nummernschild')">
                 {{errors.get('nummernschild')}}
             </ion-text>
-        </ion-item>
-        <ion-item>
+
             <ion-label position="stacked">Marke</ion-label>
             <ion-input [(ngModel)]="fahrzeug.marke" [readonly]="detailmode"></ion-input>
             <p class="ion-text-end ion-padding-end"
@@ -25,8 +24,7 @@
                *ngIf="errors.get('marke')">
                 {{errors.get('marke')}}
             </p>
-        </ion-item>
-        <ion-item>
+
             <ion-label position="stacked">Modell</ion-label>
             <ion-input [(ngModel)]="fahrzeug.modell" [readonly]="detailmode"></ion-input>
             <p class="ion-text-end ion-padding-end"
@@ -34,8 +32,7 @@
                *ngIf="errors.get('modell')">
                 {{errors.get('modell')}}
             </p>
-        </ion-item>
-        <ion-item>
+
             <ion-label position="stacked">Fahrzeugart</ion-label>
             <ion-input [(ngModel)]="fahrzeug.fahrzeugart" [readonly]="detailmode"></ion-input>
             <p class="ion-text-end ion-padding-end"
@@ -43,8 +40,7 @@
                *ngIf="errors.get('fahrzeugart')">
                 {{errors.get('fahrzeugart')}}
             </p>
-        </ion-item>
-        <ion-item>
+
             <ion-label position="stacked">Farbe</ion-label>
             <ion-input [(ngModel)]="fahrzeug.farbe" [readonly]="detailmode"></ion-input>
             <p class="ion-text-end ion-padding-end"
@@ -52,8 +48,7 @@
                *ngIf="errors.get('farbe')">
                 {{errors.get('farbe')}}
             </p>
-        </ion-item>
-        <ion-item>
+
             <ion-label position="stacked">Baujahr</ion-label>
             <ion-input [(ngModel)]="fahrzeug.baujahr" [readonly]="detailmode"></ion-input>
             <p class="ion-text-end ion-padding-end"
@@ -61,32 +56,32 @@
                *ngIf="errors.get('baujahr')">
                 {{errors.get('baujahr')}}
             </p>
-        </ion-item>
+
 
         <ion-list-header>
             Ladefläche
         </ion-list-header>
         <ion-row class="ion-justify-content-center">
             <ion-col>
-                <ion-item>
+
                     <ion-label position="stacked">Höhe</ion-label>
-                    <ion-input type="number" [(ngModel)]="fahrzeug.hoehe"
+                    <ion-input min="0" type="number" [(ngModel)]="fahrzeug.hoehe"
                                [readonly]="detailmode"></ion-input>
-                </ion-item>
+
             </ion-col>
             <ion-col>
-                <ion-item>
+
                     <ion-label position="stacked">Breite</ion-label>
-                    <ion-input type="number" [(ngModel)]="fahrzeug.breite"
+                    <ion-input min="0" type="number" [(ngModel)]="fahrzeug.breite"
                                [readonly]="detailmode"></ion-input>
-                </ion-item>
+
             </ion-col>
             <ion-col>
-                <ion-item>
+
                     <ion-label position="stacked">Tiefe</ion-label>
-                    <ion-input type="number" [(ngModel)]="fahrzeug.tiefe"
+                    <ion-input min="0" type="number" [(ngModel)]="fahrzeug.tiefe"
                                [readonly]="detailmode"></ion-input>
-                </ion-item>
+
             </ion-col>
         </ion-row>
         <ion-row>

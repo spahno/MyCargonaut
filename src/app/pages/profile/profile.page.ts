@@ -37,10 +37,10 @@ export class ProfilePage implements OnInit {
     }
 
     ngOnInit() {
-        this.user = this.authService.user;
-        this.getUserFahrzeuge();
-        console.log(this.user);
-        console.log(this.cars);
+        this.authService.loadPageSubscription(u => {
+            Object.assign(this.user = u);
+            this.getUserFahrzeuge();
+        });
     }
 
     async openFahrzeugdetails(fahrzeug: Fahrzeug, detailmode: boolean, editmode: boolean) {

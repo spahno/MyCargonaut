@@ -21,7 +21,7 @@ export class GesuchPage implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.authService.loadPageSubscription(u => this.user = u);
-        this.gesuchService.observableGesuch().subscribe(async data => {
+        this.subGesuch = this.gesuchService.observableGesuch().subscribe(async data => {
             this.gesuche = [];
             this.filtertGesuche = [];
             this.gesuche = data;
