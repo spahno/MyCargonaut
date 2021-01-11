@@ -72,6 +72,14 @@ export class Gesuch extends Anfrage {
             }
         }
     }
+
+    /**
+     * This method add the id of a Lieferobjekt to a Gesuch
+     * @param lieferobjektId is the id of Lieferobjekt connected
+     */
+    addLieferobjekt(lieferobjektId: string) {
+        this.lieferobjektId = lieferobjektId;
+    }
 }
 
 export class InteressentG {

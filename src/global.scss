@@ -30,6 +30,15 @@
 <----- GLOBAL STYLE SETTINGS ----->
 <--------------------------------->
  */
+ion-content {
+  // overwrite inline styles
+  --offset-bottom: auto!important;
+  --overflow: hidden;
+  overflow: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
 
 /**
 HEADER STYLING
@@ -69,6 +78,16 @@ BUTTON STYLINGS
   --background-hover: #005B52;
 }
 
+.add-btn {
+  --border-radius: 50%;
+  --color: #ffffff;
+  --background: #005B52;
+  --background-activated: #005B52;
+  --background-hover: #005B52;
+  height: 3rem;
+  width: 3rem;
+}
+
 /**
 ICON STYLINGS
  */
@@ -98,8 +117,20 @@ ion-input {
   padding-left: 0.2rem;
 }
 
+ion-datetime {
+  --color: #005B52;
+  border-radius: 8px !important;
+  border: 2px solid #005B52;
+}
+
 ion-label {
   --color: #005B52;
+}
+
+ion-textarea {
+  --color: #005B52;
+  border-radius: 8px !important;
+  border: 2px solid #005B52;
 }
 
 /**

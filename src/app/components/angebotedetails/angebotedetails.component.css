@@ -1,0 +1,30 @@
+.selected-fahrzeug ion-label {
+  color: #005B52;
+}
+
+.small-add {
+  --color: #ffffff;
+  --background: #005B52;
+  --background-activated: #005B52;
+  --background-hover: #005B52;
+  height: 1.5rem;
+  width: 2.5rem;
+  margin: inherit;
+}
+
+.small-del {
+  --color: #ffffff;
+  --background: #005B52;
+  --background-activated: #005B52;
+  --background-hover: #005B52;
+  height: 1.5rem;
+  width: 2.5rem;
+  margin: inherit;
+}
+
+.vertical-center {
+  display: flex;
+  align-items: center;
+}
+
+/*# sourceMappingURL=angebotedetails.component.css.map */

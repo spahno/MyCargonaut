@@ -2,14 +2,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { GesuchCardComponent } from './gesuch-card.component';
-import {Angebot} from '../../../models/Angebot';
 import {Gesuch} from '../../../models/Gesuch';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../../../environments/environment';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 
-describe('AnfrageCardComponent', () => {
+describe('GesuchCardComponent', () => {
   let component: GesuchCardComponent;
   let fixture: ComponentFixture<GesuchCardComponent>;
 

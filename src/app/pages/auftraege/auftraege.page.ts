@@ -5,6 +5,12 @@ import {Gesuch} from '../../../models/Gesuch';
 import {GesuchService} from '../../../services/gesuch/gesuch.service';
 import {Angebot} from '../../../models/Angebot';
 import {AngebotService} from '../../../services/angebot/angebot.service';
+import {Fahrzeug} from '../../../models/fahrzeug';
+import {FahrzeugdetailsComponent} from '../../components/fahrzeugdetails/fahrzeugdetails.component';
+import {ModalController} from '@ionic/angular';
+import {GesuchedetailsComponent} from '../../components/gesuchedetails/gesuchedetails.component';
+import {AngebotedetailsComponent} from '../../components/angebotedetails/angebotedetails.component';
+import {AddFahrzeugModalComponent} from '../../components/add-fahrzeug-modal/add-fahrzeug-modal.component';
 
 @Component({
     selector: 'app-auftraege',
@@ -19,10 +25,17 @@ export class AuftraegePage implements OnInit {
     intGesucheArr: Gesuch[] = [];
     intAngeboteArr: Angebot[] = [];
 
+    gesuch: Gesuch = new Gesuch();
+    angebot: Angebot = new Angebot();
+
+    detailmode: boolean = null;
+    editmode: boolean = null;
+
 
     constructor(private authService: AuthService,
                 private gesuchService: GesuchService,
-                private angebotService: AngebotService) {
+                private angebotService: AngebotService,
+                private modalController: ModalController) {
 
     }
 
@@ -64,7 +77,32 @@ export class AuftraegePage implements OnInit {
                 });
             });
         });
+    }
 
+    async openGesuchedetails(gesuch: Gesuch, detailmode: boolean, editmode: boolean) {
+        const modal = await this.modalController.create({
+            component: GesuchedetailsComponent,
+            cssClass: 'my-custom-class',
+            componentProps: {
+                gesuch,
+                detailmode,
+                editmode
+            }
+        });
+        return await modal.present();
+    }
+
+    async openAngebotdetails(angebot: Angebot, detailmode: boolean, editmode: boolean) {
+        const modal = await this.modalController.create({
+            component: AngebotedetailsComponent,
+            cssClass: 'my-custom-class',
+            componentProps: {
+                angebot,
+                detailmode,
+                editmode
+            }
+        });
+        return await modal.present();
     }
 
 }

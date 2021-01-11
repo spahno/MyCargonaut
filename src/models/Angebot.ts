@@ -1,4 +1,5 @@
 import {Anfrage} from './Anfrage';
+import {Fahrzeug} from './fahrzeug';
 
 export class Angebot extends Anfrage {
     kunden: string[] = [];
@@ -71,6 +72,22 @@ export class Angebot extends Anfrage {
                 return contains;
             }
         }
+    }
+
+    /**
+     * Adds a fahrzeugId to the Angebot
+     * @param fahrzeug includes the fahrzeugId that is to be added
+     * to the Angebot
+     */
+    addFahrzeug(fahrzeug: Fahrzeug) {
+        this.fahrzeugId = fahrzeug.id;
+    }
+
+    /**
+     * Removes a fahrzeugId from the Angebot
+     */
+    deleteFahrzeug() {
+        this.fahrzeugId = null;
     }
 }
 
