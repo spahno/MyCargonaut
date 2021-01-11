@@ -131,7 +131,7 @@
             <ion-button *ngIf="gesuch.fahrtId && gesuch.isInteressent(this.user.id)" disabled="true"><em>Anfrage ausstehend</em></ion-button>
             <ion-button *ngIf="!gesuch.fahrtId && gesuch.isInteressent(this.user.id)" disabled="true"><em>Anfrage abgelehnt</em></ion-button>
             <ion-button *ngIf="!gesuch.fahrtId && gesuch.isFahrer(this.user.id)" disabled="true"><em>Tracking gesendet</em></ion-button>
-            <ion-button *ngIf="gesuch.fahrtId && gesuch.isFahrer(this.user.id)" disabled="true"><em>Fahrt tracken</em></ion-button>
+            <ion-button *ngIf="gesuch.fahrtId && gesuch.isFahrer(this.user.id)" [routerLink]="'/tracking'"><em>Fahrt tracken</em></ion-button>
             <ion-button *ngIf="!gesuch.isInteressent(this.user.id) && !gesuch.isFahrer(this.user.id)" (click)="gesuchAnfragen()">Anfragen</ion-button>
         </div>
     </ion-card>
