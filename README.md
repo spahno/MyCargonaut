@@ -51,7 +51,7 @@ To start the app, run ``npm run ion`` in the root folder.
 ## Deployment
 
 When pushing to the main branch ``release``, the Travis bot will automatically commit the changes to the ``gh-pages``
-branch and deploy the app to [MyCargonaut](https://spahno.github.io/MyCargonaut).
+branch and deploy the app to [spahno.github.io/MyCargonaut](https://spahno.github.io/MyCargonaut).
 
 ## Technology stack
 
@@ -86,4 +86,3 @@ Technology | Usage
 ## Mockup
 
 [Mockup in Adbobe XD](https://xd.adobe.com/view/f2ef1bff-8858-4cd0-b83e-3012263a7b20-a7bc/?fullscreen)
-
