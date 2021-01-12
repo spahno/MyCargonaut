@@ -61,6 +61,16 @@ ion-list-header {
   color: #707070;
 }
 
+.add-btn {
+  --border-radius: 50%;
+  --color: #ffffff;
+  --background: #005B52;
+  --background-activated: #005B52;
+  --background-hover: #005B52;
+  height: 3rem;
+  width: 3rem;
+}
+
 ion-label {
   --border-color: #1D5A52;
 }

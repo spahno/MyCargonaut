@@ -37,14 +37,4 @@ p {
   font-size: 1rem;
 }
 
-ion-list-header .small-add {
-  --color: #ffffff;
-  --background: #005B52;
-  --background-activated: #005B52;
-  --background-hover: #005B52;
-  height: 1.5rem;
-  width: 2.5rem;
-  margin-left: 0.8rem;
-}
-
 /*# sourceMappingURL=auftraege.page.css.map */

@@ -1,0 +1,50 @@
+ion-card {
+  border-radius: 50px;
+  font-size: 25px;
+  background-color: #FFFFFF;
+  padding: 5%;
+}
+
+img {
+  width: 400px;
+  height: 50%;
+  display: block;
+  margin: 50px auto;
+}
+
+.title {
+  text-align: center;
+  margin-top: 0;
+}
+
+.auth-button {
+  width: 150px;
+  height: 50px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  font-size: 20px;
+  color: white;
+  background-color: #1D5A52;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ion-input {
+  --placeholder-color: #1D5A52;
+  --placeholder-font-weight: bold;
+  border: solid 3px #1D5A52;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.info {
+  font-size: 20px;
+  color: #1D5A52;
+}
+
+/*# sourceMappingURL=auth.css.map */
