@@ -1,9 +1,11 @@
 <div *ngIf="this.user.id && angebot._ID">
     <ion-card class="border-card-orange">
-        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
         <ion-item lines="none">
             <h3 slot="start">{{fahrzeug.marke || 'Fahrzeug nicht hinterlegt'}} {{fahrzeug.modell || ''}}</h3>
             <ion-badge color="secondary" slot="end">{{interessentenText}}</ion-badge>
+            <ion-button *ngIf="this.user.id && this.user.id === this.angebot.erstellerId && angebot._ID" (click)="deleteAngebotAlert()" disabled="true" slot="end" color="danger">
+                <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+            </ion-button>
         </ion-item>
         <ion-item lines="none">
             <h4 slot="start">{{angebot.abfahrtOrt}}</h4>

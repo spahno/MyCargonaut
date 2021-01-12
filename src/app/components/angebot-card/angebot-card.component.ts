@@ -253,6 +253,50 @@ export class AngebotCardComponent implements OnInit {
     }
   }
 
+  /**
+   * This Methods Presents a Alert to Call the deleteAngebot() Method
+   */
+  async deleteAngebotAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Abgebot löschen!',
+      message: 'Möchten Sie das Angebot von ' + this.angebot.abfahrtOrt +
+          ' nach ' + this.angebot.ankunftOrt + ' wirklich löschen?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {}
+        }, {
+          text: 'Löschen',
+          handler: () => {
+            this.deleteAngebot();
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  /**
+   * This Methods Deletes a Angebot from a Interessent a Ersteller and the Angebot it self
+   */
+  deleteAngebot() {
+    this.angebotService.deleteAngebot(this.angebot._ID).then(id => {
+      this.angebot.getInteressenten().forEach(interessent => {
+        this.user.erstellteAngebote = this.user.erstellteAngebote.filter(ange => ange !== id);
+        this.authService.updateUser(this.user);
+        this.authService.findUserById(interessent.userId).then(user => {
+          user.interessierteAngebote = user.interessierteAngebote.filter(intr => intr !== id);
+          this.authService.updateUser(user);
+        });
+      });
+    }).catch(err => {
+      this.presentAlert('Fehler!', 'Fehler beim Löschen des Angebots entstanden. Error: ' + err, 'Ok');
+    });
+  }
+
   async presentAlert(header: string, message: string, buttonText: string) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',

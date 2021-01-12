@@ -101,11 +101,15 @@ export class AngebotService {
         });
     }
 
+    /**
+     * Deletes a Angebot from Firebase
+     * @param angebotId is the ID of the deleted Angebot
+     */
     deleteAngebot(angebotId: string): Promise<string> {
         return new Promise((resolve, reject) => {
             this.angebotCollection.doc(angebotId).delete()
                 .then(async () => {
-                    resolve('Successfully deleted Document with ID: ' + angebotId);
+                    resolve(angebotId);
                 }).catch((error) => {
                 reject('Error deleting document: ' + error);
             });
