@@ -10,7 +10,7 @@
         <h2 class="ion-text-center">Fahrzeugdetails</h2>
 
             <ion-label position="stacked">Nummernschild</ion-label>
-            <ion-input [autofocus]="true" [readonly]="detailmode" [(ngModel)]="fahrzeug.nummernschild"></ion-input>
+            <ion-input [autofocus]="true" [readonly]="detailmode" [(ngModel)]="fahrzeug.nummernschild" type="text"></ion-input>
             <ion-text class="ion-text-end ion-padding-end"
                style="color:var(--ion-color-danger)"
                *ngIf="errors.get('nummernschild')">
@@ -18,7 +18,7 @@
             </ion-text>
 
             <ion-label position="stacked">Marke</ion-label>
-            <ion-input [(ngModel)]="fahrzeug.marke" [readonly]="detailmode"></ion-input>
+            <ion-input [(ngModel)]="fahrzeug.marke" [readonly]="detailmode" type="text"></ion-input>
             <p class="ion-text-end ion-padding-end"
                style="color:var(--ion-color-danger)"
                *ngIf="errors.get('marke')">
@@ -26,7 +26,7 @@
             </p>
 
             <ion-label position="stacked">Modell</ion-label>
-            <ion-input [(ngModel)]="fahrzeug.modell" [readonly]="detailmode"></ion-input>
+            <ion-input [(ngModel)]="fahrzeug.modell" [readonly]="detailmode" type="text"></ion-input>
             <p class="ion-text-end ion-padding-end"
                style="color:var(--ion-color-danger)"
                *ngIf="errors.get('modell')">
@@ -34,7 +34,7 @@
             </p>
 
             <ion-label position="stacked">Fahrzeugart</ion-label>
-            <ion-input [(ngModel)]="fahrzeug.fahrzeugart" [readonly]="detailmode"></ion-input>
+            <ion-input [(ngModel)]="fahrzeug.fahrzeugart" [readonly]="detailmode" type="text"></ion-input>
             <p class="ion-text-end ion-padding-end"
                style="color:var(--ion-color-danger)"
                *ngIf="errors.get('fahrzeugart')">
@@ -42,7 +42,7 @@
             </p>
 
             <ion-label position="stacked">Farbe</ion-label>
-            <ion-input [(ngModel)]="fahrzeug.farbe" [readonly]="detailmode"></ion-input>
+            <ion-input [(ngModel)]="fahrzeug.farbe" [readonly]="detailmode" type="text"></ion-input>
             <p class="ion-text-end ion-padding-end"
                style="color:var(--ion-color-danger)"
                *ngIf="errors.get('farbe')">
@@ -50,7 +50,7 @@
             </p>
 
             <ion-label position="stacked">Baujahr</ion-label>
-            <ion-input [(ngModel)]="fahrzeug.baujahr" [readonly]="detailmode"></ion-input>
+            <ion-input [(ngModel)]="fahrzeug.baujahr" [readonly]="detailmode" type="number"></ion-input>
             <p class="ion-text-end ion-padding-end"
                style="color:var(--ion-color-danger)"
                *ngIf="errors.get('baujahr')">

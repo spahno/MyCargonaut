@@ -43,7 +43,7 @@
                         <ion-item>
                             <ion-label position="stacked">Straße</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="gesuch.ankunftStrasse"></ion-input>
+                                       [(ngModel)]="gesuch.ankunftStrasse" type="text"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('ankunftStrasse')">
@@ -55,7 +55,7 @@
                         <ion-item>
                             <ion-label position="stacked">Nr.</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="ankunftNummer"></ion-input>
+                                       [(ngModel)]="ankunftNummer" type="number"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('ankunftNummer')">
@@ -69,7 +69,7 @@
                         <ion-item>
                             <ion-label position="stacked">PLZ</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="gesuch.ankunftPlz"></ion-input>
+                                       [(ngModel)]="gesuch.ankunftPlz" type="number"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('ankunftPlz')">
@@ -81,7 +81,7 @@
                         <ion-item>
                             <ion-label position="stacked">Ort</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="gesuch.ankunftOrt"></ion-input>
+                                       [(ngModel)]="gesuch.ankunftOrt" type="text"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('ankunftOrt')">
@@ -100,7 +100,7 @@
                         <ion-item>
                             <ion-label position="stacked">Abfahrtstraße</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="gesuch.abfahrtStrasse"></ion-input>
+                                       [(ngModel)]="gesuch.abfahrtStrasse" type="text"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('abfahrtStrasse')">
@@ -112,7 +112,7 @@
                         <ion-item>
                             <ion-label position="stacked">Nr.</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="abfahrtNummer"></ion-input>
+                                       [(ngModel)]="abfahrtNummer" type="number"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('abfahrtNummer')">
@@ -126,7 +126,7 @@
                         <ion-item>
                             <ion-label position="stacked">PLZ</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="gesuch.abfahrtPlz"></ion-input>
+                                       [(ngModel)]="gesuch.abfahrtPlz" type="number"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('abfahrtPlz')">
@@ -138,7 +138,7 @@
                         <ion-item>
                             <ion-label position="stacked">Abfahrtsort</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="gesuch.abfahrtOrt"></ion-input>
+                                       [(ngModel)]="gesuch.abfahrtOrt" type="text"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('abfahrtOrt')">
@@ -155,7 +155,7 @@
         </h3>
         <ion-item>
             <ion-label position="stacked">Titel</ion-label>
-            <ion-input [(ngModel)]="lieferobjekt.name" [readonly]="detailmode"></ion-input>
+            <ion-input [(ngModel)]="lieferobjekt.name" [readonly]="detailmode" type="text"></ion-input>
             <p class="ion-text-end ion-padding-end"
                style="color:var(--ion-color-danger)"
                *ngIf="errors.get('name')">
@@ -164,7 +164,7 @@
         </ion-item>
         <ion-item>
             <ion-label position="stacked">Beschreibung</ion-label>
-            <ion-textarea [(ngModel)]="lieferobjekt.beschreibung" [readonly]="detailmode"></ion-textarea>
+            <ion-textarea [(ngModel)]="lieferobjekt.beschreibung" [readonly]="detailmode" type="text"></ion-textarea>
             <p class="ion-text-end ion-padding-end"
                style="color:var(--ion-color-danger)"
                *ngIf="errors.get('beschreibung')">
@@ -175,7 +175,7 @@
             <ion-col size="4">
                 <ion-item>
                     <ion-label position="stacked">Preis</ion-label>
-                    <ion-input [(ngModel)]="lieferobjekt.preis" [readonly]="detailmode"></ion-input>
+                    <ion-input [(ngModel)]="lieferobjekt.preis" [readonly]="detailmode" type="number"></ion-input>
                     <p class="ion-text-end ion-padding-end"
                        style="color:var(--ion-color-danger)"
                        *ngIf="errors.get('preis')">

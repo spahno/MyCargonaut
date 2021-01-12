@@ -44,7 +44,7 @@
                         <ion-item>
                             <ion-label position="stacked">Straße</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="angebot.ankunftStrasse"></ion-input>
+                                       [(ngModel)]="angebot.ankunftStrasse" type="text"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('ankunftStrasse')">
@@ -56,7 +56,7 @@
                         <ion-item>
                             <ion-label position="stacked">Nr.</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="ankunftNummer"></ion-input>
+                                       [(ngModel)]="ankunftNummer" type="number"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('ankunftNummer')">
@@ -70,7 +70,7 @@
                         <ion-item>
                             <ion-label position="stacked">PLZ</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="angebot.ankunftPlz"></ion-input>
+                                       [(ngModel)]="angebot.ankunftPlz" type="number"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('ankunftPlz')">
@@ -82,7 +82,7 @@
                         <ion-item>
                             <ion-label position="stacked">Ort</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="angebot.ankunftOrt"></ion-input>
+                                       [(ngModel)]="angebot.ankunftOrt" type="text"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('ankunftOrt')">
@@ -101,7 +101,7 @@
                         <ion-item>
                             <ion-label position="stacked">Abfahrtstraße</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="angebot.abfahrtStrasse"></ion-input>
+                                       [(ngModel)]="angebot.abfahrtStrasse" type="text"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('abfahrtStrasse')">
@@ -113,7 +113,7 @@
                         <ion-item>
                             <ion-label position="stacked">Nr.</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="abfahrtNummer"></ion-input>
+                                       [(ngModel)]="abfahrtNummer" type="number"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('abfahrtNummer')">
@@ -127,7 +127,7 @@
                         <ion-item>
                             <ion-label position="stacked">PLZ</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="angebot.abfahrtPlz"></ion-input>
+                                       [(ngModel)]="angebot.abfahrtPlz" type="number"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('abfahrtPlz')">
@@ -139,7 +139,7 @@
                         <ion-item>
                             <ion-label position="stacked">Abfahrtsort</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="angebot.abfahrtOrt"></ion-input>
+                                       [(ngModel)]="angebot.abfahrtOrt" type="text"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('abfahrtOrt')">
