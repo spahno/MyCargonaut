@@ -9,7 +9,7 @@
             <ion-icon class="center" name="arrow-forward"></ion-icon>
             <h4 slot="end">{{gesuch.ankunftOrt}}</h4>
         </ion-item>
-        <ion-item lines="full">
+        <ion-item lines="none">
             <p slot="start">Ankunft:</p>
             <p slot="end">{{gesuch.ankunftDatum}}, {{gesuch.ankunftZeit}}</p>
         </ion-item>
@@ -123,13 +123,15 @@
 
         <!-- Buttons Angebot -->
         <div *ngIf="this.user.id && this.user.id === this.gesuch.erstellerId && gesuch._ID" class="ion-text-center ion-margin">
-            <ion-button *ngIf="!gesuch.fahrtId" (click)="starteFahrt()">Fahrt starten</ion-button>
+            <ion-note *ngIf="gesuch.fahrer.length < 1"><em>Es wurden noch keine Interessenten angenommen.</em></ion-note>
+            <br>
+            <ion-button *ngIf="!gesuch.fahrtId" [disabled]="gesuch.fahrer.length < 1" (click)="starteFahrt()">Fahrt starten</ion-button>
             <ion-button *ngIf="gesuch.fahrtId && !fahrt.beendet" (click)="fahrtBeenden()">Fahrt beenden</ion-button>
             <ion-button *ngIf="gesuch.fahrtId && fahrt.beendet" disabled="true"><em>Fahrt wurde beendet</em></ion-button>
         </div>
         <div *ngIf="this.user.id && this.user.id !== this.gesuch.erstellerId && gesuch._ID" class="ion-text-center ion-margin">
-            <ion-button *ngIf="gesuch.fahrtId && gesuch.isInteressent(this.user.id)" disabled="true"><em>Anfrage ausstehend</em></ion-button>
-            <ion-button *ngIf="!gesuch.fahrtId && gesuch.isInteressent(this.user.id)" disabled="true"><em>Anfrage abgelehnt</em></ion-button>
+            <ion-button *ngIf="!gesuch.fahrtId && gesuch.isInteressent(this.user.id)" disabled="true"><em>Anfrage ausstehend</em></ion-button>
+            <ion-button *ngIf="gesuch.fahrtId && gesuch.isInteressent(this.user.id)" disabled="true"><em>Anfrage abgelehnt</em></ion-button>
             <ion-button *ngIf="!gesuch.fahrtId && gesuch.isFahrer(this.user.id)" disabled="true"><em>Tracking gesendet</em></ion-button>
             <ion-button *ngIf="gesuch.fahrtId && gesuch.isFahrer(this.user.id)" [routerLink]="'/tracking'"><em>Fahrt tracken</em></ion-button>
             <ion-button *ngIf="!gesuch.isInteressent(this.user.id) && !gesuch.isFahrer(this.user.id)" (click)="gesuchAnfragen()">Anfragen</ion-button>

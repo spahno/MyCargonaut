@@ -4,128 +4,139 @@ import {ModalController} from '@ionic/angular';
 import {GesuchService} from '../../../services/gesuch/gesuch.service';
 import {AuthService} from '../../../services/auth/auth.service';
 import {Lieferobjekt} from '../../../models/Lieferobjekt';
-import {isAsciiHexDigit} from 'codelyzer/angular/styles/chars';
 import {LieferobjektService} from '../../../services/lieferobjekt/lieferobjekt.service';
+import {User} from '../../../models/user';
 
 @Component({
-  selector: 'app-gesuchedetails',
-  templateUrl: './gesuchedetails.component.html',
-  styleUrls: ['./gesuchedetails.component.scss'],
+    selector: 'app-gesuchedetails',
+    templateUrl: './gesuchedetails.component.html',
+    styleUrls: ['./gesuchedetails.component.scss'],
 })
 export class GesuchedetailsComponent implements OnInit {
 
-  /**
-   * Values that are passed to the form
-   */
-  @Input() gesuch: Gesuch = new Gesuch();
-  @Input() detailmode = null;
-  @Input() editmode = null;
+    user: User;
 
-  lieferobjekt: Lieferobjekt = new Lieferobjekt();
-  ankunftNummer: number;
-  abfahrtNummer: number;
-  tabSwitch = 'start';
-  now =  new Date().getFullYear();
-  endDate = new Date();
+    /**
+     * Values that are passed to the form
+     */
+    @Input() gesuch: Gesuch = new Gesuch();
+    @Input() detailmode = null;
+    @Input() editmode = null;
 
-  errors: Map<string, string> = new Map<string, string>();
+    lieferobjekt: Lieferobjekt = new Lieferobjekt();
+    ankunftNummer: number;
+    abfahrtNummer: number;
+    tabSwitch = 'start';
+    now = new Date().getFullYear();
+    endDate = new Date();
 
-  constructor(public modalController: ModalController,
-              public gesuchService: GesuchService,
-              public authService: AuthService,
-              private lieferobjektService: LieferobjektService) { }
+    errors: Map<string, string> = new Map<string, string>();
 
-  ngOnInit() {
-    console.log(this.now);
-  }
+    constructor(public modalController: ModalController,
+                public gesuchService: GesuchService,
+                public authService: AuthService,
+                private lieferobjektService: LieferobjektService) {
+    }
 
-  /**
-   * Checks all values and then either calls updateFahrzeug or addFahrzeug
-   */
-  async save() {
-    this.gesuch.ankunftDatum = new Date(this.endDate).toLocaleDateString('de-De', {year: 'numeric', month: '2-digit', day: '2-digit'});
-    this.gesuch.ankunftZeit = new Date(this.endDate).toLocaleTimeString('de-De', {hour: '2-digit', minute: '2-digit'});
+    ngOnInit() {
+        console.log(this.now);
+    }
 
-    if (!this.gesuch.ankunftDatum) {
-      this.errors.set('ankunftDatum', 'Das Ankunftsdatum muss korrekt eingetragen werden!');
-    }
-    if (!this.gesuch.ankunftZeit) {
-      this.errors.set('ankunftZeit', 'Die Ankunftszeit muss korrekt eingetragen werden!');
-    }
-    if (!this.gesuch.ankunftStrasse) {
-      this.errors.set('ankunftStrasse', 'Das Ankunftsstraße muss korrekt eingetragen werden!');
-    }
-    if (!this.ankunftNummer) {
-      this.errors.set('ankunftNummer', 'Die Hausnummer muss korrekt eingetragen werden!');
-    }
-    if (!this.gesuch.ankunftPlz) {
-      this.errors.set('ankunftPlz', 'Die Postleitzahl muss korrekt eingetragen werden!');
-    }
-    if (!this.gesuch.ankunftOrt) {
-      this.errors.set('ankunftOrt', 'Der Ankunftsort muss korrekt eingetragen werden!');
-    }
-    if (!this.gesuch.abfahrtStrasse) {
-      this.errors.set('abfahrtStrasse', 'Das Abfahrtstraße muss korrekt eingetragen werden!');
-    }
-    if (!this.abfahrtNummer) {
-      this.errors.set('abfahrtNummer', 'Die Hausnummer muss korrekt eingetragen werden!');
-    }
-    if (!this.gesuch.abfahrtPlz) {
-      this.errors.set('ankunftPlz', 'Die Postleitzahl muss korrekt eingetragen werden!');
-    }
-    if (!this.gesuch.abfahrtOrt) {
-      this.errors.set('abfahrtOrt', 'Der Abfahrtsort muss korrekt eingetragen werden!');
-    }
-    if (!this.lieferobjekt.name) {
-      this.errors.set('name', 'Der Titel muss korrekt eingetragen werden!');
-    }
-    if (!this.lieferobjekt.beschreibung) {
-      this.errors.set('beschreibung', 'Die Beschreibung muss korrekt eingetragen werden!');
-    }
-    if (!this.lieferobjekt.preis) {
-      this.errors.set('preis', 'Der Preis muss korrekt eingetragen werden!');
-    }
-    console.log('hi');
-    console.log(this.lieferobjekt.preis);
-    console.log(this.errors.get('preis'));
-
-    if (this.errors.size === 0) {
-      this.gesuch.ankunftStrasse = this.gesuch.ankunftStrasse + this.ankunftNummer;
-      this.gesuch.abfahrtStrasse = this.gesuch.abfahrtStrasse + this.abfahrtNummer;
-      if (this.editmode) {
-        console.log('schreibt eine edit ihr lappen');
+    /**
+     * Checks all values and then either calls updateFahrzeug or addFahrzeug
+     */
+    async save() {
         this.errors.clear();
-        this.dismiss();
-      } else {
-        await this.lieferobjektService.addLieferobjekt(this.lieferobjekt).then(res =>
-            this.gesuch.lieferobjektId = res.lieferobjekt._ID);
-        await this.gesuchService.addGesuch(this.gesuch).then(res => {
-          const user = this.authService.getUser();
-          user.erstellteGesuche.push(res.gesuch._ID);
-          this.authService.persist(user, user.id);
-          console.log(this.lieferobjekt.preis);
+        this.gesuch.ankunftDatum = new Date(this.endDate).toLocaleDateString('de-De', {year: 'numeric', month: '2-digit', day: '2-digit'});
+        this.gesuch.ankunftZeit = new Date(this.endDate).toLocaleTimeString('de-De', {hour: '2-digit', minute: '2-digit'});
+
+        if (!this.gesuch.ankunftDatum) {
+            this.errors.set('ankunftDatum', 'Das Ankunftsdatum muss korrekt eingetragen werden!');
+        }
+        if (!this.gesuch.ankunftZeit) {
+            this.errors.set('ankunftZeit', 'Die Ankunftszeit muss korrekt eingetragen werden!');
+        }
+        if (!this.gesuch.ankunftStrasse) {
+            this.errors.set('ankunftStrasse', 'Das Ankunftsstraße muss korrekt eingetragen werden!');
+        }
+        if (!this.ankunftNummer) {
+            this.errors.set('ankunftNummer', 'Die Hausnummer muss korrekt eingetragen werden!');
+        }
+        if (!this.gesuch.ankunftPlz) {
+            this.errors.set('ankunftPlz', 'Die Postleitzahl muss korrekt eingetragen werden!');
+        }
+        if (!this.gesuch.ankunftOrt) {
+            this.errors.set('ankunftOrt', 'Der Ankunftsort muss korrekt eingetragen werden!');
+        }
+        if (!this.gesuch.abfahrtStrasse) {
+            this.errors.set('abfahrtStrasse', 'Das Abfahrtstraße muss korrekt eingetragen werden!');
+        }
+        if (!this.abfahrtNummer) {
+            this.errors.set('abfahrtNummer', 'Die Hausnummer muss korrekt eingetragen werden!');
+        }
+        if (!this.gesuch.abfahrtPlz) {
+            this.errors.set('ankunftPlz', 'Die Postleitzahl muss korrekt eingetragen werden!');
+        }
+        if (!this.gesuch.abfahrtOrt) {
+            this.errors.set('abfahrtOrt', 'Der Abfahrtsort muss korrekt eingetragen werden!');
+        }
+        if (!this.lieferobjekt.name) {
+            this.errors.set('name', 'Der Titel muss korrekt eingetragen werden!');
+        }
+        if (!this.lieferobjekt.beschreibung) {
+            this.errors.set('beschreibung', 'Die Beschreibung muss korrekt eingetragen werden!');
+        }
+        if (!this.lieferobjekt.preis) {
+            this.errors.set('preis', 'Der Preis muss korrekt eingetragen werden!');
+        }
+        console.log(this.lieferobjekt.preis);
+        console.log(this.errors.get('preis'));
+
+        console.log(this.authService.user);
+        if (this.authService.user) {
+            this.user = this.authService.getUser();
+        } else {
+            this.errors.set('preis', 'User undefined!');
+        }
+
+        if (this.errors.size === 0) {
+
+            this.gesuch.erstellerId = this.authService.getUserID();
+            this.gesuch.ankunftStrasse = this.gesuch.ankunftStrasse + this.ankunftNummer;
+            this.gesuch.abfahrtStrasse = this.gesuch.abfahrtStrasse + this.abfahrtNummer;
+            if (this.editmode) {
+                console.log('schreibt eine edit ihr lappen');
+                this.errors.clear();
+                this.dismiss();
+            } else {
+                this.dismiss();
+                this.errors.clear();
+                await this.lieferobjektService.addLieferobjekt(this.lieferobjekt).then(res =>
+                    this.gesuch.lieferobjektId = res.lieferobjekt._ID);
+                await this.gesuchService.addGesuch(this.gesuch).then(res => {
+                    const user = this.authService.getUser();
+                    user.erstellteGesuche.push(res.gesuch._ID);
+                    this.authService.persist(user, user.id);
+                    console.log(this.lieferobjekt.preis);
+                });
+            }
+        }
+    }
+
+    dismiss() {
+        // using the injected ModalController this page
+        // can "dismiss" itself and optionally pass back data
+        this.modalController.dismiss({
+            dismissed: true
         });
-        this.errors.clear();
-        this.dismiss();
-      }
     }
-    this.errors.clear();
-  }
 
-  dismiss() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
-    this.modalController.dismiss({
-      dismissed: true
-    });
-  }
-
-  /**
-   * Triggers when the segment is clicked to change filter string
-   * @param ev the event that is triggered by clicking the segment button
-   */
-  segmentChanged(ev: any) {
-    console.log(this.tabSwitch);
-  }
+    /**
+     * Triggers when the segment is clicked to change filter string
+     * @param ev the event that is triggered by clicking the segment button
+     */
+    segmentChanged(ev: any) {
+        console.log(this.tabSwitch);
+    }
 
 }

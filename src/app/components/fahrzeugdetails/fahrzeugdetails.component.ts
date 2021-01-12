@@ -36,6 +36,7 @@ export class FahrzeugdetailsComponent implements OnInit {
    * Checks all values and then either calls updateFahrzeug or addFahrzeug
    */
   save() {
+    this.errors.clear();
     if (this.fahrzeug.nummernschild.trim().length === 0) {
       this.errors.set('nummernschild', 'Das Nummernschild muss korrekt eingetragen werden!');
     }

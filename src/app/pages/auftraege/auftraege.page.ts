@@ -1,24 +1,24 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {User} from '../../../models/user';
 import {AuthService} from '../../../services/auth/auth.service';
 import {Gesuch} from '../../../models/Gesuch';
 import {GesuchService} from '../../../services/gesuch/gesuch.service';
 import {Angebot} from '../../../models/Angebot';
 import {AngebotService} from '../../../services/angebot/angebot.service';
-import {Fahrzeug} from '../../../models/fahrzeug';
-import {FahrzeugdetailsComponent} from '../../components/fahrzeugdetails/fahrzeugdetails.component';
-import {ModalController} from '@ionic/angular';
+import {ModalController, ViewDidEnter, ViewDidLeave} from '@ionic/angular';
 import {GesuchedetailsComponent} from '../../components/gesuchedetails/gesuchedetails.component';
 import {AngebotedetailsComponent} from '../../components/angebotedetails/angebotedetails.component';
-import {AddFahrzeugModalComponent} from '../../components/add-fahrzeug-modal/add-fahrzeug-modal.component';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-auftraege',
     templateUrl: './auftraege.page.html',
     styleUrls: ['./auftraege.page.scss'],
 })
-export class AuftraegePage implements OnInit {
+export class AuftraegePage implements ViewDidEnter, ViewDidLeave {
 
+    angebotSub: Subscription;
+    gesuchSub: Subscription;
     user: User = new User('', '', '', '');
     gesucheArr: Gesuch[] = [];
     angeboteArr: Angebot[] = [];
@@ -39,44 +39,66 @@ export class AuftraegePage implements OnInit {
 
     }
 
-    ngOnInit() {
-        this.authService.loadPageSubscription(u => {
+    async ionViewDidEnter() {
+        this.gesucheArr = [];
+        this.angeboteArr = [];
+        this.intGesucheArr = [];
+        this.intAngeboteArr = [];
+
+        await this.authService.loadPageSubscription(u => {
             Object.assign(this.user, u);
-            this.angebotService.observableAngebote().subscribe(res => {
+        });
+        this.angebotSub = this.angebotService.observableAngebote()
+            .subscribe(() => {
+                // angebotSub.unsubscribe();
                 this.angeboteArr = [];
                 this.intAngeboteArr = [];
                 // fetch Angebote
+                const tempErstellteAngebotArray: Angebot[] = [];
+                const tempInteressierteAngebotArray: Angebot[] = [];
+
                 this.user.erstellteAngebote.forEach(a => {
                     this.angebotService.findAngebotById(a).then(foundItem => {
-                        this.angeboteArr.push(foundItem);
+                        tempErstellteAngebotArray.push(foundItem);
                     });
                 });
                 // fetch Angebote
                 this.user.interessierteAngebote.forEach(a => {
                     this.angebotService.findAngebotById(a).then(foundItem => {
-                        this.intAngeboteArr.push(foundItem);
+                        tempInteressierteAngebotArray.push(foundItem);
                         console.log('Page Angebot' + foundItem.abfahrtOrt);
                     });
                 });
+
+                this.intAngeboteArr = tempInteressierteAngebotArray;
+                this.angeboteArr = tempErstellteAngebotArray;
             });
-            this.gesuchService.observableGesuch().subscribe(res => {
+
+        // this.gesuchSub.unsubscribe();
+        this.gesuchSub = this.gesuchService.observableGesuch()
+            .subscribe(() => {
+                // this.gesuchSub.unsubscribe();
                 this.gesucheArr = [];
                 this.intGesucheArr = [];
+
+                const tempErstellteGesucheArray: Gesuch[] = [];
+                const tempInteressierteGesucheArray: Gesuch[] = [];
 
                 // fetch Gesuche
                 this.user.erstellteGesuche.forEach(g => {
                     this.gesuchService.findGesuchById(g).then(foundItem => {
-                        this.gesucheArr.push(foundItem);
+                        tempErstellteGesucheArray.push(foundItem);
                     });
                 });
                 // fetch Gesuche
                 this.user.interessierteGesuche.forEach(g => {
                     this.gesuchService.findGesuchById(g).then(foundItem => {
-                        this.intGesucheArr.push(foundItem);
+                        tempInteressierteGesucheArray.push(foundItem);
                     });
                 });
+                this.gesucheArr = tempErstellteGesucheArray;
+                this.intGesucheArr = tempInteressierteGesucheArray;
             });
-        });
     }
 
     async openGesuchedetails(gesuch: Gesuch, detailmode: boolean, editmode: boolean) {
@@ -103,6 +125,17 @@ export class AuftraegePage implements OnInit {
             }
         });
         return await modal.present();
+    }
+
+    ionViewDidLeave() {
+        this.gesucheArr = [];
+        this.angeboteArr = [];
+        this.intGesucheArr = [];
+        this.intAngeboteArr = [];
+
+        this.authService.subUser.unsubscribe();
+        this.angebotSub.unsubscribe();
+        this.gesuchSub.unsubscribe();
     }
 
 }

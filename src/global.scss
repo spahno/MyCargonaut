@@ -30,16 +30,6 @@
 <----- GLOBAL STYLE SETTINGS ----->
 <--------------------------------->
  */
-ion-content {
-  // overwrite inline styles
-  --offset-bottom: auto!important;
-  --overflow: hidden;
-  overflow: auto;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
 /**
 HEADER STYLING
  */
@@ -61,6 +51,10 @@ ion-toolbar ion-icon {
   margin-left: auto;
   margin-right: auto;
   --background: #EFEFEF;
+}
+
+.label-margin {
+  margin-bottom: 10px !important;
 }
 
 /**

@@ -9,7 +9,7 @@
     <ion-list class="ion-margin-horizontal">
         <h2 class="ion-text-center">Transportgesuch erstellen</h2>
         <ion-row>
-            <ion-segment mode="ios" (ionChange)="segmentChanged($event)" [(ngModel)]="tabSwitch">
+            <ion-segment style="max-width: 400px; margin: auto" mode="ios" (ionChange)="segmentChanged($event)" [(ngModel)]="tabSwitch">
                 <ion-segment-button value="start">
                     <ion-label>Start</ion-label>
                 </ion-segment-button>
@@ -25,9 +25,9 @@
             <div *ngSwitchCase="'ziel'">
                 <ion-row>
                     <ion-col>
-                        <ion-item>
-                            <ion-item>
-                                <ion-label position="floating">Ankunftsdatum und -uhrzeit</ion-label>
+
+                            <ion-item lines="none">
+                                <ion-label class="label-margin" position="floating">Ankunftsdatum und -uhrzeit</ion-label>
                                 <ion-datetime displayFormat="DD/MM/YYYY +HH:mm" [min]="now" [max]="now + 2" placeholder="Ankunftsdatum wählen" [(ngModel)]="endDate"></ion-datetime>
                             </ion-item>
                             <ion-text class="ion-text-end ion-padding-end"
@@ -35,13 +35,13 @@
                                       *ngIf="errors.get('ankunftDatum')">
                                 {{errors.get('ankunftDatum')}}
                             </ion-text>
-                        </ion-item>
+
                     </ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col size="9">
-                        <ion-item>
-                            <ion-label position="stacked">Straße</ion-label>
+                        <ion-item lines="none">
+                            <ion-label class="label-margin" position="stacked">Straße</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
                                        [(ngModel)]="gesuch.ankunftStrasse" type="text"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
@@ -52,8 +52,8 @@
                         </ion-item>
                     </ion-col>
                     <ion-col size="3">
-                        <ion-item>
-                            <ion-label position="stacked">Nr.</ion-label>
+                        <ion-item lines="none">
+                            <ion-label class="label-margin" position="stacked">Nr.</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
                                        [(ngModel)]="ankunftNummer" type="number"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
@@ -66,8 +66,8 @@
                 </ion-row>
                 <ion-row>
                     <ion-col size="4">
-                        <ion-item>
-                            <ion-label position="stacked">PLZ</ion-label>
+                        <ion-item lines="none">
+                            <ion-label class="label-margin" position="stacked">PLZ</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
                                        [(ngModel)]="gesuch.ankunftPlz" type="number"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
@@ -78,8 +78,8 @@
                         </ion-item>
                     </ion-col>
                     <ion-col size="8">
-                        <ion-item>
-                            <ion-label position="stacked">Ort</ion-label>
+                        <ion-item lines="none">
+                            <ion-label class="label-margin" position="stacked">Ort</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
                                        [(ngModel)]="gesuch.ankunftOrt" type="text"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
@@ -97,8 +97,8 @@
             <div *ngSwitchCase="'start'">
                 <ion-row>
                     <ion-col size="9">
-                        <ion-item>
-                            <ion-label position="stacked">Abfahrtstraße</ion-label>
+                        <ion-item lines="none">
+                            <ion-label class="label-margin" position="stacked">Abfahrtstraße</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
                                        [(ngModel)]="gesuch.abfahrtStrasse" type="text"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
@@ -109,8 +109,8 @@
                         </ion-item>
                     </ion-col>
                     <ion-col size="3">
-                        <ion-item>
-                            <ion-label position="stacked">Nr.</ion-label>
+                        <ion-item lines="none">
+                            <ion-label class="label-margin" position="stacked">Nr.</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
                                        [(ngModel)]="abfahrtNummer" type="number"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
@@ -123,8 +123,8 @@
                 </ion-row>
                 <ion-row>
                     <ion-col size="4">
-                        <ion-item>
-                            <ion-label position="stacked">PLZ</ion-label>
+                        <ion-item lines="none">
+                            <ion-label class="label-margin" position="stacked">PLZ</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
                                        [(ngModel)]="gesuch.abfahrtPlz" type="number"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
@@ -135,8 +135,8 @@
                         </ion-item>
                     </ion-col>
                     <ion-col size="8">
-                        <ion-item>
-                            <ion-label position="stacked">Abfahrtsort</ion-label>
+                        <ion-item lines="none">
+                            <ion-label class="label-margin" position="stacked">Abfahrtsort</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
                                        [(ngModel)]="gesuch.abfahrtOrt" type="text"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
@@ -153,8 +153,8 @@
         <h3 class="ion-margin-start">
             Lieferobjekt
         </h3>
-        <ion-item>
-            <ion-label position="stacked">Titel</ion-label>
+        <ion-item lines="none">
+            <ion-label class="label-margin" position="stacked">Titel</ion-label>
             <ion-input [(ngModel)]="lieferobjekt.name" [readonly]="detailmode" type="text"></ion-input>
             <p class="ion-text-end ion-padding-end"
                style="color:var(--ion-color-danger)"
@@ -162,8 +162,8 @@
                 {{errors.get('name')}}
             </p>
         </ion-item>
-        <ion-item>
-            <ion-label position="stacked">Beschreibung</ion-label>
+        <ion-item lines="none">
+            <ion-label class="label-margin" position="stacked">Beschreibung</ion-label>
             <ion-textarea [(ngModel)]="lieferobjekt.beschreibung" [readonly]="detailmode" type="text"></ion-textarea>
             <p class="ion-text-end ion-padding-end"
                style="color:var(--ion-color-danger)"
@@ -173,14 +173,16 @@
         </ion-item>
         <ion-row>
             <ion-col size="4">
-                <ion-item>
-                    <ion-label position="stacked">Preis</ion-label>
-                    <ion-input [(ngModel)]="lieferobjekt.preis" [readonly]="detailmode" type="number"></ion-input>
+                <ion-item lines="none">
+                    <ion-label class="label-margin" position="stacked">Preis</ion-label>
+                    <ion-input [(ngModel)]="lieferobjekt.preis" [readonly]="detailmode"></ion-input>
                     <p class="ion-text-end ion-padding-end"
                        style="color:var(--ion-color-danger)"
                        *ngIf="errors.get('preis')">
                         {{errors.get('preis')}}
                     </p>
+
+
                 </ion-item>
             </ion-col>
         </ion-row>

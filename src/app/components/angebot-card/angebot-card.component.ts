@@ -84,11 +84,15 @@ export class AngebotCardComponent implements OnInit {
   }
 
   interessentAnnehmen(interessent: InteressentA) {
-    this.angebot.addKunde(interessent);
-    this.angebot.deleteInteressent(interessent);
-    this.angebotService.updateAngebot(this.angebot).then(res => {
-      Object.assign(this.angebot, res.angebot);
-    }).catch(err => this.presentAlert('Fehler', 'Fehler beim Update des Angebots. Error: ' + err, 'Ok'));
+    if (!this.angebot.isInteressent(interessent.userId)) {
+      this.angebot.addKunde(interessent);
+      this.angebot.deleteInteressent(interessent);
+      this.angebotService.updateAngebot(this.angebot).then(res => {
+        Object.assign(this.angebot, res.angebot);
+      }).catch(err => this.presentAlert('Fehler', 'Fehler beim Update des Angebots. Error: ' + err, 'Ok'));
+    } else {
+      alert('Der Interessent wurde schon angenommen.');
+    }
   }
 
   interessentEntfernen(interessent: InteressentA) {
