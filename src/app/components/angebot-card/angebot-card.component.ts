@@ -3,12 +3,14 @@ import {Angebot, InteressentA} from '../../../models/Angebot';
 import {AuthService} from '../../../services/auth/auth.service';
 import {AngebotService} from '../../../services/angebot/angebot.service';
 import {FahrtService} from '../../../services/fahrt/fahrt.service';
-import {AlertController} from '@ionic/angular';
+import {AlertController, ModalController} from '@ionic/angular';
 import {User} from '../../../models/user';
 import {LieferobjektService} from '../../../services/lieferobjekt/lieferobjekt.service';
 import {Fahrt} from '../../../models/Fahrt';
 import {Fahrzeug} from '../../../models/fahrzeug';
 import {FahrzeugService} from '../../../services/fahrzeug/fahrzeug.service';
+import {InteressentG} from '../../../models/Gesuch';
+import {ProfilPopoverComponent} from '../profil-popover/profil-popover.component';
 
 @Component({
   selector: 'app-angebot-card',
@@ -33,7 +35,8 @@ export class AngebotCardComponent implements OnInit {
               private fahrtService: FahrtService,
               private lieferobjektService: LieferobjektService,
               public alertController: AlertController,
-              private fahrzeugService: FahrzeugService) {
+              private fahrzeugService: FahrzeugService,
+              public modalController: ModalController) {
   }
 
   ngOnInit() {
@@ -84,7 +87,7 @@ export class AngebotCardComponent implements OnInit {
   }
 
   interessentAnnehmen(interessent: InteressentA) {
-    if (!this.angebot.isInteressent(interessent.userId)) {
+    if (!this.angebot.isKunde(interessent.userId)) {
       this.angebot.addKunde(interessent);
       this.angebot.deleteInteressent(interessent);
       this.angebotService.updateAngebot(this.angebot).then(res => {
@@ -100,6 +103,22 @@ export class AngebotCardComponent implements OnInit {
     this.angebotService.updateAngebot(this.angebot).then(res => {
       Object.assign(this.angebot, res.angebot);
     }).catch(err => this.presentAlert('Fehler', 'Fehler beim Update des Angebots. Error: ' + err, 'Ok'));
+  }
+
+  async infoPopoverInteressent(interessent: InteressentA) {
+    const intUser = await this.authService.findUserById(interessent.userId);
+    const sub = await this.lieferobjektService.findLieferobjektById(interessent.objectId).subscribe(async intLieferobjekt => {
+      sub.unsubscribe();
+      const modal = await this.modalController.create({
+        component: ProfilPopoverComponent,
+        cssClass: 'my-custom-class',
+        componentProps: {
+          interessent: intUser,
+          lieferobjekt: intLieferobjekt
+        }
+      });
+      return await modal.present();
+    });
   }
 
   starteFahrt() {

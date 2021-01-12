@@ -89,10 +89,6 @@ export class GesuchedetailsComponent implements OnInit {
         if (!this.lieferobjekt.preis) {
             this.errors.set('preis', 'Der Preis muss korrekt eingetragen werden!');
         }
-        console.log(this.lieferobjekt.preis);
-        console.log(this.errors.get('preis'));
-
-        console.log(this.authService.user);
         if (this.authService.user) {
             this.user = this.authService.getUser();
         } else {
@@ -100,7 +96,6 @@ export class GesuchedetailsComponent implements OnInit {
         }
 
         if (this.errors.size === 0) {
-
             this.gesuch.erstellerId = this.authService.getUserID();
             this.gesuch.ankunftStrasse = this.gesuch.ankunftStrasse + this.ankunftNummer;
             this.gesuch.abfahrtStrasse = this.gesuch.abfahrtStrasse + this.abfahrtNummer;

@@ -78,12 +78,7 @@ export class AngebotedetailsComponent implements OnInit {
         if (!this.angebot.abfahrtOrt) {
             this.errors.set('abfahrtOrt', 'Der Abfahrtsort muss korrekt eingetragen werden!');
         }
-
-        console.log('hi');
-        console.log(this.errors.get('preis'));
-
-        console.log(this.authService.user);
-        if (!this.authService.user) {
+        if (this.authService.user) {
             this.user = this.authService.getUser();
         } else {
             this.errors.set('preis', 'User undefined!');
@@ -108,7 +103,6 @@ export class AngebotedetailsComponent implements OnInit {
                 this.dismiss();
             }
         }
-        this.errors.clear();
     }
 
     dismiss() {

@@ -1,5 +1,6 @@
 <div *ngIf="this.user.id && angebot._ID">
     <ion-card class="border-card-orange">
+        <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
         <ion-item lines="none">
             <h3 slot="start">{{fahrzeug.marke || 'Fahrzeug nicht hinterlegt'}} {{fahrzeug.modell || ''}}</h3>
             <ion-badge color="secondary" slot="end">{{interessentenText}}</ion-badge>
@@ -102,7 +103,7 @@
                 <ion-label>
                     {{interessent.user.vorname}} {{interessent.user.nachname}}
                 </ion-label>
-                <ion-icon slot="end" name="information-circle-outline"></ion-icon>
+                <ion-icon slot="end" name="information-circle-outline" (click)="infoPopoverInteressent(interessent.interessent)"></ion-icon>
                 <ion-icon slot="end" color="primary" name="checkmark-circle-outline" (click)="this.interessentAnnehmen(interessent.interessent)"></ion-icon>
                 <ion-icon slot="end" color="secondary" name="close-circle-outline" (click)="interessentEntfernen(interessent.interessent)"></ion-icon>
             </ion-item>
@@ -117,7 +118,7 @@
                 <ion-label>
                     {{kunde.user.vorname}} {{kunde.user.nachname}}
                 </ion-label>
-                <ion-icon slot="end" name="information-circle-outline"></ion-icon>
+                <ion-icon slot="end" name="information-circle-outline" (click)="infoPopoverInteressent(kunde.kunde)"></ion-icon>
             </ion-item>
         </ng-container>
 

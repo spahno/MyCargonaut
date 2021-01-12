@@ -9,7 +9,7 @@
                     </ion-col>
 
                     <ion-col>
-                        <p class="name">Max Mustermann</p>
+                        <p class="name">{{interessent.vorname || 'Kein Vorname hinterlegt!'}} {{interessent.nachname || 'Kein Nachname hinterlegt!'}}</p>
                     </ion-col>
 
                     <ion-col class="stars">
@@ -26,7 +26,7 @@
             <ion-item lines="full">
                 <p>
                     <ion-icon name="mail-outline" slot="start"></ion-icon>
-                    max@gmail.com
+                    {{interessent.email || 'Keine Email hinterlegt!'}}
                 </p>
             </ion-item>
 
@@ -35,34 +35,40 @@
                 <p>
                 <p>
                     <ion-icon name="call-outline" slot="start"></ion-icon>
-                    0123 456789
+                    {{interessent.telefon || 'Keine Telefonnummer hinterlegt!'}}
                 </p>
             </ion-item>
 
             <br>
             <br>
+            <ng-container *ngIf="fahrzeug">
+                <ion-item lines="full">
+                    <p>{{fahrzeug.marke || 'Keine Marke hinterlegt!'}} {{fahrzeug.modell || 'Kein Modell hinterlegt!'}}</p>
+                </ion-item>
 
-            <ion-item lines="full">
-                <p>Mercedes Vito</p>
-            </ion-item>
+                <ion-item lines="full">
+                    <p>Fahrzeugart: {{fahrzeug.fahrzeugart || 'Keine Fahrzeugart hinterlegt!'}}</p>
+                </ion-item>
+                <ion-item lines="full">
+                    <p>{{fahrzeug.hoehe || 'Keine Höhe hinterlegt!'}}m x {{fahrzeug.breite || 'Keine breite hinterlegt!'}}m x {{fahrzeug.tiefe || 'Keine tiefe hinterlegt!'}}m</p>
+                </ion-item>
+            </ng-container>
+            <ng-container *ngIf="lieferobjekt">
+                <ion-item lines="full">
+                    <p>{{lieferobjekt.name || 'Kein Name hinterlegt!'}}</p>
+                </ion-item>
 
-            <ion-item lines="full">
-                <p>Fahrzeugart: Transporter</p>
-            </ion-item>
-            <ion-item lines="full">
-                <p>3m x 4m x 200x</p>
-            </ion-item>
-
+                <ion-item lines="full">
+                    <p>Preis: {{lieferobjekt.preis || 'Kein Preis hinterlegt!'}}</p>
+                </ion-item>
+                <ion-item lines="full">
+                    <p>{{lieferobjekt.beschreibung || 'Keine Beschreibung hinterlegt!'}}</p>
+                </ion-item>
+            </ng-container>
 
             <ion-row class="ion-justify-content-center">
                 <ion-list>
-                    <button (click)="dismissClickPopover()" class="accept">Anfrage annehmen</button>
-                </ion-list>
-            </ion-row>
-
-            <ion-row class="ion-justify-content-center">
-                <ion-list>
-                    <button (click)="dismissClickPopover()" class="abbrechen">Abbrechen</button>
+                    <button (click)="dismissClickPopover()" class="accept">Schließen</button>
                 </ion-list>
             </ion-row>
 

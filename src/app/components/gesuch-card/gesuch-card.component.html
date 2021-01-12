@@ -102,7 +102,7 @@
                 <ion-label>
                     {{interessent.user.vorname}} {{interessent.user.nachname}}
                 </ion-label>
-                <ion-icon slot="end" name="information-circle-outline"></ion-icon>
+                <ion-icon slot="end" name="information-circle-outline" (click)="infoPopoverInteressent(interessent.interessent)"></ion-icon>
                 <ion-icon slot="end" color="primary" name="checkmark-circle-outline" (click)="interessentAnnehmen(interessent.interessent)"></ion-icon>
                 <ion-icon slot="end" color="secondary" name="close-circle-outline" (click)="interessentEntfernen(interessent.interessent)"></ion-icon>
             </ion-item>
@@ -117,7 +117,7 @@
                 <ion-label>
                     {{fahrer.user.vorname}} {{fahrer.user.nachname}}
                 </ion-label>
-                <ion-icon slot="end" name="information-circle-outline"></ion-icon>
+                <ion-icon slot="end" name="information-circle-outline" (click)="infoPopoverInteressent(fahrer.fahrer)"></ion-icon>
             </ion-item>
         </ng-container>
 
