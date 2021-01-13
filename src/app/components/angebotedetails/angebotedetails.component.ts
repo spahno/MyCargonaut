@@ -91,9 +91,14 @@ export class AngebotedetailsComponent implements OnInit {
             this.angebot.erstellerId = this.authService.getUserID();
 
             if (this.editmode) {
-                console.log('schreibt eine edit ihr lappen');
-                this.errors.clear();
-                this.dismiss();
+                await this.angebotService.updateAngebot(this.angebot).then(res => {
+                    const index = this.user.erstellteAngebote.indexOf(res.angebot._ID);
+                    this.user.erstellteAngebote[index] = res.angebot._ID;
+                    this.authService.updateUser(this.user);
+                    this.errors.clear();
+                    this.dismiss();
+                });
+                await this.authService.loadPageSubscription(u => this.user =  u);
             } else {
                 await this.angebotService.addAngebot(this.angebot).then(res => {
                     this.user.erstellteAngebote.push(res.angebot._ID);

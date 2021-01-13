@@ -101,9 +101,16 @@ export class GesuchedetailsComponent implements OnInit {
             this.gesuch.ankunftStrasse = this.gesuch.ankunftStrasse + this.ankunftNummer;
             this.gesuch.abfahrtStrasse = this.gesuch.abfahrtStrasse + this.abfahrtNummer;
             if (this.editmode) {
-                // console.log('schreibt eine edit ihr lappen');
-                this.errors.clear();
-                this.dismiss();
+                // await this.lieferobjektService.update(this.lieferobjekt).then(res =>
+                //     this.gesuch.lieferobjektId = res.lieferobjekt._ID);
+                await this.gesuchService.updateGesuch(this.gesuch).then(res => {
+                    const index = this.user.erstellteAngebote.indexOf(res.gesuch._ID);
+                    this.user.erstellteGesuche[index] = res.gesuch._ID;
+                    this.authService.updateUser(this.user);
+                    this.errors.clear();
+                    this.dismiss();
+                });
+                await this.authService.loadPageSubscription(u => this.user =  u);
             } else {
                 this.dismiss();
                 this.errors.clear();
