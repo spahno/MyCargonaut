@@ -103,6 +103,9 @@ export class AngebotedetailsComponent implements OnInit {
         }
     }
 
+    /**
+     * dismisses the current modal
+     */
     dismiss() {
         // using the injected ModalController this page
         // can "dismiss" itself and optionally pass back data
@@ -131,8 +134,6 @@ export class AngebotedetailsComponent implements OnInit {
 
         modal.onDidDismiss()
             .then((fahrzeug) => {
-                console.log('hi');
-                console.log(fahrzeug);
                 this.angebotFahrzeug = fahrzeug.data; // Here's your selected user!
                 this.angebot.fahrzeugId = this.angebotFahrzeug.id;
             });

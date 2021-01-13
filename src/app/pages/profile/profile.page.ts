@@ -36,6 +36,9 @@ export class ProfilePage implements OnInit {
                 public fahrzeugService: FahrzeugService) {
     }
 
+    /**
+     * Loads the current user and all his Fahrzeuge
+     */
     ngOnInit() {
         this.authService.loadPageSubscription(u => {
             Object.assign(this.user = u);
@@ -43,6 +46,12 @@ export class ProfilePage implements OnInit {
         });
     }
 
+    /**
+     * Opens the Fahrzeugedetails Modal to add a Fahrzeug
+     * @param fahrzeug is the fahrzeug passed to the modal
+     * @param detailmode sets the inputs on readonly if true
+     * @param editmode changes the save button in the modal
+     */
     async openFahrzeugdetails(fahrzeug: Fahrzeug, detailmode: boolean, editmode: boolean) {
         const modal = await this.modalController.create({
             component: FahrzeugdetailsComponent,
@@ -59,6 +68,9 @@ export class ProfilePage implements OnInit {
             });
     }
 
+    /**
+     * Opens the profile editing modal
+     */
     async openProfilBearbeiten() {
         const modal = await this.modalController.create({
             component: ProfileEditPage,
@@ -66,10 +78,16 @@ export class ProfilePage implements OnInit {
         return await modal.present();
     }
 
+    /**
+     * deletes the current user
+     */
     async delete() {
         await this.authService.deleteProfile();
     }
 
+    /**
+     * Gets all the Fahrzeuge of the current user
+     */
     getUserFahrzeuge() {
         this.cars = [];
         this.user.fahrzeuge.forEach(id => {
@@ -80,6 +98,10 @@ export class ProfilePage implements OnInit {
         });
     }
 
+    /**
+     * Deletes a Fahrzeug
+     * @param fahrzeug the fahrzeug that is to be deleted
+     */
     deleteFahrzeug(fahrzeug: Fahrzeug) {
         this.fahrzeugService.deleteFahrzeug(fahrzeug.id).then(() => {
             const user = this.authService.getUser();

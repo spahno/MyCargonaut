@@ -28,11 +28,15 @@ export class GesuchPage implements OnInit, OnDestroy {
             this.filterGesuche();
         });
     }
-
+    /**
+     * Make sure data is not loaded twice
+     */
     ngOnDestroy(): void {
         this.subGesuch.unsubscribe();
     }
-
+    /**
+     * filters shown Gesuche by user input
+     */
     filterGesuche() {
         const startort = this.gesuchService.startort.toLowerCase();
         const zielort = this.gesuchService.zielort.toLowerCase();

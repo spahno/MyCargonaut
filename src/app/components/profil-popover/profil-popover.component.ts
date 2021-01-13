@@ -11,7 +11,9 @@ import {Lieferobjekt} from '../../../models/Lieferobjekt';
     styleUrls: ['./profil-popover.component.scss'],
 })
 export class ProfilPopoverComponent {
-
+    /**
+     * Values passed to the popover
+     */
     @Input() interessent = new User( '', '', '', '');
     @Input() lieferobjekt: Lieferobjekt;
     @Input() fahrzeug: Fahrzeug;
@@ -20,6 +22,9 @@ export class ProfilPopoverComponent {
                 private modalController: ModalController) {
     }
 
+    /**
+     * dismisses the Popover
+     */
     async dismissClickPopover() {
         await this.modalController.dismiss();
     }
