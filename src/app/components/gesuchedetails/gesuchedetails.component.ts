@@ -75,10 +75,13 @@ export class GesuchedetailsComponent implements OnInit {
             this.errors.set('abfahrtNummer', 'Die Hausnummer muss korrekt eingetragen werden!');
         }
         if (!this.gesuch.abfahrtPlz) {
-            this.errors.set('ankunftPlz', 'Die Postleitzahl muss korrekt eingetragen werden!');
+            this.errors.set('abfahrtPlz', 'Die Postleitzahl muss korrekt eingetragen werden!');
         }
         if (!this.gesuch.abfahrtOrt) {
             this.errors.set('abfahrtOrt', 'Der Abfahrtsort muss korrekt eingetragen werden!');
+        }
+        if (!this.gesuch.bezahlung) {
+            this.errors.set('bezahlung', 'Die Bezahlung muss korrekt eingetragen werden!');
         }
         if (!this.lieferobjekt.name) {
             this.errors.set('name', 'Der Titel muss korrekt eingetragen werden!');
@@ -97,10 +100,23 @@ export class GesuchedetailsComponent implements OnInit {
             this.gesuch.erstellerId = this.authService.getUserID();
             this.gesuch.ankunftStrasse = this.gesuch.ankunftStrasse + this.ankunftNummer;
             this.gesuch.abfahrtStrasse = this.gesuch.abfahrtStrasse + this.abfahrtNummer;
+            /**
+             * Edit a Gesuch
+             */
             if (this.editmode) {
-                // console.log('schreibt eine edit ihr lappen');
-                this.errors.clear();
-                this.dismiss();
+                await this.lieferobjektService.updateLieferobjekt(this.lieferobjekt).then(res =>
+                    this.gesuch.lieferobjektId = res._ID);
+                await this.gesuchService.updateGesuch(this.gesuch).then(res => {
+                    const index = this.user.erstellteAngebote.indexOf(res.gesuch._ID);
+                    this.user.erstellteGesuche[index] = res.gesuch._ID;
+                    this.authService.updateUser(this.user);
+                    this.errors.clear();
+                    this.dismiss();
+                });
+                await this.authService.loadPageSubscription(u => this.user =  u);
+                /**
+                 * Add a Gesuch
+                 */
             } else {
                 this.dismiss();
                 this.errors.clear();

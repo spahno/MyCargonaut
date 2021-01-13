@@ -32,9 +32,7 @@ export class SuchenPage {
    * Prepares filter values and passes them to the service
    */
   gesuchSearch() {
-    console.log(this.endDate);
     this.transformDate();
-    console.log(this.endDate);
     this.gesuchService.startSearch(this.startort, this.zielort, this.endDate);
   }
 
@@ -42,9 +40,7 @@ export class SuchenPage {
    * Prepares filter values and passes them to the service
    */
   angebotSearch() {
-    console.log(this.endDate);
     this.transformDate();
-    console.log(this.endDate);
     this.angebotService.startSearch(this.startort, this.zielort, this.endDate);
   }
 

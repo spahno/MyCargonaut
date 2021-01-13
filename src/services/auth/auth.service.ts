@@ -96,7 +96,9 @@ export class AuthService {
     findUserById(id: string): Promise<User> {
         return new Promise((resolve, reject) => {
             this.userCollection.doc(id).get().toPromise().then((res) => {
-                resolve(res.data());
+                const user = res.data();
+                user.id = id;
+                resolve(user);
             }).catch(err => reject(err));
         });
     }
@@ -130,8 +132,8 @@ export class AuthService {
         return new Promise((resolve) => {
             this.loadPageSubscription((u) => {
                 if (u === undefined || u.id === undefined) {
-                    resolve(false);
                     localStorage.clear();
+                    resolve(false);
                 } else {
                     resolve(true);
                 }
@@ -159,7 +161,7 @@ export class AuthService {
                 localStorage.setItem('userID', res.user.uid);
             })
             .catch((error) => {
-                console.log(error);
+                alert(error);
             });
     }
 

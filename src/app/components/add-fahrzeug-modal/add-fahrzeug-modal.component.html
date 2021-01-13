@@ -2,11 +2,11 @@
     <ion-toolbar>
         <ion-title>Fahrzeug auswählen</ion-title>
         <ion-buttons slot="end">
-            <ion-button onclick="dismissModal()">Close</ion-button>
+            <ion-button (click)="modalController.dismiss()">Close</ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
-<ion-content fullscreen>
+<ion-content fullscreen *ngIf="this.userFahrzeuge.length > 0">
     <ion-list>
         <ion-item *ngFor="let fahrzeug of this.userFahrzeuge" (click)="this.selectFahrzeug(fahrzeug)">
             <ion-label>

@@ -10,6 +10,7 @@ import {Fahrt} from '../../../models/Fahrt';
 import {Fahrzeug} from '../../../models/fahrzeug';
 import {FahrzeugService} from '../../../services/fahrzeug/fahrzeug.service';
 import {ProfilPopoverComponent} from '../profil-popover/profil-popover.component';
+import {TrackingPage} from '../../pages/tracking/tracking.page';
 
 @Component({
   selector: 'app-angebot-card',
@@ -57,6 +58,10 @@ export class AngebotCardComponent implements OnInit {
     }
   }
 
+  /**
+   * Sets the interest of a user for a Anngebot
+   * @param interessenten all the interessenten of a Gesuch
+   */
   setInteressenten(interessenten: InteressentA[]) {
     this.interessenten = [];
     interessenten.forEach(interessent => {
@@ -66,6 +71,10 @@ export class AngebotCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Sets the customer for a Angebot
+   * @param kunden interested customers
+   */
   setKunden(kunden: InteressentA[]) {
     this.kunden = [];
     kunden.forEach(kunde => {
@@ -75,6 +84,10 @@ export class AngebotCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Sets the number of interessenten in the badge to display to a user
+   * @param interessenten is the number of interested users
+   */
   setInteressentenText(interessenten: number) {
     if (interessenten === 0) {
       this.interessentenText = 'Keine Interessenten';
@@ -85,6 +98,10 @@ export class AngebotCardComponent implements OnInit {
     }
   }
 
+  /**
+   * Accepts the request of a user for a Angebot
+   * @param interessent is the requesting user
+   */
   interessentAnnehmen(interessent: InteressentA) {
     if (!this.angebot.isKunde(interessent.userId)) {
       this.angebot.addKunde(interessent);
@@ -97,16 +114,29 @@ export class AngebotCardComponent implements OnInit {
     }
   }
 
+  /**
+   * Deletes the request of a user
+   * @param interessent is the requesting user
+   */
   interessentEntfernen(interessent: InteressentA) {
     this.authService.findUserById(interessent.userId).then(res => {
       const delInt: User = res;
       delInt.id = interessent.userId;
       const findIndex: number = delInt.interessierteAngebote.indexOf(this.angebot._ID);
       delInt.interessierteAngebote.splice(findIndex, 1);
-      this.authService.updateUser(delInt);
-    });
+      this.authService.updateUser(delInt)
+          .catch(err => this.presentAlert('Fehler', 'Fehler beim Update des Interessenten des Angebots. Error: ' + err, 'Ok'));
+    }).catch(err => this.presentAlert('Fehler', 'Fehler beim finden des Interessenten des Angebots. Error: ' + err, 'Ok'));
+    this.angebot.deleteInteressent(interessent);
+    this.angebotService.updateAngebot(this.angebot).then(res => {
+      Object.assign(this.angebot, res.angebot);
+    }).catch(err => this.presentAlert('Fehler', 'Fehler beim Update des Angebots. Error: ' + err, 'Ok'));
   }
 
+  /**
+   * Opens a popover to display more information about the user and his request
+   * @param interessent the requesting user
+   */
   async infoPopoverInteressent(interessent: InteressentA) {
     const intUser = await this.authService.findUserById(interessent.userId);
     const sub = await this.lieferobjektService.findLieferobjektById(interessent.objectId).subscribe(async intLieferobjekt => {
@@ -123,6 +153,9 @@ export class AngebotCardComponent implements OnInit {
     });
   }
 
+  /**
+   * starts the drive and presents an alert to display confirmation to user
+   */
   starteFahrt() {
     if (this.authService.getUser() && this.authService.getUser().id === this.angebot.erstellerId){
       if (this.angebot) {
@@ -148,7 +181,9 @@ export class AngebotCardComponent implements OnInit {
       this.presentAlert('Fehler', 'Fahrt starten fehlgeschlagen. Error: Nicht Authorisiert', 'Ok');
     }
   }
-
+  /**
+   * ends the drive and presents a popover to rate the drive
+   */
   fahrtBeenden() {
     if (this.authService.getUser() && this.authService.getUser().id === this.angebot.erstellerId) {
       if (this.angebot) {
@@ -168,6 +203,10 @@ export class AngebotCardComponent implements OnInit {
     }
   }
 
+  /**
+   * Presents the rating popover
+   * @param fahrtId is the id of the ride to be rated
+   */
   async fahrtBewerten(fahrtId: string) {
     const bewertung = 5;
     const alert = await this.alertController.create({
@@ -202,7 +241,10 @@ export class AngebotCardComponent implements OnInit {
 
     await alert.present();
   }
-
+  /**
+   * Presents a popover to the user to create a Cargo object
+   * that is to be transported
+   */
   async angebotAnfragen() {
     if (this.angebot) {
       const alert = await this.alertController.create({
@@ -285,20 +327,46 @@ export class AngebotCardComponent implements OnInit {
    * This Methods Deletes a Angebot from a Interessent a Ersteller and the Angebot it self
    */
   deleteAngebot() {
-    this.angebotService.deleteAngebot(this.angebot._ID).then(id => {
-      this.angebot.getInteressenten().forEach(interessent => {
-        this.user.erstellteAngebote = this.user.erstellteAngebote.filter(ange => ange !== id);
-        this.authService.updateUser(this.user);
+    const interessentenArr: InteressentA[] = this.angebot.getInteressenten().concat(this.angebot.getKunden());
+    if (interessentenArr.length === 0){
+      this.deleteAngebotCurrentUser();
+    } else {
+      interessentenArr.forEach(interessent => {
         this.authService.findUserById(interessent.userId).then(user => {
-          user.interessierteAngebote = user.interessierteAngebote.filter(intr => intr !== id);
-          this.authService.updateUser(user);
+          user.interessierteAngebote = user.interessierteAngebote.filter(intr => intr !== this.angebot._ID);
+          this.authService.updateUser(user).then(() => {
+            this.deleteAngebotCurrentUser();
+          }).catch(err => {
+            this.presentAlert('Fehler!', 'Fehler beim Updaten des Interessenten. Error: ' + err, 'Ok');
+          });
+        }).catch(err => {
+          this.presentAlert('Fehler!', 'Fehler beim Löschen des Angebots im Interessenten. Error: ' + err, 'Ok');
         });
       });
+    }
+  }
+
+  /**
+   * This Method deletes the Angebot from the Current user and calls a method to to update in firebase
+   */
+  deleteAngebotCurrentUser() {
+    this.user.erstellteAngebote = this.user.erstellteAngebote.filter(ange => ange !== this.angebot._ID);
+    this.authService.updateUser(this.user).then(newUser => {
+      Object.assign(this.user, newUser);
+      this.angebotService.deleteAngebot(this.angebot._ID).catch(err => {
+        this.presentAlert('Fehler!', 'Fehler beim Löschen des Angebots entstanden. Error: ' + err, 'Ok');
+      });
     }).catch(err => {
-      this.presentAlert('Fehler!', 'Fehler beim Löschen des Angebots entstanden. Error: ' + err, 'Ok');
+      this.presentAlert('Fehler!', 'Fehler beim Updaten des Users. Error: ' + err, 'Ok');
     });
   }
 
+  /**
+   * This method is a async Funktion and is presenting an alert
+   * @param header is the Heaermessage of an alert
+   * @param message is the message of an alert
+   * @param buttonText is the Confirm Buttontext of an alert
+   */
   async presentAlert(header: string, message: string, buttonText: string) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',
@@ -307,5 +375,23 @@ export class AngebotCardComponent implements OnInit {
       buttons: [buttonText]
     });
     await alert.present();
+  }
+
+  /**
+   * method to display the tracking modal page
+   */
+  async presentTrackingModal() {
+    const modal = await this.modalController.create({
+      component: TrackingPage,
+      componentProps: {
+        fahrzeugart: this.fahrzeug.fahrzeugart,
+        startort: this.angebot.abfahrtOrt,
+        zielort: this.angebot.ankunftOrt,
+        ankunftDatum: this.angebot.ankunftDatum,
+        ankunftZeit: this.angebot.ankunftZeit,
+        beendet: this.fahrt.beendet
+      }
+    });
+    return await modal.present();
   }
 }

@@ -5,6 +5,7 @@ import {AuthService} from '../../../services/auth/auth.service';
 import {User} from '../../../models/user';
 import {Angebot} from '../../../models/Angebot';
 import {ModalController} from '@ionic/angular';
+import {ChangePageService} from '../../../services/changePage/change-page.service';
 
 @Component({
     selector: 'app-add-fahrzeug-modal',
@@ -26,23 +27,21 @@ export class AddFahrzeugModalComponent implements OnInit {
 
     constructor(private fahrzeugService: FahrzeugService,
                 private authService: AuthService,
-                private modalController: ModalController) {
+                public modalController: ModalController,
+                public changePage: ChangePageService) {
     }
 
     ngOnInit() {
         this.authService.loadPageSubscription(u => {
             Object.assign(this.currentUser = u);
-            console.log('user wird geholt: ' + this.currentUser.email);
             this.getUserFahrzeuge();
         });
     }
 
     getUserFahrzeuge() {
-        console.log('getuserFahrzeuge wird ausgeführt');
         this.currentUser.fahrzeuge.forEach(fahrzeugID => {
             this.fahrzeugService.findFahrzeugById(fahrzeugID).subscribe(fahrzeug => {
                 this.userFahrzeuge.push(fahrzeug);
-                console.log(fahrzeug);
             });
         });
     }

@@ -3,6 +3,9 @@
         <ion-item lines="none">
             <h3 slot="start">{{lieferobjekt.name || 'Lieferobjekt nicht hinterlegt'}}</h3>
             <ion-badge color="primary" slot="end">{{interessentenText}}</ion-badge>
+            <ion-button *ngIf="this.user.id && this.user.id === this.gesuch.erstellerId && gesuch._ID" (click)="deleteGesuchAlert()" slot="end" color="danger">
+                <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+            </ion-button>
         </ion-item>
         <ion-item lines="none">
             <h4 slot="start">{{gesuch.abfahrtOrt}}</h4>

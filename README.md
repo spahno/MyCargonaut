@@ -23,6 +23,7 @@
 ## Content
 
 * [Installation](#installation)
+* [Documentation](#documentation)
 * [Technology stack](#technology-stack)
 * [Infrastructure](#infrastructure)
 * [Domain model](#domain-model)
@@ -35,6 +36,11 @@
 To install the dependencies, run ``npm i``.
 
 To start the app, run ``npm run ion`` in the root folder.
+
+## Documentation
+
+To review the client documentation, execute ``npm run compodoc``.
+With the emitted link in the console, the browser will be opened.
 
 ## Testing
 
@@ -66,6 +72,7 @@ Technology | Usage
 [Travis CI](https://travis-ci.org) | Continuous Integration
 [Hound CI](https://houndci.com) | Continuous Integration
 [Github Pages](https://pages.github.com) | Deployment
+[Compodoc](https://compodoc.app) | Client documentation
 
 ## Infrastructure
 

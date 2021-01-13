@@ -3,7 +3,7 @@
         <ion-item lines="none">
             <h3 slot="start">{{fahrzeug.marke || 'Fahrzeug nicht hinterlegt'}} {{fahrzeug.modell || ''}}</h3>
             <ion-badge color="secondary" slot="end">{{interessentenText}}</ion-badge>
-            <ion-button *ngIf="this.user.id && this.user.id === this.angebot.erstellerId && angebot._ID" (click)="deleteAngebotAlert()" disabled="true" slot="end" color="danger">
+            <ion-button *ngIf="this.user.id && this.user.id === this.angebot.erstellerId && angebot._ID" (click)="deleteAngebotAlert()" slot="end" color="danger">
                 <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
             </ion-button>
         </ion-item>
@@ -137,7 +137,7 @@
                 <em>Sobald der Fahrer die Fahrt beginnt ist das Tracking möglich.</em><br>
                 <ion-button class="ion-margin-top" disabled="true"><em>Fahrt tracken</em></ion-button>
             </ng-container>
-            <ion-button *ngIf="angebot.fahrtId && angebot.isKunde(this.user.id)">Fahrt tracken</ion-button>
+            <ion-button *ngIf="angebot.fahrtId && angebot.isKunde(this.user.id)" (click)="presentTrackingModal()">Fahrt tracken</ion-button>
             <ion-button *ngIf="!angebot.isInteressent(this.user.id) && !angebot.isKunde(this.user.id)" (click)="angebotAnfragen()">Anfragen</ion-button>
         </div>
     </ion-card>

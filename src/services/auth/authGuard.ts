@@ -15,6 +15,7 @@ export class AuthGuard implements CanActivate {
             this.authService.checkIfLoggedIn()
                 .then(res => {
                     if (!res) {
+                        localStorage.clear();
                         const location: string = window.location.pathname;
                         if (!(location === '/login' || location === '/registrierung')) {
                             this.router.navigate(['/login']);
