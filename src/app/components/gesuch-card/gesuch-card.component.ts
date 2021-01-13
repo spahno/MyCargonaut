@@ -127,8 +127,9 @@ export class GesuchCardComponent implements OnInit {
       delInt.id = interessent.userId;
       const findIndex: number = delInt.interessierteGesuche.indexOf(this.gesuch._ID);
       delInt.interessierteGesuche.splice(findIndex, 1);
-      this.authService.updateUser(delInt);
-    });
+      this.authService.updateUser(delInt)
+          .catch(err => this.presentAlert('Fehler', 'Fehler beim Update des Interessenten des Gesuchs. Error: ' + err, 'Ok'));
+    }).catch(err => this.presentAlert('Fehler', 'Fehler beim finden des Interessenten des Gesuchs. Error: ' + err, 'Ok'));
     this.gesuch.deleteInteressent(interessent);
     this.gesuchService.updateGesuch(this.gesuch).then(res => {
       Object.assign(this.gesuch, res.gesuch);

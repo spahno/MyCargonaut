@@ -123,8 +123,13 @@ export class AngebotCardComponent implements OnInit {
       delInt.id = interessent.userId;
       const findIndex: number = delInt.interessierteAngebote.indexOf(this.angebot._ID);
       delInt.interessierteAngebote.splice(findIndex, 1);
-      this.authService.updateUser(delInt);
-    });
+      this.authService.updateUser(delInt)
+          .catch(err => this.presentAlert('Fehler', 'Fehler beim Update des Interessenten des Angebots. Error: ' + err, 'Ok'));
+    }).catch(err => this.presentAlert('Fehler', 'Fehler beim finden des Interessenten des Angebots. Error: ' + err, 'Ok'));
+    this.angebot.deleteInteressent(interessent);
+    this.angebotService.updateAngebot(this.angebot).then(res => {
+      Object.assign(this.angebot, res.angebot);
+    }).catch(err => this.presentAlert('Fehler', 'Fehler beim Update des Angebots. Error: ' + err, 'Ok'));
   }
 
   /**
