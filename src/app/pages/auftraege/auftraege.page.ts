@@ -9,7 +9,6 @@ import {ModalController, ViewDidEnter, ViewDidLeave} from '@ionic/angular';
 import {GesuchedetailsComponent} from '../../components/gesuchedetails/gesuchedetails.component';
 import {AngebotedetailsComponent} from '../../components/angebotedetails/angebotedetails.component';
 import {Subscription} from 'rxjs';
-import {Fahrzeug} from '../../../models/fahrzeug';
 
 @Component({
     selector: 'app-auftraege',
