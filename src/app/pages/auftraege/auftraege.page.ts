@@ -5,10 +5,12 @@ import {Gesuch} from '../../../models/Gesuch';
 import {GesuchService} from '../../../services/gesuch/gesuch.service';
 import {Angebot} from '../../../models/Angebot';
 import {AngebotService} from '../../../services/angebot/angebot.service';
-import {ModalController, ViewDidEnter, ViewDidLeave} from '@ionic/angular';
+import {AlertController, ModalController, ViewDidEnter, ViewDidLeave} from '@ionic/angular';
 import {GesuchedetailsComponent} from '../../components/gesuchedetails/gesuchedetails.component';
 import {AngebotedetailsComponent} from '../../components/angebotedetails/angebotedetails.component';
 import {Subscription} from 'rxjs';
+import {FahrzeugService} from '../../../services/fahrzeug/fahrzeug.service';
+import {ChangePageService} from '../../../services/changePage/change-page.service';
 
 @Component({
     selector: 'app-auftraege',
@@ -35,7 +37,9 @@ export class AuftraegePage implements ViewDidEnter, ViewDidLeave {
     constructor(private authService: AuthService,
                 private gesuchService: GesuchService,
                 private angebotService: AngebotService,
-                private modalController: ModalController) {
+                private modalController: ModalController,
+                public alertController: AlertController,
+                public changePage: ChangePageService) {
 
     }
 
@@ -148,8 +152,30 @@ export class AuftraegePage implements ViewDidEnter, ViewDidLeave {
         });
     }
 
-    openAngebotAlert() {
-        this.openAngebotdetails(this.angebot, false, false);
+    async openAngebotAlert() {
+        const alert = await this.alertController.create({
+            cssClass: 'my-custom-class',
+            header: 'Kein Fahrzeug vorhanden!',
+            message: 'Um eine Suche einzustellen muss ein Fahrzeug im Profil hinterlegt sein.',
+            buttons: [
+                {
+                    text: 'Ok',
+                    role: 'cancel',
+                    cssClass: 'secondary',
+                    handler: () => {}
+                }, {
+                    text: 'zum Profil',
+                    handler: () => {
+                        this.changePage.route('profile');
+                    }
+                }
+            ]
+        });
+        if (this.user.fahrzeuge.length === 0) {
+            await alert.present();
+        } else {
+            this.openAngebotdetails(this.angebot, false, false);
+        }
     }
 
     /**
