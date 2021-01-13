@@ -123,6 +123,7 @@ export class AuthService {
             this.loadPageSubscription((u) => {
                 if (u === undefined || u.id === undefined) {
                     resolve(false);
+                    localStorage.clear();
                 } else {
                     resolve(true);
                 }
