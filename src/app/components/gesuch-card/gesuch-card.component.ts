@@ -142,7 +142,7 @@ export class GesuchCardComponent implements OnInit {
           this.presentAlert('Fehler', 'Fahrt starten fehlgeschlagen. Die fahrt wurde bereits gestartet.', 'Ok');
         }
       } else {
-        this.presentAlert('Fehler', 'Fahrt starten fehlgeschlagen. Error: angebot: undefined', 'Ok');
+        this.presentAlert('Fehler', 'Fahrt starten fehlgeschlagen. Error: gesuch: undefined', 'Ok');
       }
     } else {
       this.presentAlert('Fehler', 'Fahrt starten fehlgeschlagen. Error: Nicht Authorisiert', 'Ok');
@@ -161,7 +161,7 @@ export class GesuchCardComponent implements OnInit {
           this.presentAlert('Fehler', 'Fahrt beenden fehlgeschlagen. Die fahrt wurde noch nicht gestartet.', 'Ok');
         }
       } else {
-        this.presentAlert('Fehler', 'Fahrt beenden fehlgeschlagen. Error: angebot: undefined', 'Ok');
+        this.presentAlert('Fehler', 'Fahrt beenden fehlgeschlagen. Error: gesuch: undefined', 'Ok');
       }
     } else {
       this.presentAlert('Fehler', 'Fahrt beenden fehlgeschlagen. Error: Nicht Authorisiert', 'Ok');
@@ -256,7 +256,7 @@ export class GesuchCardComponent implements OnInit {
                     this.presentAlert('Fehler!', 'Fehler beim update des Users der sich interessiert. Error: ' + err, 'Ok');
                   });
                   this.gesuchService.updateGesuch(this.gesuch).catch(err => {
-                    this.presentAlert('Fehler!', 'Fehler beim speichern des Angebots entstanden. Error: ' + err, 'Ok');
+                    this.presentAlert('Fehler!', 'Fehler beim speichern des Gesuchs entstanden. Error: ' + err, 'Ok');
                   });
                 }
               }
@@ -270,6 +270,77 @@ export class GesuchCardComponent implements OnInit {
     }
   }
 
+
+  /**
+   * This Methods Presents a Alert to Call the deleteGesuch() Method
+   */
+  async deleteGesuchAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Gesuch löschen!',
+      message: 'Möchten Sie das Gesuch von ' + this.gesuch.abfahrtOrt +
+          ' nach ' + this.gesuch.ankunftOrt + ' wirklich löschen?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {}
+        }, {
+          text: 'Löschen',
+          handler: () => {
+            this.deleteGesuch();
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  /**
+   * This Methods Deletes a Gesuch from a Interessent a Ersteller and the Gesuch it self
+   */
+  deleteGesuch() {
+    const interessentenArr: InteressentG[] = this.gesuch.getInteressenten().concat(this.gesuch.getFahrer());
+    if (interessentenArr.length === 0) {
+      this.deleteGesuchCurrentUser();
+    } else {
+      interessentenArr.forEach(interessent => {
+        this.authService.findUserById(interessent.userId).then(user => {
+          user.interessierteGesuche = user.interessierteGesuche.filter(intr => intr !== this.gesuch._ID);
+          this.authService.updateUser(user).then(() => {
+            this.deleteGesuchCurrentUser();
+          }).catch(err => {
+            this.presentAlert('Fehler!', 'Fehler beim Updaten des Interessenten. Error: ' + err, 'Ok');
+          });
+        }).catch(err => {
+          this.presentAlert('Fehler!', 'Fehler beim Löschen des Gesuchs im Interessenten. Error: ' + err, 'Ok');
+        });
+      });
+    }
+  }
+
+  /**
+   * This Method deletes the Gesuch from the Current user and calls a method to to update in firebase
+   */
+  deleteGesuchCurrentUser() {
+    this.user.erstellteGesuche = this.user.erstellteGesuche.filter(ges => ges !== this.gesuch._ID);
+    this.authService.updateUser(this.user).then(newUser => {
+      Object.assign(this.user, newUser);
+      this.gesuchService.deleteGesuch(this.gesuch._ID).catch(err => {
+        this.presentAlert('Fehler!', 'Fehler beim Löschen des Gesuch entstanden. Error: ' + err, 'Ok');
+      });
+    }).catch(err => {
+      this.presentAlert('Fehler!', 'Fehler beim Updaten des Users. Error: ' + err, 'Ok');
+    });
+  }
+
+  /**
+   * This method is a async Funktion and is presenting an alert
+   * @param header is the Heaermessage of an alert
+   * @param message is the message of an alert
+   * @param buttonText is the Confirm Buttontext of an alert
+   */
   async presentAlert(header: string, message: string, buttonText: string) {
     const alert = await this.alertController.create({
       cssClass: 'my-custom-class',

@@ -283,26 +283,37 @@ export class AngebotCardComponent implements OnInit {
    * This Methods Deletes a Angebot from a Interessent a Ersteller and the Angebot it self
    */
   deleteAngebot() {
-    const interessentenArr: InteressentA[] = [];
-    interessentenArr.concat(this.angebot.getInteressenten());
-    interessentenArr.concat(this.angebot.getKunden());
-    interessentenArr.forEach(interessent => {
-      this.authService.findUserById(interessent.userId).then(user => {
-        user.interessierteAngebote = user.interessierteAngebote.filter(intr => intr !== this.angebot._ID);
-        this.authService.updateUser(user).then(() => {
-          this.user.erstellteAngebote = this.user.erstellteAngebote.filter(ange => ange !== this.angebot._ID);
-          this.authService.updateUser(this.user).then(newUser => {
-            Object.assign(this.user, newUser);
-            this.angebotService.deleteAngebot(this.angebot._ID).catch(err => {
-              this.presentAlert('Fehler!', 'Fehler beim Löschen des Angebots entstanden. Error: ' + err, 'Ok');
-            });
+    const interessentenArr: InteressentA[] = this.angebot.getInteressenten().concat(this.angebot.getKunden());
+    if (interessentenArr.length === 0){
+      this.deleteAngebotCurrentUser();
+    } else {
+      interessentenArr.forEach(interessent => {
+        this.authService.findUserById(interessent.userId).then(user => {
+          user.interessierteAngebote = user.interessierteAngebote.filter(intr => intr !== this.angebot._ID);
+          this.authService.updateUser(user).then(() => {
+            this.deleteAngebotCurrentUser();
           }).catch(err => {
-            this.presentAlert('Fehler!', 'Fehler beim Updaten des Users. Error: ' + err, 'Ok');
+            this.presentAlert('Fehler!', 'Fehler beim Updaten des Interessenten. Error: ' + err, 'Ok');
           });
+        }).catch(err => {
+          this.presentAlert('Fehler!', 'Fehler beim Löschen des Angebots im Interessenten. Error: ' + err, 'Ok');
         });
-      }).catch(err => {
-        this.presentAlert('Fehler!', 'Fehler beim Löschen des Angebots im Interessenten. Error: ' + err, 'Ok');
       });
+    }
+  }
+
+  /**
+   * This Method deletes the Angebot from the Current user and calls a method to to update in firebase
+   */
+  deleteAngebotCurrentUser() {
+    this.user.erstellteAngebote = this.user.erstellteAngebote.filter(ange => ange !== this.angebot._ID);
+    this.authService.updateUser(this.user).then(newUser => {
+      Object.assign(this.user, newUser);
+      this.angebotService.deleteAngebot(this.angebot._ID).catch(err => {
+        this.presentAlert('Fehler!', 'Fehler beim Löschen des Angebots entstanden. Error: ' + err, 'Ok');
+      });
+    }).catch(err => {
+      this.presentAlert('Fehler!', 'Fehler beim Updaten des Users. Error: ' + err, 'Ok');
     });
   }
 
