@@ -66,7 +66,7 @@ export class LieferobjektService {
      * This method updates a Lieferobjekt in Firebase
      * @param lieferobjekt that will be updated
      */
-    updateAngebot(lieferobjekt: Lieferobjekt): Promise<Lieferobjekt> {
+    updateLieferobjekt(lieferobjekt: Lieferobjekt): Promise<Lieferobjekt> {
         return new Promise((resolve, reject) => {
             const lieferobjektId = lieferobjekt._ID;
             this.objektCollection.doc(lieferobjektId).update(LieferobjektService.copyAndPrepare(lieferobjekt))

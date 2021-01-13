@@ -101,8 +101,8 @@ export class GesuchedetailsComponent implements OnInit {
             this.gesuch.ankunftStrasse = this.gesuch.ankunftStrasse + this.ankunftNummer;
             this.gesuch.abfahrtStrasse = this.gesuch.abfahrtStrasse + this.abfahrtNummer;
             if (this.editmode) {
-                // await this.lieferobjektService.update(this.lieferobjekt).then(res =>
-                //     this.gesuch.lieferobjektId = res.lieferobjekt._ID);
+                await this.lieferobjektService.updateLieferobjekt(this.lieferobjekt).then(res =>
+                    this.gesuch.lieferobjektId = res._ID);
                 await this.gesuchService.updateGesuch(this.gesuch).then(res => {
                     const index = this.user.erstellteAngebote.indexOf(res.gesuch._ID);
                     this.user.erstellteGesuche[index] = res.gesuch._ID;
