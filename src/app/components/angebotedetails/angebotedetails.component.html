@@ -163,7 +163,8 @@
                 </ion-col>
             </ion-row>
         </div>
-        <div *ngIf="this.angebot.fahrzeugId" class="selected-fahrzeug">
+        <!-- Todo: Add a new Fahrzeug if there is no in the user -->
+        <div *ngIf="this.angebot.fahrzeugId && angebotFahrzeug" class="selected-fahrzeug">
             <ion-row>
                 <ion-col class="vertical-center">
                     <h3 class="ion-margin-start">Fahrzeug auswählen</h3>
