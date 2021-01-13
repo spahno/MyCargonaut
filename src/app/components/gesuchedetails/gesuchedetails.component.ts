@@ -75,10 +75,13 @@ export class GesuchedetailsComponent implements OnInit {
             this.errors.set('abfahrtNummer', 'Die Hausnummer muss korrekt eingetragen werden!');
         }
         if (!this.gesuch.abfahrtPlz) {
-            this.errors.set('ankunftPlz', 'Die Postleitzahl muss korrekt eingetragen werden!');
+            this.errors.set('abfahrtPlz', 'Die Postleitzahl muss korrekt eingetragen werden!');
         }
         if (!this.gesuch.abfahrtOrt) {
             this.errors.set('abfahrtOrt', 'Der Abfahrtsort muss korrekt eingetragen werden!');
+        }
+        if (!this.gesuch.bezahlung) {
+            this.errors.set('bezahlung', 'Die Bezahlung muss korrekt eingetragen werden!');
         }
         if (!this.lieferobjekt.name) {
             this.errors.set('name', 'Der Titel muss korrekt eingetragen werden!');

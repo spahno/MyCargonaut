@@ -73,10 +73,13 @@ export class AngebotedetailsComponent implements OnInit {
             this.errors.set('abfahrtNummer', 'Die Hausnummer muss korrekt eingetragen werden!');
         }
         if (!this.angebot.abfahrtPlz) {
-            this.errors.set('ankunftPlz', 'Die Postleitzahl muss korrekt eingetragen werden!');
+            this.errors.set('abfahrtPlz', 'Die Postleitzahl muss korrekt eingetragen werden!');
         }
         if (!this.angebot.abfahrtOrt) {
             this.errors.set('abfahrtOrt', 'Der Abfahrtsort muss korrekt eingetragen werden!');
+        }
+        if (!this.angebot.bezahlung) {
+            this.errors.set('bezahlung', 'Die Bezahlung muss korrekt eingetragen werden!');
         }
         if (!this.user) {
             this.errors.set('user', 'User undefined!');
