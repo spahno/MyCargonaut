@@ -101,6 +101,13 @@ export class GesuchCardComponent implements OnInit {
   }
 
   interessentEntfernen(interessent: InteressentG) {
+    this.authService.findUserById(interessent.userId).then(res => {
+      const delInt: User = res;
+      delInt.id = interessent.userId;
+      const findIndex: number = delInt.interessierteGesuche.indexOf(this.gesuch._ID);
+      delInt.interessierteGesuche.splice(findIndex, 1);
+      this.authService.updateUser(delInt);
+    });
     this.gesuch.deleteInteressent(interessent);
     this.gesuchService.updateGesuch(this.gesuch).then(res => {
       Object.assign(this.gesuch, res.gesuch);

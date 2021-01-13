@@ -39,7 +39,7 @@ export class GesuchedetailsComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.now);
+        this.authService.loadPageSubscription(u => this.user =  u);
     }
 
     /**
@@ -89,10 +89,8 @@ export class GesuchedetailsComponent implements OnInit {
         if (!this.lieferobjekt.preis) {
             this.errors.set('preis', 'Der Preis muss korrekt eingetragen werden!');
         }
-        if (this.authService.user) {
-            this.user = this.authService.getUser();
-        } else {
-            this.errors.set('preis', 'User undefined!');
+        if (!this.user) {
+            this.errors.set('user', 'User undefined!');
         }
 
         if (this.errors.size === 0) {
@@ -100,7 +98,7 @@ export class GesuchedetailsComponent implements OnInit {
             this.gesuch.ankunftStrasse = this.gesuch.ankunftStrasse + this.ankunftNummer;
             this.gesuch.abfahrtStrasse = this.gesuch.abfahrtStrasse + this.abfahrtNummer;
             if (this.editmode) {
-                console.log('schreibt eine edit ihr lappen');
+                // console.log('schreibt eine edit ihr lappen');
                 this.errors.clear();
                 this.dismiss();
             } else {
@@ -109,11 +107,10 @@ export class GesuchedetailsComponent implements OnInit {
                 await this.lieferobjektService.addLieferobjekt(this.lieferobjekt).then(res =>
                     this.gesuch.lieferobjektId = res.lieferobjekt._ID);
                 await this.gesuchService.addGesuch(this.gesuch).then(res => {
-                    const user = this.authService.getUser();
-                    user.erstellteGesuche.push(res.gesuch._ID);
-                    this.authService.persist(user, user.id);
-                    console.log(this.lieferobjekt.preis);
+                    this.user.erstellteGesuche.push(res.gesuch._ID);
+                    this.authService.updateUser(this.user);
                 });
+                await this.authService.loadPageSubscription(u => this.user =  u);
             }
         }
     }

@@ -37,7 +37,7 @@ export class AngebotedetailsComponent implements OnInit {
     }
 
     ngOnInit() {
-        console.log(this.now);
+        this.authService.loadPageSubscription(u => this.user =  u);
     }
 
     /**
@@ -78,10 +78,8 @@ export class AngebotedetailsComponent implements OnInit {
         if (!this.angebot.abfahrtOrt) {
             this.errors.set('abfahrtOrt', 'Der Abfahrtsort muss korrekt eingetragen werden!');
         }
-        if (this.authService.user) {
-            this.user = this.authService.getUser();
-        } else {
-            this.errors.set('preis', 'User undefined!');
+        if (!this.user) {
+            this.errors.set('user', 'User undefined!');
         }
 
         if (this.errors.size === 0) {
@@ -95,10 +93,10 @@ export class AngebotedetailsComponent implements OnInit {
                 this.dismiss();
             } else {
                 await this.angebotService.addAngebot(this.angebot).then(res => {
-                    const user = this.authService.getUser();
-                    user.erstellteAngebote.push(res.angebot._ID);
-                    this.authService.persist(user, user.id);
+                    this.user.erstellteAngebote.push(res.angebot._ID);
+                    this.authService.updateUser(this.user);
                 });
+                await this.authService.loadPageSubscription(u => this.user =  u);
                 this.errors.clear();
                 this.dismiss();
             }

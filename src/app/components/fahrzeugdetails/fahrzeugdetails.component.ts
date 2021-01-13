@@ -1,8 +1,9 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {ModalController} from '@ionic/angular';
+import {ModalController, ViewWillLeave} from '@ionic/angular';
 import {Fahrzeug} from '../../../models/fahrzeug';
 import {FahrzeugService} from '../../../services/fahrzeug/fahrzeug.service';
 import {AuthService} from '../../../services/auth/auth.service';
+import {User} from '../../../models/user';
 
 @Component({
   selector: 'app-fahrzeugdetails',
@@ -18,6 +19,7 @@ export class FahrzeugdetailsComponent implements OnInit {
   @Input() detailmode = true;
   @Input() editmode = false;
 
+  user: User;
   errors: Map<string, string> = new Map<string, string>();
 
   constructor(public modalController: ModalController,
@@ -25,11 +27,7 @@ export class FahrzeugdetailsComponent implements OnInit {
               public authService: AuthService) { }
 
   ngOnInit() {
-    // console.log(
-        // 'fahrzeug: ' + this.fahrzeug.marke,
-    //     'editmode: ' + this.editmode,
-    //     'detailmode: ' + this.detailmode
-    // );
+    this.authService.loadPageSubscription(u => this.user =  u);
   }
 
   /**
@@ -64,6 +62,9 @@ export class FahrzeugdetailsComponent implements OnInit {
     if (!this.fahrzeug.tiefe) {
       this.errors.set('tiefe', 'Die Tiefe muss korrekt eingetragen werden!');
     }
+    if (!this.user) {
+      this.errors.set('user', 'User undefined!');
+    }
 
     if (this.errors.size === 0) {
 
@@ -73,20 +74,19 @@ export class FahrzeugdetailsComponent implements OnInit {
         this.dismiss();
       } else {
         this.fahrzeugService.addFahrzeug(this.fahrzeug).then(res => {
-          const user = this.authService.getUser();
-          user.fahrzeuge.push(res.fahrzeug.id);
-          this.authService.persist(user, user.id);
+          this.user.fahrzeuge.push(res.fahrzeug.id);
+          this.authService.updateUser(this.user);
         });
         this.errors.clear();
         this.dismiss();
+        this.authService.loadPageSubscription(u => this.user =  u);
       }
     }
   }
 
   dismiss() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
-    this.modalController.dismiss({
+    this.modalController.dismiss(
+        {
       dismissed: true
     });
   }

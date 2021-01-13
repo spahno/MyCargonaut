@@ -99,10 +99,13 @@ export class AngebotCardComponent implements OnInit {
   }
 
   interessentEntfernen(interessent: InteressentA) {
-    this.angebot.deleteInteressent(interessent);
-    this.angebotService.updateAngebot(this.angebot).then(res => {
-      Object.assign(this.angebot, res.angebot);
-    }).catch(err => this.presentAlert('Fehler', 'Fehler beim Update des Angebots. Error: ' + err, 'Ok'));
+    this.authService.findUserById(interessent.userId).then(res => {
+      const delInt: User = res;
+      delInt.id = interessent.userId;
+      const findIndex: number = delInt.interessierteAngebote.indexOf(this.angebot._ID);
+      delInt.interessierteAngebote.splice(findIndex, 1);
+      this.authService.updateUser(delInt);
+    });
   }
 
   async infoPopoverInteressent(interessent: InteressentA) {

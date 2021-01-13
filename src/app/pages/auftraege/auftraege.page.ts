@@ -9,6 +9,7 @@ import {ModalController, ViewDidEnter, ViewDidLeave} from '@ionic/angular';
 import {GesuchedetailsComponent} from '../../components/gesuchedetails/gesuchedetails.component';
 import {AngebotedetailsComponent} from '../../components/angebotedetails/angebotedetails.component';
 import {Subscription} from 'rxjs';
+import {Fahrzeug} from '../../../models/fahrzeug';
 
 @Component({
     selector: 'app-auftraege',
@@ -111,7 +112,10 @@ export class AuftraegePage implements ViewDidEnter, ViewDidLeave {
                 editmode
             }
         });
-        return await modal.present();
+        await modal.present();
+        await modal.onDidDismiss().then( () => {
+            this.gesuch = new Gesuch();
+        });
     }
 
     async openAngebotdetails(angebot: Angebot, detailmode: boolean, editmode: boolean) {
@@ -124,7 +128,10 @@ export class AuftraegePage implements ViewDidEnter, ViewDidLeave {
                 editmode
             }
         });
-        return await modal.present();
+        await modal.present();
+        await modal.onDidDismiss().then( () => {
+            this.angebot = new Angebot();
+        });
     }
 
     ionViewDidLeave() {

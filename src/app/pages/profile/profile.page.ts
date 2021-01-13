@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Fahrzeug} from '../../../models/fahrzeug';
 import {AuthService} from '../../../services/auth/auth.service';
 import {FahrzeugdetailsComponent} from '../../components/fahrzeugdetails/fahrzeugdetails.component';
-import {ModalController} from '@ionic/angular';
+import {ModalController, ViewWillEnter} from '@ionic/angular';
 import {User} from '../../../models/user';
 import {FahrzeugService} from '../../../services/fahrzeug/fahrzeug.service';
 import {ProfileEditPage} from './profile-edit/profile-edit.page';
@@ -53,7 +53,10 @@ export class ProfilePage implements OnInit {
                 editmode
             }
         });
-        return await modal.present();
+        await modal.present();
+        await modal.onDidDismiss().then( () => {
+            this.car = new Fahrzeug();
+            });
     }
 
     async openProfilBearbeiten() {
