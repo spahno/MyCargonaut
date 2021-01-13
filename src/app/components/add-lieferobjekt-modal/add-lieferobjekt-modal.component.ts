@@ -17,7 +17,7 @@ export class AddLieferobjektModalComponent implements OnInit {
   ngOnInit() {}
 
   /**
-   * Closes the Modal
+   * method to dismiss the modal
    */
   closeModal() {
     this.lieferobjektService.addLieferobjekt(this.lieferobjekt)

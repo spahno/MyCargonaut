@@ -23,7 +23,7 @@ export class ProfilPopoverComponent {
     }
 
     /**
-     * dismisses the Popover
+     * method to dismiss the modal
      */
     async dismissClickPopover() {
         await this.modalController.dismiss();

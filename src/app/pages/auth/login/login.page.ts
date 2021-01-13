@@ -24,6 +24,10 @@ export class LoginPage implements ViewDidEnter {
 
     }
 
+    /**
+     * Method to check if all of the passed data is valid.
+     * If so, then the 'signIn()' method is called in the 'authService'
+     */
     async login() {
         this.errors.clear();
 

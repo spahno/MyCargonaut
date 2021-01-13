@@ -11,6 +11,10 @@ export class ChangePageService {
                 public loadingController: LoadingController) {
     }
 
+    /**
+     * method to navigate to another page
+     * @param page the pathname to navigate to
+     */
     public async route(page: string) {
         const loading = await this.loadingController.create({
             message: 'Bitte warten...',

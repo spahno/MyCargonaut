@@ -34,8 +34,9 @@ export class GesuchPage implements OnInit, OnDestroy {
     ngOnDestroy(): void {
         this.subGesuch.unsubscribe();
     }
+
     /**
-     * filters shown Gesuche by user input
+     * Method to get all of the search results, depending on the searched values
      */
     filterGesuche() {
         const startort = this.gesuchService.startort.toLowerCase();

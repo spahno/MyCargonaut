@@ -116,7 +116,7 @@ export class GesuchedetailsComponent implements OnInit {
     }
 
     /**
-     * dismisses the modal
+     * method to dismiss the modal
      */
     dismiss() {
         this.modalController.dismiss({

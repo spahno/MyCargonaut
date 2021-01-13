@@ -28,6 +28,10 @@ export class RegisterPage implements ViewDidEnter {
 
     }
 
+    /**
+     * Method to check if all of the passed data is valid.
+     * If so, then the 'signUp()' method is called in the 'authService'
+     */
     async register() {
         this.errors.clear();
 
