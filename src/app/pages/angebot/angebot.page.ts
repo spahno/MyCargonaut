@@ -41,7 +41,7 @@ export class AngebotPage implements OnInit, OnDestroy {
     }
 
     /**
-     * filters shown Angebote by user input
+     * Method to get all of the search results, depending on the searched values
      */
     filterAngebote() {
         this.filtertAngebote = [];

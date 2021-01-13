@@ -9,7 +9,6 @@ import {LieferobjektService} from '../../../services/lieferobjekt/lieferobjekt.s
 import {Fahrt} from '../../../models/Fahrt';
 import {Fahrzeug} from '../../../models/fahrzeug';
 import {FahrzeugService} from '../../../services/fahrzeug/fahrzeug.service';
-import {InteressentG} from '../../../models/Gesuch';
 import {ProfilPopoverComponent} from '../profil-popover/profil-popover.component';
 
 @Component({

@@ -104,7 +104,7 @@ export class AngebotedetailsComponent implements OnInit {
     }
 
     /**
-     * dismisses the current modal
+     * method to dismiss the modal
      */
     dismiss() {
         // using the injected ModalController this page
@@ -122,7 +122,9 @@ export class AngebotedetailsComponent implements OnInit {
     segmentChanged(ev: any) {
         console.log(this.tabSwitch);
     }
-
+    /**
+     * method to open the modal
+     */
     async openFahrzeugModal(angebot: Angebot) {
         const modal = await this.modalController.create({
             component: AddFahrzeugModalComponent,
@@ -134,7 +136,7 @@ export class AngebotedetailsComponent implements OnInit {
 
         modal.onDidDismiss()
             .then((fahrzeug) => {
-                this.angebotFahrzeug = fahrzeug.data; // Here's your selected user!
+                this.angebotFahrzeug = fahrzeug.data;
                 this.angebot.fahrzeugId = this.angebotFahrzeug.id;
             });
 

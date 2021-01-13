@@ -20,6 +20,9 @@ export class TrackingPage implements OnInit {
                 public router: Router) {
     }
 
+    /**
+     * Method to initialize the map and to set the longitude and latitude
+     */
     initMap() {
         const container = document.getElementById('map');
         if (container) {

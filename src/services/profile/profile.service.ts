@@ -15,6 +15,9 @@ export class ProfileService {
         this.userCollection = this.afs.collection<User>('users');
     }
 
+    /**
+     * method to display the profile of an interested user
+     */
     async presentPopoverProfile() {
         const modal = await this.modalController.create({
             component: ProfilPopoverComponent,
@@ -36,10 +39,18 @@ export class ProfileService {
         return await popover.present();
     }*/
 
+
+    /**
+     * method to check if an entered email is valid or not
+     */
     emailIsValid(email: string) {
         return /\S+@\S+\.\S+/.test(email);
     }
 
+
+    /**
+     * method to check if an entered phone number is valid or not
+     */
     phoneNumberIsValid(phoneNumber: number) {
         return /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im.test(String(phoneNumber));
     }

@@ -85,7 +85,7 @@ export class FahrzeugdetailsComponent implements OnInit {
   }
 
   /**
-   * dismiss the modal
+   * method to dismiss the modal
    */
   dismiss() {
     this.modalController.dismiss(

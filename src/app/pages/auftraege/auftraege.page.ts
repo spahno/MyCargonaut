@@ -39,6 +39,9 @@ export class AuftraegePage implements ViewDidEnter, ViewDidLeave {
 
     }
 
+    /**
+     * Method to retrieve all of the user's 'Aufträge' when the page is loaded
+     */
     async ionViewDidEnter() {
         this.gesucheArr = [];
         this.angeboteArr = [];
@@ -101,6 +104,12 @@ export class AuftraegePage implements ViewDidEnter, ViewDidLeave {
             });
     }
 
+    /**
+     * Method to display a modal to edit a 'Gesuch'
+     * @param gesuch the 'Gesuch' to be edited
+     * @param detailmode if true, the 'Gesuch' is readonly
+     * @param editmode if true, the 'Gesuch' is editable
+     */
     async openGesuchedetails(gesuch: Gesuch, detailmode: boolean, editmode: boolean) {
         const modal = await this.modalController.create({
             component: GesuchedetailsComponent,
@@ -117,6 +126,12 @@ export class AuftraegePage implements ViewDidEnter, ViewDidLeave {
         });
     }
 
+    /**
+     * Method to display a modal to edit an 'Angebot'
+     * @param angebot the 'Angebot' to be edited
+     * @param detailmode if true, the 'Angebot' is readonly
+     * @param editmode if true, the 'Angebot' is editable
+     */
     async openAngebotdetails(angebot: Angebot, detailmode: boolean, editmode: boolean) {
         const modal = await this.modalController.create({
             component: AngebotedetailsComponent,
@@ -133,6 +148,9 @@ export class AuftraegePage implements ViewDidEnter, ViewDidLeave {
         });
     }
 
+    /**
+     * method to clear all arrays and unsubscribe from all observables
+     */
     ionViewDidLeave() {
         this.gesucheArr = [];
         this.angeboteArr = [];

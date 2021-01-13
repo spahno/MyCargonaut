@@ -69,7 +69,7 @@ export class ProfilePage implements OnInit {
     }
 
     /**
-     * Opens the profile editing modal
+     * Method to display a modal to edit the user's data
      */
     async openProfilBearbeiten() {
         const modal = await this.modalController.create({
@@ -79,14 +79,14 @@ export class ProfilePage implements OnInit {
     }
 
     /**
-     * deletes the current user
+     * Method that calls the 'deleteProfile()' method in the 'authService'
      */
     async delete() {
         await this.authService.deleteProfile();
     }
 
     /**
-     * Gets all the Fahrzeuge of the current user
+     * Method to retrieve all of te user's 'Fahrzeuge'
      */
     getUserFahrzeuge() {
         this.cars = [];
