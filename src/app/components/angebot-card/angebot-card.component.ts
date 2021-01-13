@@ -10,6 +10,7 @@ import {Fahrt} from '../../../models/Fahrt';
 import {Fahrzeug} from '../../../models/fahrzeug';
 import {FahrzeugService} from '../../../services/fahrzeug/fahrzeug.service';
 import {ProfilPopoverComponent} from '../profil-popover/profil-popover.component';
+import {TrackingPage} from '../../pages/tracking/tracking.page';
 
 @Component({
   selector: 'app-angebot-card',
@@ -72,7 +73,7 @@ export class AngebotCardComponent implements OnInit {
 
   /**
    * Sets the customer for a Angebot
-   * @param fahrerArray all the drivers
+   * @param kunden interested customers
    */
   setKunden(kunden: InteressentA[]) {
     this.kunden = [];
@@ -374,5 +375,23 @@ export class AngebotCardComponent implements OnInit {
       buttons: [buttonText]
     });
     await alert.present();
+  }
+
+  /**
+   * method to display the tracking modal page
+   */
+  async presentTrackingModal() {
+    const modal = await this.modalController.create({
+      component: TrackingPage,
+      componentProps: {
+        fahrzeugart: this.fahrzeug.fahrzeugart,
+        startort: this.angebot.abfahrtOrt,
+        zielort: this.angebot.ankunftOrt,
+        ankunftDatum: this.angebot.ankunftDatum,
+        ankunftZeit: this.angebot.ankunftZeit,
+        beendet: this.fahrt.beendet
+      }
+    });
+    return await modal.present();
   }
 }

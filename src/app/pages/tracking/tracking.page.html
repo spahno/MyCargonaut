@@ -1,28 +1,47 @@
 <ion-header>
     <ion-toolbar>
         <ion-title>Sendungsverfolgung</ion-title>
-        <ion-buttons slot="start">
-            <!--<ion-back-button></ion-back-button>-->
-            <ion-back-button defaultHref="login"></ion-back-button>
+        <ion-buttons slot="end">
+            <ion-button (click)="modalController.dismiss()">Schließen</ion-button>
         </ion-buttons>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-    <ion-card>
-        <ion-card-header>
-            <p class="title">Transporter</p>
-            <ion-card-subtitle>Gießen -> Berlin</ion-card-subtitle>
-            <ion-card-subtitle>Voraussichtliche Ankunft: 24.12.2020 18:30 Uhr</ion-card-subtitle>
-        </ion-card-header>
+    <ion-card class="border-card-orange">
+        <ion-item lines="none">
+            <h3 slot="start">{{fahrzeugart || 'Fahrzeug nicht hinterlegt'}}</h3>
+            <ion-badge *ngIf="beendet" color="secondary" slot="end">Zugestellt</ion-badge>
+            <ion-badge *ngIf="!beendet" color="secondary" slot="end">In Zustellung</ion-badge>
+
+        </ion-item>
+        <ion-item lines="none">
+            <h4 slot="start">{{startort}}</h4>
+            <ion-icon class="center" name="arrow-forward"></ion-icon>
+            <h4 slot="end">{{zielort}}</h4>
+        </ion-item>
+        <ion-item lines="none">
+            <p slot="start">Ankunft:</p>
+            <p slot="end">Voraussichtliche Ankunft: {{ankunftDatum}}, {{ankunftZeit}}</p>
+        </ion-item>
+
+        <div *ngIf="beendet" class="success-checkmark">
+            <div class="check-icon">
+                <span class="icon-line line-tip"></span>
+                <span class="icon-line line-long"></span>
+                <div class="icon-circle"></div>
+                <div class="icon-fix"></div>
+            </div>
+        </div>
+
+        <div *ngIf="!beendet" class="error-banmark">
+            <div class="ban-icon">
+                <span class="icon-line line-long-invert"></span>
+                <span class="icon-line line-long"></span>
+                <div class="icon-circle"></div>
+                <div class="icon-fix"></div>
+            </div>
+        </div>
     </ion-card>
-
-    <ion-card>
-        <ion-card-content>
-            <div id="map" style="height:100%;"></div>
-        </ion-card-content>
-    </ion-card>
-
-
 </ion-content>
