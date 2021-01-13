@@ -72,6 +72,7 @@ Technology | Usage
 [Travis CI](https://travis-ci.org) | Continuous Integration
 [Hound CI](https://houndci.com) | Continuous Integration
 [Github Pages](https://pages.github.com) | Deployment
+[Compodoc](https://compodoc.app) | Client documentation
 
 ## Infrastructure
 
