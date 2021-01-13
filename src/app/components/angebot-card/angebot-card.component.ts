@@ -3,12 +3,13 @@ import {Angebot, InteressentA} from '../../../models/Angebot';
 import {AuthService} from '../../../services/auth/auth.service';
 import {AngebotService} from '../../../services/angebot/angebot.service';
 import {FahrtService} from '../../../services/fahrt/fahrt.service';
-import {AlertController} from '@ionic/angular';
+import {AlertController, ModalController} from '@ionic/angular';
 import {User} from '../../../models/user';
 import {LieferobjektService} from '../../../services/lieferobjekt/lieferobjekt.service';
 import {Fahrt} from '../../../models/Fahrt';
 import {Fahrzeug} from '../../../models/fahrzeug';
 import {FahrzeugService} from '../../../services/fahrzeug/fahrzeug.service';
+import {ProfilPopoverComponent} from '../profil-popover/profil-popover.component';
 
 @Component({
   selector: 'app-angebot-card',
@@ -33,7 +34,8 @@ export class AngebotCardComponent implements OnInit {
               private fahrtService: FahrtService,
               private lieferobjektService: LieferobjektService,
               public alertController: AlertController,
-              private fahrzeugService: FahrzeugService) {
+              private fahrzeugService: FahrzeugService,
+              public modalController: ModalController) {
   }
 
   ngOnInit() {
@@ -84,18 +86,41 @@ export class AngebotCardComponent implements OnInit {
   }
 
   interessentAnnehmen(interessent: InteressentA) {
-    this.angebot.addKunde(interessent);
-    this.angebot.deleteInteressent(interessent);
-    this.angebotService.updateAngebot(this.angebot).then(res => {
-      Object.assign(this.angebot, res.angebot);
-    }).catch(err => this.presentAlert('Fehler', 'Fehler beim Update des Angebots. Error: ' + err, 'Ok'));
+    if (!this.angebot.isKunde(interessent.userId)) {
+      this.angebot.addKunde(interessent);
+      this.angebot.deleteInteressent(interessent);
+      this.angebotService.updateAngebot(this.angebot).then(res => {
+        Object.assign(this.angebot, res.angebot);
+      }).catch(err => this.presentAlert('Fehler', 'Fehler beim Update des Angebots. Error: ' + err, 'Ok'));
+    } else {
+      alert('Der Interessent wurde schon angenommen.');
+    }
   }
 
   interessentEntfernen(interessent: InteressentA) {
-    this.angebot.deleteInteressent(interessent);
-    this.angebotService.updateAngebot(this.angebot).then(res => {
-      Object.assign(this.angebot, res.angebot);
-    }).catch(err => this.presentAlert('Fehler', 'Fehler beim Update des Angebots. Error: ' + err, 'Ok'));
+    this.authService.findUserById(interessent.userId).then(res => {
+      const delInt: User = res;
+      delInt.id = interessent.userId;
+      const findIndex: number = delInt.interessierteAngebote.indexOf(this.angebot._ID);
+      delInt.interessierteAngebote.splice(findIndex, 1);
+      this.authService.updateUser(delInt);
+    });
+  }
+
+  async infoPopoverInteressent(interessent: InteressentA) {
+    const intUser = await this.authService.findUserById(interessent.userId);
+    const sub = await this.lieferobjektService.findLieferobjektById(interessent.objectId).subscribe(async intLieferobjekt => {
+      sub.unsubscribe();
+      const modal = await this.modalController.create({
+        component: ProfilPopoverComponent,
+        cssClass: 'my-custom-class',
+        componentProps: {
+          interessent: intUser,
+          lieferobjekt: intLieferobjekt
+        }
+      });
+      return await modal.present();
+    });
   }
 
   starteFahrt() {
@@ -228,6 +253,50 @@ export class AngebotCardComponent implements OnInit {
       });
       await alert.present();
     }
+  }
+
+  /**
+   * This Methods Presents a Alert to Call the deleteAngebot() Method
+   */
+  async deleteAngebotAlert() {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Abgebot löschen!',
+      message: 'Möchten Sie das Angebot von ' + this.angebot.abfahrtOrt +
+          ' nach ' + this.angebot.ankunftOrt + ' wirklich löschen?',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {}
+        }, {
+          text: 'Löschen',
+          handler: () => {
+            this.deleteAngebot();
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  /**
+   * This Methods Deletes a Angebot from a Interessent a Ersteller and the Angebot it self
+   */
+  deleteAngebot() {
+    this.angebotService.deleteAngebot(this.angebot._ID).then(id => {
+      this.angebot.getInteressenten().forEach(interessent => {
+        this.user.erstellteAngebote = this.user.erstellteAngebote.filter(ange => ange !== id);
+        this.authService.updateUser(this.user);
+        this.authService.findUserById(interessent.userId).then(user => {
+          user.interessierteAngebote = user.interessierteAngebote.filter(intr => intr !== id);
+          this.authService.updateUser(user);
+        });
+      });
+    }).catch(err => {
+      this.presentAlert('Fehler!', 'Fehler beim Löschen des Angebots entstanden. Error: ' + err, 'Ok');
+    });
   }
 
   async presentAlert(header: string, message: string, buttonText: string) {

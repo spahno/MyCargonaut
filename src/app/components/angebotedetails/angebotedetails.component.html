@@ -25,9 +25,9 @@
             <div *ngSwitchCase="'ziel'">
                 <ion-row>
                     <ion-col>
-                        <ion-item>
-                            <ion-item>
-                                <ion-label position="floating">Ankunftsdatum und -uhrzeit</ion-label>
+                        <ion-item lines="none">
+                            <ion-item lines="none">
+                                <ion-label class="label-margin" position="floating">Ankunftsdatum und -uhrzeit</ion-label>
                                 <ion-datetime displayFormat="DD/MM/YYYY +HH:mm" [min]="now" [max]="now + 2"
                                               placeholder="Ankunftsdatum wählen" [(ngModel)]="endDate"></ion-datetime>
                             </ion-item>
@@ -41,10 +41,10 @@
                 </ion-row>
                 <ion-row>
                     <ion-col size="9">
-                        <ion-item>
-                            <ion-label position="stacked">Straße</ion-label>
+                        <ion-item lines="none">
+                            <ion-label class="label-margin" position="stacked">Straße</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="angebot.ankunftStrasse"></ion-input>
+                                       [(ngModel)]="angebot.ankunftStrasse" type="text"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('ankunftStrasse')">
@@ -53,10 +53,10 @@
                         </ion-item>
                     </ion-col>
                     <ion-col size="3">
-                        <ion-item>
-                            <ion-label position="stacked">Nr.</ion-label>
+                        <ion-item lines="none">
+                            <ion-label class="label-margin" position="stacked">Nr.</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="ankunftNummer"></ion-input>
+                                       [(ngModel)]="ankunftNummer" type="number"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('ankunftNummer')">
@@ -67,10 +67,10 @@
                 </ion-row>
                 <ion-row>
                     <ion-col size="4">
-                        <ion-item>
-                            <ion-label position="stacked">PLZ</ion-label>
+                        <ion-item lines="none">
+                            <ion-label class="label-margin" position="stacked">PLZ</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="angebot.ankunftPlz"></ion-input>
+                                       [(ngModel)]="angebot.ankunftPlz" type="number"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('ankunftPlz')">
@@ -79,10 +79,10 @@
                         </ion-item>
                     </ion-col>
                     <ion-col size="8">
-                        <ion-item>
-                            <ion-label position="stacked">Ort</ion-label>
+                        <ion-item lines="none">
+                            <ion-label class="label-margin" position="stacked">Ort</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="angebot.ankunftOrt"></ion-input>
+                                       [(ngModel)]="angebot.ankunftOrt" type="text"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('ankunftOrt')">
@@ -98,10 +98,10 @@
             <div *ngSwitchCase="'start'">
                 <ion-row>
                     <ion-col size="9">
-                        <ion-item>
-                            <ion-label position="stacked">Abfahrtstraße</ion-label>
+                        <ion-item lines="none">
+                            <ion-label class="label-margin" position="stacked">Abfahrtstraße</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="angebot.abfahrtStrasse"></ion-input>
+                                       [(ngModel)]="angebot.abfahrtStrasse" type="text"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('abfahrtStrasse')">
@@ -110,10 +110,10 @@
                         </ion-item>
                     </ion-col>
                     <ion-col size="3">
-                        <ion-item>
-                            <ion-label position="stacked">Nr.</ion-label>
+                        <ion-item lines="none">
+                            <ion-label class="label-margin" position="stacked">Nr.</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="abfahrtNummer"></ion-input>
+                                       [(ngModel)]="abfahrtNummer" type="number"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('abfahrtNummer')">
@@ -124,10 +124,10 @@
                 </ion-row>
                 <ion-row>
                     <ion-col size="4">
-                        <ion-item>
-                            <ion-label position="stacked">PLZ</ion-label>
+                        <ion-item lines="none">
+                            <ion-label class="label-margin" position="stacked">PLZ</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="angebot.abfahrtPlz"></ion-input>
+                                       [(ngModel)]="angebot.abfahrtPlz" type="number"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('abfahrtPlz')">
@@ -136,10 +136,10 @@
                         </ion-item>
                     </ion-col>
                     <ion-col size="8">
-                        <ion-item>
-                            <ion-label position="stacked">Abfahrtsort</ion-label>
+                        <ion-item lines="none">
+                            <ion-label class="label-margin" position="stacked">Abfahrtsort</ion-label>
                             <ion-input [autofocus]="true" [readonly]="detailmode"
-                                       [(ngModel)]="angebot.abfahrtOrt"></ion-input>
+                                       [(ngModel)]="angebot.abfahrtOrt" type="text"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('abfahrtOrt')">
@@ -176,26 +176,26 @@
             </ion-row>
             <ion-row>
                 <ion-col>
-                    <ion-label>
+                    <ion-label class="label-margin">
                         Marke
                     </ion-label>
-                    <ion-item>
+                    <ion-item lines="none">
                         <p>{{angebotFahrzeug.marke}}</p>
                     </ion-item>
                 </ion-col>
                 <ion-col>
-                    <ion-label>
+                    <ion-label class="label-margin">
                         Modell
                     </ion-label>
-                    <ion-item>
+                    <ion-item lines="none">
                         <p>{{angebotFahrzeug.modell}}</p>
                     </ion-item>
                 </ion-col>
                 <ion-col>
-                    <ion-label>
+                    <ion-label class="label-margin">
                         Fahrzeugart
                     </ion-label>
-                    <ion-item>
+                    <ion-item lines="none">
                         <p>{{angebotFahrzeug.fahrzeugart}}</p>
                     </ion-item>
                 </ion-col>
@@ -203,26 +203,26 @@
             <h3>Ladefläche</h3>
             <ion-row>
                 <ion-col>
-                    <ion-label>
+                    <ion-label class="label-margin">
                         Höhe
                     </ion-label>
-                    <ion-item>
+                    <ion-item lines="none">
                         <p>{{angebotFahrzeug.hoehe}}</p>
                     </ion-item>
                 </ion-col>
                 <ion-col>
-                    <ion-label>
+                    <ion-label class="label-margin">
                         Breite
                     </ion-label>
-                    <ion-item>
+                    <ion-item lines="none">
                         <p>{{angebotFahrzeug.breite}}</p>
                     </ion-item>
                 </ion-col>
                 <ion-col>
-                    <ion-label>
+                    <ion-label class="label-margin">
                         Tiefe
                     </ion-label>
-                    <ion-item>
+                    <ion-item lines="none">
                         <p>{{angebotFahrzeug.tiefe}}</p>
                     </ion-item>
                 </ion-col>

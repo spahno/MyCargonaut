@@ -24,6 +24,10 @@ export class LoginPage implements ViewDidEnter {
 
     }
 
+    /**
+     * Method to check if all of the passed data is valid.
+     * If so, then the 'signIn()' method is called in the 'authService'
+     */
     async login() {
         this.errors.clear();
 
@@ -43,18 +47,19 @@ export class LoginPage implements ViewDidEnter {
                 this.changePage.route('profile');
                 this.email = '';
                 this.password = '';
-            })
-            .catch(error => {
+            });
+            /*.catch(error => {
                 if (error.code === 'auth/user-not-found') {
                     this.errors.set('email', 'E-Mail oder Passwort wurde falsch eingegeben!');
+                    alert('E-Mail oder Passwort wurde falsch eingegeben!');
                 } else if (error.code === 'auth/invalid-email') {
-                    this.errors.set('email', 'E-Mail oder Passwort wurde falsch eingegeben!');
+                    alert('E-Mail oder Passwort wurde falsch eingegeben!');
                 } else if (error.code === 'auth/wrong-password') {
-                    this.errors.set('email', 'E-Mail oder Passwort wurde falsch eingegeben!');
+                    alert('E-Mail oder Passwort wurde falsch eingegeben!');
                 } else if (error.code === 'auth/argument-error') {
-                    this.errors.set('email', 'E-Mail oder Passwort wurde falsch eingegeben!');
+                    alert('E-Mail oder Passwort wurde falsch eingegeben!');
                 }
-            });
+            });*/
     }
 
     ionViewDidEnter() {

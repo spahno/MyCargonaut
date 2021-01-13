@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import {AngebotService} from '../../../services/angebot/angebot.service';
 import {GesuchService} from '../../../services/gesuch/gesuch.service';
 
@@ -7,7 +7,7 @@ import {GesuchService} from '../../../services/gesuch/gesuch.service';
   templateUrl: './suchen.page.html',
   styleUrls: ['./suchen.page.scss'],
 })
-export class SuchenPage implements OnInit {
+export class SuchenPage {
 
   tabSwitch = 'gesuche';
 
@@ -19,9 +19,6 @@ export class SuchenPage implements OnInit {
 
   constructor(public angebotService: AngebotService,
               public gesuchService: GesuchService) { }
-
-  ngOnInit() {
-  }
 
   /**
    * Triggers when the segment is clicked to change filter string

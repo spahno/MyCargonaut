@@ -5,7 +5,8 @@
 </ion-header>
 
 <ion-content>
-    <div class="content-center ion-margin-horizontal">
+
+    <div class="cargo-content content-center">
         <ion-row>
             <ion-col>
                 <ion-row>
@@ -20,25 +21,25 @@
                 </ion-row>
                 <ion-row class="ion-justify-content-center">
                     <ion-list>
-                        <ion-item>
-                            <ion-label position="stacked">Startort</ion-label>
-                            <ion-input [autofocus]="true" [(ngModel)]="startort"></ion-input>
+                        <ion-item lines="none">
+                            <ion-label class="label-margin" position="stacked">Startort</ion-label>
+                            <ion-input [(ngModel)]="startort"></ion-input>
                         </ion-item>
-                        <ion-item>
-                            <ion-label position="stacked">Zielort</ion-label>
+                        <ion-item lines="none">
+                            <ion-label class="label-margin" position="stacked">Zielort</ion-label>
                             <ion-input [(ngModel)]="zielort"></ion-input>
                         </ion-item>
                         <div [ngSwitch]="tabSwitch">
 
                             <div *ngSwitchCase="'gesuche'">
-                                <ion-item>
-                                    <ion-label position="floating">Ankunftsdatum</ion-label>
+                                <ion-item lines="none">
+                                    <ion-label class="label-margin" position="floating">Ankunftsdatum</ion-label>
                                     <ion-datetime displayFormat="DD/MM/YYYY" [min]="now" [max]="now + 2" placeholder="Ankunftsdatum wählen" [(ngModel)]="endDate"></ion-datetime>
                                 </ion-item>
                             </div>
 
                             <div *ngSwitchCase="'angebote'">
-                                <ion-item>
+                                <ion-item lines="none">
                                     <ion-label position="floating">Ankunftsdatum</ion-label>
                                     <ion-datetime displayFormat="DD/MM/YYYY" [min]="now" [max]="now + 2" placeholder="Ankunftsdatum wählen" [(ngModel)]="endDate"></ion-datetime>
                                 </ion-item>

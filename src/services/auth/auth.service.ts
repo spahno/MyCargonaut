@@ -104,12 +104,16 @@ export class AuthService {
 
     /**
      * Method to return the authenticated user
-     * @return user current user
+     * @return User current user
      */
     getUser(): User {
         return this.user;
     }
 
+    /**
+     * Method to return the ID of the current user
+     * @return string ID of current user
+     */
     getUserID(): string {
         if (localStorage.getItem('userID')) {
             return localStorage.getItem('userID');
@@ -118,11 +122,16 @@ export class AuthService {
         }
     }
 
+    /**
+     * Method to check whether a user is logged in or not
+     * @return Promise<boolean> resolves true, if user is logged in
+     */
     checkIfLoggedIn(): Promise<boolean> {
         return new Promise((resolve) => {
             this.loadPageSubscription((u) => {
                 if (u === undefined || u.id === undefined) {
                     resolve(false);
+                    localStorage.clear();
                 } else {
                     resolve(true);
                 }
@@ -170,12 +179,12 @@ export class AuthService {
                     });
             })
             .catch((error) => {
-                console.log(error);
+                alert('Datenbankfehler: \n \n' + error);
             });
     }
 
     /**
-     * un-authenticate
+     * Method to un-authenticate the current user
      */
     logOut() {
         setTimeout(() => {
@@ -198,6 +207,10 @@ export class AuthService {
          }
      }*/
 
+    /**
+     * Method to reload the user, if the user's data cannot be found
+     * @param callback callback that returns the user's data
+     */
     async loadPageSubscription(callback: (u: User) => void) {
         let counter = true;
         if (this.getUserID()) {

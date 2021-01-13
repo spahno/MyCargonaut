@@ -21,6 +21,9 @@ export class AngebotPage implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        /**
+         * loads user data and empties arrays
+         */
         this.authService.loadPageSubscription(u => this.user = u);
         this.subAngebot = this.angebotService.observableAngebote().subscribe(async data => {
             this.angebote = [];
@@ -30,10 +33,16 @@ export class AngebotPage implements OnInit, OnDestroy {
         });
     }
 
+    /**
+     * Make sure data is not loaded twice
+     */
     ngOnDestroy(): void {
         this.subAngebot.unsubscribe();
     }
 
+    /**
+     * Method to get all of the search results, depending on the searched values
+     */
     filterAngebote() {
         this.filtertAngebote = [];
         const startort = this.angebotService.startort.toLowerCase();

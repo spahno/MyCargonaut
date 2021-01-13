@@ -45,4 +45,8 @@ describe('AnfrageCardComponent', () => {
     component.inputAngebot = angebot;
     expect(component).toBeTruthy();
   });
+  it('should delete', () => {
+
+    expect(component).toBeTruthy();
+  });
 });

@@ -28,11 +28,16 @@ export class GesuchPage implements OnInit, OnDestroy {
             this.filterGesuche();
         });
     }
-
+    /**
+     * Make sure data is not loaded twice
+     */
     ngOnDestroy(): void {
         this.subGesuch.unsubscribe();
     }
 
+    /**
+     * Method to get all of the search results, depending on the searched values
+     */
     filterGesuche() {
         const startort = this.gesuchService.startort.toLowerCase();
         const zielort = this.gesuchService.zielort.toLowerCase();

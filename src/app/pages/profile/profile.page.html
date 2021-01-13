@@ -75,7 +75,7 @@
                         <h2>{{car.marke}} {{car.modell}}</h2>
                         <p>{{car.nummernschild}}</p>
                     </ion-label>
-                    <ion-icon name="create-outline" slot="end" class="action-btn icon-green" (click)="this.openFahrzeugdetails(this.car, false, true)"></ion-icon>
+                    <ion-icon name="create-outline" slot="end" class="action-btn icon-green" (click)="this.openFahrzeugdetails(this.car, false, false)"></ion-icon>
                     <ion-icon name="trash" slot="end" class="action-btn icon-yellow" (click)="this.deleteFahrzeug(car)"></ion-icon>
                     <ion-icon name="chevron-forward-outline" slot="end" class="forward-chevron" (click)="openFahrzeugdetails(this.car, true, false)"></ion-icon>
                 </ion-item>

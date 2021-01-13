@@ -9,6 +9,7 @@ import {FahrzeugService} from '../../../services/fahrzeug/fahrzeug.service';
 import {Fahrt} from '../../../models/Fahrt';
 import {Lieferobjekt} from '../../../models/Lieferobjekt';
 import {LieferobjektService} from '../../../services/lieferobjekt/lieferobjekt.service';
+import {ProfilPopoverComponent} from '../profil-popover/profil-popover.component';
 
 @Component({
   selector: 'app-gesuch-card',
@@ -88,14 +89,25 @@ export class GesuchCardComponent implements OnInit {
   }
 
   interessentAnnehmen(interessent: InteressentG) {
-    this.gesuch.addFahrer(interessent);
-    this.gesuch.deleteInteressent(interessent);
-    this.gesuchService.updateGesuch(this.gesuch).then(res => {
-      Object.assign(this.gesuch, res.gesuch);
-    }).catch(err => this.presentAlert('Fehler', 'Fehler beim Update des Gesuchs. Error: ' + err, 'Ok'));
+    if (!this.gesuch.isFahrer(interessent.userId)) {
+      this.gesuch.addFahrer(interessent);
+      this.gesuch.deleteInteressent(interessent);
+      this.gesuchService.updateGesuch(this.gesuch).then(res => {
+        Object.assign(this.gesuch, res.gesuch);
+      }).catch(err => this.presentAlert('Fehler', 'Fehler beim Update des Gesuchs. Error: ' + err, 'Ok'));
+    } else {
+      alert('Der Interessent wurde schon angenommen.');
+    }
   }
 
   interessentEntfernen(interessent: InteressentG) {
+    this.authService.findUserById(interessent.userId).then(res => {
+      const delInt: User = res;
+      delInt.id = interessent.userId;
+      const findIndex: number = delInt.interessierteGesuche.indexOf(this.gesuch._ID);
+      delInt.interessierteGesuche.splice(findIndex, 1);
+      this.authService.updateUser(delInt);
+    });
     this.gesuch.deleteInteressent(interessent);
     this.gesuchService.updateGesuch(this.gesuch).then(res => {
       Object.assign(this.gesuch, res.gesuch);
@@ -104,12 +116,18 @@ export class GesuchCardComponent implements OnInit {
 
   async infoPopoverInteressent(interessent: InteressentG) {
     const intUser = await this.authService.findUserById(interessent.userId);
-    const intFahrzeug = await this.fahrzeugService.findFahrzeugById(interessent.fahrzeugId);
-    // const modal = await this.modalController.create({
-      // component: ProfilPopoverComponent,
-      // cssClass: 'my-custom-class'
-    // });
-    // return await modal.present();
+    const sub = await this.fahrzeugService.findFahrzeugById(interessent.fahrzeugId).subscribe(async intFahrzeug => {
+      sub.unsubscribe();
+      const modal = await this.modalController.create({
+        component: ProfilPopoverComponent,
+        cssClass: 'my-custom-class',
+        componentProps: {
+          interessent: intUser,
+          fahrzeug: intFahrzeug
+        }
+      });
+      return await modal.present();
+    });
   }
 
   starteFahrt() {
