@@ -100,6 +100,9 @@ export class GesuchedetailsComponent implements OnInit {
             this.gesuch.erstellerId = this.authService.getUserID();
             this.gesuch.ankunftStrasse = this.gesuch.ankunftStrasse + this.ankunftNummer;
             this.gesuch.abfahrtStrasse = this.gesuch.abfahrtStrasse + this.abfahrtNummer;
+            /**
+             * Edit a Gesuch
+             */
             if (this.editmode) {
                 await this.lieferobjektService.updateLieferobjekt(this.lieferobjekt).then(res =>
                     this.gesuch.lieferobjektId = res._ID);
@@ -111,6 +114,9 @@ export class GesuchedetailsComponent implements OnInit {
                     this.dismiss();
                 });
                 await this.authService.loadPageSubscription(u => this.user =  u);
+                /**
+                 * Add a Gesuch
+                 */
             } else {
                 this.dismiss();
                 this.errors.clear();

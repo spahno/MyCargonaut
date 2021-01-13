@@ -89,7 +89,9 @@ export class AngebotedetailsComponent implements OnInit {
             this.angebot.ankunftStrasse = this.angebot.ankunftStrasse + this.ankunftNummer;
             this.angebot.abfahrtStrasse = this.angebot.abfahrtStrasse + this.abfahrtNummer;
             this.angebot.erstellerId = this.authService.getUserID();
-
+            /**
+             * Edit an Angebot
+             */
             if (this.editmode) {
                 await this.angebotService.updateAngebot(this.angebot).then(res => {
                     const index = this.user.erstellteAngebote.indexOf(res.angebot._ID);
@@ -99,6 +101,9 @@ export class AngebotedetailsComponent implements OnInit {
                     this.dismiss();
                 });
                 await this.authService.loadPageSubscription(u => this.user =  u);
+                /**
+                 * Add an Angebot
+                 */
             } else {
                 await this.angebotService.addAngebot(this.angebot).then(res => {
                     this.user.erstellteAngebote.push(res.angebot._ID);
