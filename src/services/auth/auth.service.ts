@@ -132,8 +132,8 @@ export class AuthService {
         return new Promise((resolve) => {
             this.loadPageSubscription((u) => {
                 if (u === undefined || u.id === undefined) {
-                    resolve(false);
                     localStorage.clear();
+                    resolve(false);
                 } else {
                     resolve(true);
                 }

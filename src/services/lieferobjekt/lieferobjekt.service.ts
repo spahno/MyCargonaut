@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {User} from '../../models/user';
 import {map} from 'rxjs/operators';
 import {Gesuch} from '../../models/Gesuch';
+import {Angebot} from '../../models/Angebot';
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +61,23 @@ export class LieferobjektService {
       });
     });
   }
+
+    /**
+     * This method updates a Lieferobjekt in Firebase
+     * @param lieferobjekt that will be updated
+     */
+    updateAngebot(lieferobjekt: Lieferobjekt): Promise<Lieferobjekt> {
+        return new Promise((resolve, reject) => {
+            const lieferobjektId = lieferobjekt._ID;
+            this.objektCollection.doc(lieferobjektId).update(LieferobjektService.copyAndPrepare(lieferobjekt))
+                .then(async () => {
+                    lieferobjekt._ID = lieferobjektId;
+                    resolve(lieferobjekt);
+                }).catch((error) => {
+                reject('Error editing document: ' + error);
+            });
+        });
+    }
 
   /**
    * This Method deletes a Lieberobjekt in Firebase

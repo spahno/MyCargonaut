@@ -8,8 +8,7 @@ import {LoadingController, ModalController} from '@ionic/angular';
 export class ChangePageService {
 
     constructor(private router: Router,
-                public loadingController: LoadingController,
-                private modalCtrl: ModalController) {
+                public loadingController: LoadingController) {
     }
 
     /**
@@ -26,9 +25,6 @@ export class ChangePageService {
             .then(async () => {
                 await loading.present();
                 await loading.onDidDismiss();
-                if (page === 'profile'){
-                    await this.modalCtrl.dismiss();
-                }
             });
     }
 }

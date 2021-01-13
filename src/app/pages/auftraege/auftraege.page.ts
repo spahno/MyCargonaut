@@ -148,6 +148,10 @@ export class AuftraegePage implements ViewDidEnter, ViewDidLeave {
         });
     }
 
+    openAngebotAlert() {
+        this.openAngebotdetails(this.angebot, false, false);
+    }
+
     /**
      * method to clear all arrays and unsubscribe from all observables
      */
