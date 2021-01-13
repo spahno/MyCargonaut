@@ -171,7 +171,7 @@ export class AuthService {
                     });
             })
             .catch((error) => {
-                console.log(error);
+                alert('Datenbankfehler: \n \n' + error);
             });
     }
 
