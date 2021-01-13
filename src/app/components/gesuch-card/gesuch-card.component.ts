@@ -40,10 +40,11 @@ export class GesuchCardComponent implements OnInit {
   }
 
   ngOnInit() {
+    /**
+     * prepares user data
+     */
     Object.assign(this.user, this.inputUser);
     Object.assign(this.gesuch, this.inputGesuch);
-    console.log('Card:' + this.user.id);
-    console.log('Card:' + this.gesuch._ID);
     const tmpInteressenten = this.gesuch.getInteressenten();
     this.setInteressenten(tmpInteressenten);
     this.setInteressentenText(tmpInteressenten.length);
@@ -60,6 +61,10 @@ export class GesuchCardComponent implements OnInit {
     }
   }
 
+  /**
+   * Sets the interest of a user for a Gesuch
+   * @param interessenten all the interessenten of a Gesuch
+   */
   setInteressenten(interessenten: InteressentG[]) {
     this.interessenten = [];
     interessenten.forEach(interessent => {
@@ -69,6 +74,10 @@ export class GesuchCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Sets the driver for a Gesuch
+   * @param fahrerArray all the drivers
+   */
   setFahrer(fahrerArray: InteressentG[]) {
     this.interessenten = [];
     fahrerArray.forEach(fahrer => {
@@ -78,6 +87,10 @@ export class GesuchCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Sets the number of interessenten in the badge to display to a user
+   * @param interessenten is the number of interested users
+   */
   setInteressentenText(interessenten: number) {
     if (interessenten === 0) {
       this.interessentenText = 'Keine Interessenten';
@@ -88,6 +101,10 @@ export class GesuchCardComponent implements OnInit {
     }
   }
 
+  /**
+   * Accepts the request of a user for a Gesuch
+   * @param interessent is the requesting user
+   */
   interessentAnnehmen(interessent: InteressentG) {
     if (!this.gesuch.isFahrer(interessent.userId)) {
       this.gesuch.addFahrer(interessent);
@@ -100,6 +117,10 @@ export class GesuchCardComponent implements OnInit {
     }
   }
 
+  /**
+   * Deletes the request of a user
+   * @param interessent is the requesting user
+   */
   interessentEntfernen(interessent: InteressentG) {
     this.authService.findUserById(interessent.userId).then(res => {
       const delInt: User = res;
@@ -114,6 +135,10 @@ export class GesuchCardComponent implements OnInit {
     }).catch(err => this.presentAlert('Fehler', 'Fehler beim Update des Gesuchs. Error: ' + err, 'Ok'));
   }
 
+  /**
+   * Opens a popover to display more information about the user and his request
+   * @param interessent the requesting user
+   */
   async infoPopoverInteressent(interessent: InteressentG) {
     const intUser = await this.authService.findUserById(interessent.userId);
     const sub = await this.fahrzeugService.findFahrzeugById(interessent.fahrzeugId).subscribe(async intFahrzeug => {
@@ -130,6 +155,9 @@ export class GesuchCardComponent implements OnInit {
     });
   }
 
+  /**
+   * starts the drive and presents an alert to display confirmation to user
+   */
   starteFahrt() {
     if (this.authService.getUser() && this.authService.getUser().id === this.gesuch.erstellerId){
       if (this.gesuch) {
@@ -138,7 +166,7 @@ export class GesuchCardComponent implements OnInit {
             this.fahrt = res.fahrt;
             this.gesuch.fahrtId = res.fahrt._ID;
             this.gesuchService.updateGesuch(this.gesuch).then(res2 => {
-              this.presentAlert('Fahrt gestartet', 'Die fahrt von ' + res2.gesuch.abfahrtOrt +
+              this.presentAlert('Fahrt gestartet', 'Die Fahrt von ' + res2.gesuch.abfahrtOrt +
                   ' nach ' + res2.gesuch.ankunftOrt + ' wurde gestartet.<br>' +
                   'Ihre angegebene Ankunftszeit ist: ' + res2.gesuch.ankunftZeit + '.', 'Los gehts!');
             }).catch(err => {
@@ -156,6 +184,9 @@ export class GesuchCardComponent implements OnInit {
     }
   }
 
+  /**
+   * ends the drive and presents a popover to rate the drive
+   */
   fahrtBeenden() {
     if (this.authService.getUser() && this.authService.getUser().id === this.gesuch.erstellerId) {
       if (this.gesuch) {
@@ -175,6 +206,10 @@ export class GesuchCardComponent implements OnInit {
     }
   }
 
+  /**
+   * Presents the rating popover
+   * @param fahrtId is the id of the ride to be rated
+   */
   async fahrtBewerten(fahrtId: string) {
     const bewertung = 5;
     const alert = await this.alertController.create({
@@ -210,6 +245,10 @@ export class GesuchCardComponent implements OnInit {
     await alert.present();
   }
 
+  /**
+   * Gets all the Fahrzeuge of a user that is accepting a Gesuch to set the Fahrzeug
+   * the cargo is to be transported with
+   */
   getFahrzeuge(): Promise<{ name: string, type: 'radio', label: string, value: string, checked: boolean}[]> {
     return new Promise( (resolve, reject) => {
       if (this.user.fahrzeuge && this.user.fahrzeuge.length === 0) {
@@ -234,6 +273,9 @@ export class GesuchCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Presents a popover to the user to choose one of his Fahrzeuge for a drive
+   */
   async gesuchAnfragen() {
     if (this.gesuch) {
       await this.getFahrzeuge().then(async radioInputs => {

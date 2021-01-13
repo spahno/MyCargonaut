@@ -58,6 +58,10 @@ export class AngebotCardComponent implements OnInit {
     }
   }
 
+  /**
+   * Sets the interest of a user for a Anngebot
+   * @param interessenten all the interessenten of a Gesuch
+   */
   setInteressenten(interessenten: InteressentA[]) {
     this.interessenten = [];
     interessenten.forEach(interessent => {
@@ -67,6 +71,10 @@ export class AngebotCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Sets the customer for a Angebot
+   * @param fahrerArray all the drivers
+   */
   setKunden(kunden: InteressentA[]) {
     this.kunden = [];
     kunden.forEach(kunde => {
@@ -76,6 +84,10 @@ export class AngebotCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Sets the number of interessenten in the badge to display to a user
+   * @param interessenten is the number of interested users
+   */
   setInteressentenText(interessenten: number) {
     if (interessenten === 0) {
       this.interessentenText = 'Keine Interessenten';
@@ -86,6 +98,10 @@ export class AngebotCardComponent implements OnInit {
     }
   }
 
+  /**
+   * Accepts the request of a user for a Angebot
+   * @param interessent is the requesting user
+   */
   interessentAnnehmen(interessent: InteressentA) {
     if (!this.angebot.isKunde(interessent.userId)) {
       this.angebot.addKunde(interessent);
@@ -98,6 +114,10 @@ export class AngebotCardComponent implements OnInit {
     }
   }
 
+  /**
+   * Deletes the request of a user
+   * @param interessent is the requesting user
+   */
   interessentEntfernen(interessent: InteressentA) {
     this.authService.findUserById(interessent.userId).then(res => {
       const delInt: User = res;
@@ -108,6 +128,10 @@ export class AngebotCardComponent implements OnInit {
     });
   }
 
+  /**
+   * Opens a popover to display more information about the user and his request
+   * @param interessent the requesting user
+   */
   async infoPopoverInteressent(interessent: InteressentA) {
     const intUser = await this.authService.findUserById(interessent.userId);
     const sub = await this.lieferobjektService.findLieferobjektById(interessent.objectId).subscribe(async intLieferobjekt => {
@@ -124,6 +148,9 @@ export class AngebotCardComponent implements OnInit {
     });
   }
 
+  /**
+   * starts the drive and presents an alert to display confirmation to user
+   */
   starteFahrt() {
     if (this.authService.getUser() && this.authService.getUser().id === this.angebot.erstellerId){
       if (this.angebot) {
@@ -149,7 +176,9 @@ export class AngebotCardComponent implements OnInit {
       this.presentAlert('Fehler', 'Fahrt starten fehlgeschlagen. Error: Nicht Authorisiert', 'Ok');
     }
   }
-
+  /**
+   * ends the drive and presents a popover to rate the drive
+   */
   fahrtBeenden() {
     if (this.authService.getUser() && this.authService.getUser().id === this.angebot.erstellerId) {
       if (this.angebot) {
@@ -169,6 +198,10 @@ export class AngebotCardComponent implements OnInit {
     }
   }
 
+  /**
+   * Presents the rating popover
+   * @param fahrtId is the id of the ride to be rated
+   */
   async fahrtBewerten(fahrtId: string) {
     const bewertung = 5;
     const alert = await this.alertController.create({
@@ -203,7 +236,10 @@ export class AngebotCardComponent implements OnInit {
 
     await alert.present();
   }
-
+  /**
+   * Presents a popover to the user to create a Cargo object
+   * that is to be transported
+   */
   async angebotAnfragen() {
     if (this.angebot) {
       const alert = await this.alertController.create({
