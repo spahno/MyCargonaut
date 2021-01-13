@@ -10,7 +10,8 @@
     "lint": "ng lint",
     "test": "ng test --no-watch --no-progress --browsers=ChromeHeadlessCI",
     "e2e": "ng e2e --protractor-config=e2e/protractor-ci.conf.js",
-    "coverage": "ng test --no-watch --code-coverage"
+    "coverage": "ng test --no-watch --code-coverage",
+    "compodoc": "./node_modules/.bin/compodoc -p tsconfig.json -w -s"
   },
   "private": true,
   "dependencies": {
@@ -40,6 +41,7 @@
     "@angular/compiler-cli": "~10.0.0",
     "@angular/language-service": "~10.0.0",
     "@capacitor/cli": "2.4.5",
+    "@compodoc/compodoc": "^1.1.11",
     "@ionic/angular-toolkit": "^2.3.0",
     "@types/jasmine": "~3.5.0",
     "@types/jasminewd2": "~2.0.3",
