@@ -116,6 +116,10 @@ export class AngebotService {
         });
     }
 
+    /**
+     * This method updates a Angebot in Firebase
+     * @param angebot that will be updated
+     */
     updateAngebot(angebot: Angebot): Promise<{ angebot: Angebot, message: string }> {
         return new Promise((resolve, reject) => {
             const angebotId = angebot._ID;
