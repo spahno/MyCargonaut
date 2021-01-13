@@ -34,17 +34,14 @@ export class AddFahrzeugModalComponent implements OnInit {
     ngOnInit() {
         this.authService.loadPageSubscription(u => {
             Object.assign(this.currentUser = u);
-            console.log('user wird geholt: ' + this.currentUser.email);
             this.getUserFahrzeuge();
         });
     }
 
     getUserFahrzeuge() {
-        console.log('getuserFahrzeuge wird ausgeführt');
         this.currentUser.fahrzeuge.forEach(fahrzeugID => {
             this.fahrzeugService.findFahrzeugById(fahrzeugID).subscribe(fahrzeug => {
                 this.userFahrzeuge.push(fahrzeug);
-                console.log(fahrzeug);
             });
         });
     }

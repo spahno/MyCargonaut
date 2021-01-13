@@ -161,7 +161,7 @@ export class AuthService {
                 localStorage.setItem('userID', res.user.uid);
             })
             .catch((error) => {
-                console.log(error);
+                alert(error);
             });
     }
 

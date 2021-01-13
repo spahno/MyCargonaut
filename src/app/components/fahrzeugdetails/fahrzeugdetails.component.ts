@@ -69,7 +69,6 @@ export class FahrzeugdetailsComponent implements OnInit {
     if (this.errors.size === 0) {
 
       if (this.editmode) {
-        console.log('schreibt eine editFahrzeug ihr lappen');
         this.errors.clear();
         this.dismiss();
       } else {

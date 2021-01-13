@@ -73,7 +73,6 @@ export class AuftraegePage implements ViewDidEnter, ViewDidLeave {
                 this.user.interessierteAngebote.forEach(a => {
                     this.angebotService.findAngebotById(a).then(foundItem => {
                         tempInteressierteAngebotArray.push(foundItem);
-                        console.log('Page Angebot' + foundItem.abfahrtOrt);
                     });
                 });
 
