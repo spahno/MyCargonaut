@@ -18,19 +18,23 @@ const routes: Routes = [
     },
     {
         path: 'tracking',
-        loadChildren: () => import('./pages/tracking/tracking.module').then(m => m.TrackingPageModule)
+        loadChildren: () => import('./pages/tracking/tracking.module').then(m => m.TrackingPageModule),
+        canActivate: [AuthGuard]
     },
     {
         path: 'gesuch',
-        loadChildren: () => import('./pages/gesuch/gesuch.module').then(m => m.GesuchPageModule)
+        loadChildren: () => import('./pages/gesuch/gesuch.module').then(m => m.GesuchPageModule),
+        canActivate: [AuthGuard]
     },
     {
         path: 'angebot',
-        loadChildren: () => import('./pages/angebot/angebot.module').then(m => m.AngebotPageModule)
+        loadChildren: () => import('./pages/angebot/angebot.module').then(m => m.AngebotPageModule),
+        canActivate: [AuthGuard]
     },
     {
         path: 'suchen',
-        loadChildren: () => import('./pages/suchen/suchen.module').then(m => m.SuchenPageModule)
+        loadChildren: () => import('./pages/suchen/suchen.module').then(m => m.SuchenPageModule),
+        canActivate: [AuthGuard]
     },
     {
         path: 'profile',
@@ -39,7 +43,8 @@ const routes: Routes = [
     },
     {
         path: 'auftraege',
-        loadChildren: () => import('./pages/auftraege/auftraege.module').then(m => m.AuftraegePageModule)
+        loadChildren: () => import('./pages/auftraege/auftraege.module').then(m => m.AuftraegePageModule),
+        canActivate: [AuthGuard]
     },
     {
         path: '**',
