@@ -96,7 +96,9 @@ export class AuthService {
     findUserById(id: string): Promise<User> {
         return new Promise((resolve, reject) => {
             this.userCollection.doc(id).get().toPromise().then((res) => {
-                resolve(res.data());
+                const user = res.data();
+                user.id = id;
+                resolve(user);
             }).catch(err => reject(err));
         });
     }

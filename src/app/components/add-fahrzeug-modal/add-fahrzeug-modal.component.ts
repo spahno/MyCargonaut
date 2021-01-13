@@ -5,6 +5,7 @@ import {AuthService} from '../../../services/auth/auth.service';
 import {User} from '../../../models/user';
 import {Angebot} from '../../../models/Angebot';
 import {ModalController} from '@ionic/angular';
+import {ChangePageService} from '../../../services/changePage/change-page.service';
 
 @Component({
     selector: 'app-add-fahrzeug-modal',
@@ -26,7 +27,8 @@ export class AddFahrzeugModalComponent implements OnInit {
 
     constructor(private fahrzeugService: FahrzeugService,
                 private authService: AuthService,
-                private modalController: ModalController) {
+                public modalController: ModalController,
+                public changePage: ChangePageService) {
     }
 
     ngOnInit() {

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {LoadingController} from '@ionic/angular';
+import {LoadingController, ModalController} from '@ionic/angular';
 
 @Injectable({
     providedIn: 'root'
@@ -8,7 +8,8 @@ import {LoadingController} from '@ionic/angular';
 export class ChangePageService {
 
     constructor(private router: Router,
-                public loadingController: LoadingController) {
+                public loadingController: LoadingController,
+                private modalCtrl: ModalController) {
     }
 
     /**
@@ -25,6 +26,9 @@ export class ChangePageService {
             .then(async () => {
                 await loading.present();
                 await loading.onDidDismiss();
+                if (page === 'profile'){
+                    await this.modalCtrl.dismiss();
+                }
             });
     }
 }

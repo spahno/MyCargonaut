@@ -28,12 +28,4 @@ describe('ProfilPopoverComponent', () => {
         component = fixture.componentInstance;
         fixture.detectChanges();
     }));
-
-    /*
-    it('should dismiss modal', inject([ProfileService], async service => {
-        // todo
-        await service.presentPopoverProfile();
-        await component.dismissClickPopover();
-    }));
-    */
 });
