@@ -84,7 +84,7 @@ Technology | Usage
 
 ## Class diagram
 
-![Class diagram](./docs/class_diagram.jpeg)
+![Class diagram](docs/class_diagram.jpg)
 
 ## Wireframe
 
