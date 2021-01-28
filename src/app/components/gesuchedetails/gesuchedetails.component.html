@@ -152,7 +152,7 @@
                         <ion-item lines="none">
                             <ion-label class="label-margin" position="stacked">Bezahlung</ion-label>
                             <ion-input [readonly]="detailmode"
-                                       [(ngModel)]="gesuch.abfahrtOrt" type="text"></ion-input>
+                                       [(ngModel)]="gesuch.bezahlung" type="text"></ion-input>
                             <ion-text class="ion-text-end ion-padding-end"
                                       style="color:var(--ion-color-danger)"
                                       *ngIf="errors.get('bezahlung')">
